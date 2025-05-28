@@ -1,0 +1,132 @@
+// 重置
+html,
+body {
+  width: 100%;
+  height: 100%;
+  @include css(font-size, $fontsize_default);
+  font-family: "Microsoft Yahei", sans-serif;
+}
+html,
+body,
+div,
+p,
+ul,
+ol,
+li {
+  margin: 0;
+  padding: 0;
+}
+ul,
+li {
+  list-style: none;
+}
+// 主要字体颜色
+* {
+  @include css(outline-color, $title_line_color);
+}
+// 公共样式
+.container {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  background: #fff;
+  @include css(padding, $padding);
+  @include css(font-size, $fontsize_default);
+  @include css(color, $font_color);
+}
+.width50 {
+  width: 50%;
+}
+.width100 {
+  width: 100%;
+}
+.height100 {
+  height: 100%;
+}
+.overflowAuto {
+  overflow: auto;
+}
+.overflowHidden {
+  overflow: hidden;
+}
+.border {
+  @include css(border, 1px solid $border_color);
+}
+.underline {
+  text-decoration: underline;
+}
+.cursor {
+  cursor: pointer;
+}
+.textCenter {
+  text-align: center;
+}
+
+@font-face {
+  font-family: DingTalk-JinBuTi;
+  src: url("../font/DingTalk-JinBuTi.ttf");
+}
+
+@font-face {
+  font-family: "TWIG";
+  src: url("../font/DINMittelschriftLTW1G.otf");
+}
+
+@font-face {
+  font-family: "D-D-Bold";
+  src: url("../font/D-D-Bold.otf");
+}
+
+/* ---el-table滚动条公共样式--- */
+.ep-scrollbar {
+  // 横向滚动条
+  .ep-scrollbar__bar.is-horizontal {
+    opacity: 1; // 默认滚动条自带透明度
+    height: 12px !important; // 横向滑块的宽度
+    border-radius: 10px; // 圆角度数
+    // background-color: rgba(136, 219, 255, 1); // 滑块背景色
+    background: transparent;
+  }
+
+  // 纵向滚动条
+  .ep-scrollbar__bar.is-vertical {
+    opacity: 1;
+    width: 12px !important; // 纵向滑块的宽度
+    border-radius: 10px; // 圆角度数
+    // background-color: rgba(136, 219, 255, 1); // 滑块背景色
+    background: transparent;
+  }
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(144, 147, 153, 0.3);
+  -webkit-border-radius: 10px;
+
+  &:hover {
+    background-color: rgba(144, 147, 153, 0.5);
+  }
+}
+
+// element滚动条
+.ep-scrollbar .ep-scrollbar__view {
+  height: 100%;
+  margin: 0 auto;
+}
+
+.el-tooltip__popper.is-dark{
+  // background-color: rgba(43, 116, 196, 0.9) !important;
+
+  background-color: #2b74c4 !important;
+  box-shadow: inset 0px 0px 15px 2px  rgba(181, 188, 199, 0.5);
+  max-width: 40%;
+  line-height: 20px;
+
+}
+.el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: #0450a2 !important;
+}
