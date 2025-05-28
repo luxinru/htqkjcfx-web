@@ -15,7 +15,7 @@
             <div class="val"></div>
           </div>
           <span class="label2">
-            58.6%
+            51.9%
           </span>
         </div>
         <div class="item">
@@ -23,10 +23,10 @@
             完成值
           </span>
           <div class="schedule">
-            <div class="val"></div>
+            <div class="val val2"></div>
           </div>
-          <span class="label2">
-            58.6%
+          <span class="label2" style="color: rgba(255, 51, 85, 1)">
+            47.7%
           </span>
         </div>
       </div>
@@ -50,10 +50,10 @@
       <div class="item">
         <div class="labels">
           <span>
-            同方威视
+            同方数科
           </span>
           <div>
-            9.47
+            1.24
             <span>
               亿元
             </span>
@@ -64,10 +64,10 @@
       <div class="item">
         <div class="labels">
           <span>
-            同方威视
+            同方能源
           </span>
           <div>
-            9.47
+            4.38
             <span>
               亿元
             </span>
@@ -273,6 +273,14 @@ export default {
               #00f6ff 100%
             );
             border-radius: 2px;
+          }
+
+          .val2 {
+            background: linear-gradient(
+              to right,
+              rgba(0, 80, 144, 0.5) 0%,
+              rgba(255, 51, 85, 1) 100%
+            );
           }
         }
 

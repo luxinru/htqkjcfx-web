@@ -26,29 +26,29 @@
               年度计划值: 83亿元
             </div>
             <div class="value2">
-              计划完成率: 63.75%
+              计划完成率: 45%
             </div>
           </div>
         </div>
         <div class="part">
           <div class="child">
             <div class="label1">
-              固投投资金额
+              固投投资项目数
             </div>
             <div class="label2">
-              52.91
+              6
               <span>
-                亿元
+                个
               </span>
             </div>
           </div>
 
           <div class="child">
             <div class="value1">
-              年度计划值: 83亿元
+              正常: 5个
             </div>
             <div class="value2">
-              计划完成率: 63.75%
+              滞后: 1个
             </div>
           </div>
         </div>
@@ -65,10 +65,10 @@
         <div class="part">
           <div class="child">
             <div class="label1">
-              固投投资金额
+              股投投资金额
             </div>
             <div class="label2">
-              52.91
+              45.91
               <span>
                 亿元
               </span>
@@ -77,32 +77,32 @@
 
           <div class="child">
             <div class="value1">
-              年度计划值: 83亿元
+              年度计划值: 123亿元
             </div>
             <div class="value2">
-              计划完成率: 63.75%
+              计划完成率: 60%
             </div>
           </div>
         </div>
         <div class="part">
           <div class="child">
             <div class="label1">
-              固投投资金额
+              股投投资项目数
             </div>
             <div class="label2">
-              52.91
+              7
               <span>
-                亿元
+                个
               </span>
             </div>
           </div>
 
           <div class="child">
             <div class="value1">
-              年度计划值: 83亿元
+              正常: 5个
             </div>
             <div class="value2">
-              计划完成率: 63.75%
+              滞后: 2个
             </div>
           </div>
         </div>

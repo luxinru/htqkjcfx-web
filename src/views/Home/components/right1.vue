@@ -1,15 +1,15 @@
 <template>
   <div class="right1">
-    <div class="item" v-for="item in list">
+    <div class="item">
       <div class="part">
         <span>
-          {{ item.title }}
+          营业收现率
         </span>
         <span>
-          {{ item.value }}
+          14.2%
         </span>
         <span>
-          {{ item.target }}
+          年度目标值72%
         </span>
       </div>
       <div class="part">
@@ -17,7 +17,7 @@
           超年度目标
         </span>
         <span>
-          {{ item.targetValue }}
+          1.2个百分点
         </span>
       </div>
       <div class="part">
@@ -25,7 +25,127 @@
           同比
         </span>
         <span class="red">
-          {{ item.targetValue2 }}
+          15.5%
+        </span>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="part">
+        <span>
+          净资产收益率
+        </span>
+        <span>
+          17.8%
+        </span>
+        <span>
+          年度目标值72%
+        </span>
+      </div>
+      <div class="part">
+        <span>
+          年度目标差距
+        </span>
+        <span class="red">
+          1.2个百分点
+        </span>
+      </div>
+      <div class="part">
+        <span>
+          同比
+        </span>
+        <span>
+          20.5%
+        </span>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="part">
+        <span>
+          资产负债率
+        </span>
+        <span>
+          17.8%
+        </span>
+        <span>
+          年度目标值72%
+        </span>
+      </div>
+      <div class="part">
+        <span>
+          超年度目标
+        </span>
+        <span>
+          1.2个百分点
+        </span>
+      </div>
+      <div class="part">
+        <span>
+          同比
+        </span>
+        <span>
+          15.7
+        </span>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="part">
+        <span>
+          研发投入强度
+        </span>
+        <span>
+          17.8%
+        </span>
+        <span>
+          年度目标值72%
+        </span>
+      </div>
+      <div class="part">
+        <span>
+          超年度目标
+        </span>
+        <span>
+          1.2个百分点
+        </span>
+      </div>
+      <div class="part">
+        <span>
+          同比
+        </span>
+        <span class="red">
+          2.79
+        </span>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="part">
+        <span>
+          全员劳动生产率
+        </span>
+        <span>
+          43万元/人年
+        </span>
+        <span>
+          年度目标值39万元/人年
+        </span>
+      </div>
+      <div class="part">
+        <span>
+          年度目标差距
+        </span>
+        <span class="red">
+          10.1万元/人年
+        </span>
+      </div>
+      <div class="part">
+        <span>
+          同比
+        </span>
+        <span>
+          1.5万元/人年
         </span>
       </div>
     </div>
@@ -38,43 +158,6 @@ export default {
 
   data() {
     return {
-      list: [
-        {
-          title: "营业收现率",
-          value: "14.2%",
-          target: "年度目标值72%",
-          targetValue: "1.2个百分点",
-          targetValue2: "20.5%"
-        },
-        {
-          title: "营业收现率",
-          value: "14.2%",
-          target: "年度目标值72%",
-          targetValue: "1.2个百分点",
-          targetValue2: "20.5%"
-        },
-        {
-          title: "营业收现率",
-          value: "14.2%",
-          target: "年度目标值72%",
-          targetValue: "1.2个百分点",
-          targetValue2: "20.5%"
-        },
-        {
-          title: "营业收现率",
-          value: "14.2%",
-          target: "年度目标值72%",
-          targetValue: "1.2个百分点",
-          targetValue2: "20.5%"
-        },
-        {
-          title: "营业收现率",
-          value: "14.2%",
-          target: "年度目标值72%",
-          targetValue: "1.2个百分点",
-          targetValue2: "20.5%"
-        }
-      ]
     };
   }
 };
@@ -119,12 +202,12 @@ export default {
 
           &:nth-child(2) {
             font-weight: 400;
-            font-size: 24px;
+            font-size: 22px;
             color: #3ff1ff;
           }
 
           &:nth-child(3) {
-            font-size: 14px;
+            font-size: 12px;
             color: #00bbff;
           }
         }
@@ -140,12 +223,12 @@ export default {
 
         span {
           &:nth-child(1) {
-            font-size: 16px;
+            font-size: 13px;
             color: #ffffff;
           }
 
           &:nth-child(2) {
-            font-size: 16px;
+            font-size: 13px;
             color: #25ff50;
           }
         }

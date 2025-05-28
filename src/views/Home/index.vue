@@ -21,7 +21,9 @@
         </div>
       </div>
       <div class="center">
-        <div class="part" style="flex: 2 0;"></div>
+        <div class="part" style="flex: 2 0;">
+          <Center />
+        </div>
         <div class="part">
           <div class="child">
             <Box title="国际化经营">
@@ -37,7 +39,7 @@
       </div>
       <div class="right">
         <div class="part" style="flex: 2 0;">
-          <Box title="五率">
+          <Box title="五率" :type="2">
             <Right1 />
           </Box>
         </div>
@@ -59,6 +61,7 @@ import Left2 from "./components/left2.vue";
 import Left3 from "./components/left3.vue";
 import Right1 from "./components/right1.vue";
 import Right2 from "./components/right2.vue";
+import Center from "./components/center.vue";
 import CenterBottom1 from "./components/center_bottom1.vue";
 import CenterBottom2 from "./components/center_bottom2.vue";
 
@@ -74,7 +77,8 @@ export default {
     Right1,
     Right2,
     CenterBottom1,
-    CenterBottom2
+    CenterBottom2,
+    Center
   },
 
   data() {

@@ -6,7 +6,7 @@
       </div>
     </div>
 
-    <div class="box_container">
+    <div class="box_container" :class="type === 1 ? 'style1' : 'style2'">
       <slot></slot>
     </div>
   </div>
@@ -20,6 +20,11 @@ export default {
     title: {
       type: String,
       default: "标题"
+    },
+
+    type: {
+      type: Number,
+      default: 1
     }
   }
 };
@@ -61,6 +66,18 @@ export default {
       center;
     background-size: 100% 100%;
     overflow: hidden;
+  }
+
+  .style1 {
+    background: url("~@/assets/img/home/box_container.png") no-repeat center
+      center;
+    background-size: 100% 100%;
+  }
+
+  .style2 {
+    background: url("~@/assets/img/home/box_container2.png") no-repeat center
+      center;
+    background-size: 100% 100%;
   }
 }
 </style>

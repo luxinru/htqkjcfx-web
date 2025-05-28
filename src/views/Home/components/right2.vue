@@ -33,8 +33,10 @@ export default {
           trigger: "item"
         },
         grid: {
-          left: 0,
-          bottom: 0
+          top: "15%",
+          left: "10%",
+          right: "5%",
+          bottom: "15%"
         },
         xAxis: {
           data: xData2,
@@ -42,14 +44,18 @@ export default {
             show: false
           },
           axisLine: {
-            show: false
+            show: true,
+            lineStyle: {
+              color: "#005090"
+            }
           },
           axisLabel: {
             interval: 0,
+            margin: 16,
             textStyle: {
               color: "#fff",
               fontSize: 16
-            },
+            }
           }
         },
         yAxis: {
@@ -57,15 +63,21 @@ export default {
             show: false
           },
           axisTick: {
-            show: false
+            show: true,
+            lineStyle: {
+              color: "#005090"
+            }
           },
           axisLine: {
-            show: false
+            show: true,
+            lineStyle: {
+              color: "#005090"
+            }
           },
           axisLabel: {
             textStyle: {
-              color: "#fff",
-              fontSize: 16
+              color: "#00BBFF",
+              fontSize: 14
             }
           }
         },
@@ -93,23 +105,45 @@ export default {
               //lenged文本
               opacity: 0.7,
               color: function(params) {
-                return new echarts.graphic.LinearGradient(
-                  0,
-                  0,
-                  0,
-                  1,
-                  [
-                    {
-                      offset: 0,
-                      color: "#FF9A22" // 0% 处的颜色
-                    },
-                    {
-                      offset: 1,
-                      color: "#FFD56E" // 100% 处的颜色
-                    }
-                  ],
-                  false
-                );
+                if (params.dataIndex === 0) {
+                  // 第一个柱子保持原来的橙色
+                  return new echarts.graphic.LinearGradient(
+                    0,
+                    0,
+                    0,
+                    1,
+                    [
+                      {
+                        offset: 0,
+                        color: "#E18537" // 0% 处的颜色
+                      },
+                      {
+                        offset: 1,
+                        color: "#E18537" // 100% 处的颜色
+                      }
+                    ],
+                    false
+                  );
+                } else {
+                  // 后面三个柱子使用新的蓝色渐变
+                  return new echarts.graphic.LinearGradient(
+                    0,
+                    0,
+                    0,
+                    1,
+                    [
+                      {
+                        offset: 0,
+                        color: "#1570DF" // 0% 处的颜色
+                      },
+                      {
+                        offset: 1,
+                        color: "#40AFF6" // 100% 处的颜色
+                      }
+                    ],
+                    false
+                  );
+                }
               }
             },
             data: data1
@@ -152,23 +186,45 @@ export default {
             itemStyle: {
               opacity: 1,
               color: function(params) {
-                return new echarts.graphic.LinearGradient(
-                  0,
-                  0,
-                  0,
-                  1,
-                  [
-                    {
-                      offset: 0,
-                      color: "#FF9A22" // 0% 处的颜色
-                    },
-                    {
-                      offset: 1,
-                      color: "#FFD56E" // 100% 处的颜色
-                    }
-                  ],
-                  false
-                );
+                if (params.dataIndex === 0) {
+                  // 第一个柱子保持原来的橙色
+                  return new echarts.graphic.LinearGradient(
+                    0,
+                    0,
+                    0,
+                    1,
+                    [
+                      {
+                        offset: 0,
+                        color: "#F2B563" // 0% 处的颜色
+                      },
+                      {
+                        offset: 1,
+                        color: "#F2B563" // 100% 处的颜色
+                      }
+                    ],
+                    false
+                  );
+                } else {
+                  // 后面三个柱子使用新的蓝色渐变
+                  return new echarts.graphic.LinearGradient(
+                    0,
+                    0,
+                    0,
+                    1,
+                    [
+                      {
+                        offset: 0,
+                        color: "#40AFF6" // 0% 处的颜色
+                      },
+                      {
+                        offset: 1,
+                        color: "#40AFF6" // 100% 处的颜色
+                      }
+                    ],
+                    false
+                  );
+                }
               }
             },
             label: {
@@ -194,23 +250,45 @@ export default {
             itemStyle: {
               opacity: 1,
               color: function(params) {
-                return new echarts.graphic.LinearGradient(
-                  0,
-                  0,
-                  0,
-                  1,
-                  [
-                    {
-                      offset: 0,
-                      color: "#FF9A22" // 0% 处的颜色
-                    },
-                    {
-                      offset: 1,
-                      color: "#FFD56E" // 100% 处的颜色
-                    }
-                  ],
-                  false
-                );
+                if (params.dataIndex === 0) {
+                  // 第一个柱子保持原来的橙色渐变
+                  return new echarts.graphic.LinearGradient(
+                    0,
+                    0,
+                    0,
+                    1,
+                    [
+                      {
+                        offset: 0,
+                        color: "#FF9A22" // 0% 处的颜色
+                      },
+                      {
+                        offset: 1,
+                        color: "#FFD56E" // 100% 处的颜色
+                      }
+                    ],
+                    false
+                  );
+                } else {
+                  // 后面三个柱子使用蓝色渐变
+                  return new echarts.graphic.LinearGradient(
+                    0,
+                    0,
+                    0,
+                    1,
+                    [
+                      {
+                        offset: 0,
+                        color: "#1570DF" // 0% 处的颜色
+                      },
+                      {
+                        offset: 1,
+                        color: "#40AFF6" // 100% 处的颜色
+                      }
+                    ],
+                    false
+                  );
+                }
               }
             },
             data: [1, 1, 1, 1, 1]

@@ -42,10 +42,10 @@
 
         <div class="info">
           <span class="label">
-            EVA
+            科技投入
           </span>
-          <div class="value">
-            153.24
+          <div class="value" style="color: rgba(63, 241, 255, 1)">
+            85.36
             <span>
               亿元
             </span>
@@ -54,14 +54,14 @@
       </div>
 
       <span class="tip">
-        年度计划值: 255.47亿元
+        年度计划值: 94.237亿元
       </span>
 
       <div class="chart_box">
         <div ref="chart2" class="chart"></div>
         <div class="info">
-          <span>
-            75%
+          <span style="color: rgba(63, 241, 255, 1) ">
+            85%
           </span>
           <span>
             计划完成率
@@ -103,16 +103,18 @@ export default {
             type: "gauge",
             radius: "100%",
             center: ["50%", "53%"],
-            splitNumber: 0, //刻度数量
+            min: 0,
+            max: 100,
             startAngle: 180,
             endAngle: 0,
             axisLine: {
               show: true,
               lineStyle: {
-                width: 16,
+                // 轴线样式
+                width: 12, // 宽度
                 color: [
                   [
-                    1,
+                    (75 / 100).toFixed(2),
                     new echarts.graphic.LinearGradient(0, 0, 1, 0, [
                       {
                         offset: 0,
@@ -123,28 +125,31 @@ export default {
                         color: "rgba(0, 243, 114, 1)"
                       }
                     ])
-                  ]
-                ]
+                  ],
+                  [1, "rgba(0, 80, 144, 1)"]
+                ] // 颜色
               }
             },
-            //分隔线样式。
-            splitLine: {
-              show: false
-            },
-            axisLabel: {
+            pointer: {
+              // 仪表盘指针
               show: false
             },
             axisTick: {
+              // 刻度
               show: false
             },
-            pointer: {
+            splitLine: {
+              // 分割线
               show: false
             },
-            data: [
-              {
-                value: 70
-              }
-            ]
+            axisLabel: {
+              // 刻度标签
+              show: false
+            },
+            detail: {
+              // 仪表盘详情
+              show: false
+            }
           }
         ]
       });
@@ -157,16 +162,18 @@ export default {
             type: "gauge",
             radius: "100%",
             center: ["50%", "53%"],
-            splitNumber: 0, //刻度数量
+            min: 0,
+            max: 100,
             startAngle: 180,
             endAngle: 0,
             axisLine: {
               show: true,
               lineStyle: {
-                width: 16,
+                // 轴线样式
+                width: 12, // 宽度
                 color: [
                   [
-                    1,
+                    (85 / 100).toFixed(2),
                     new echarts.graphic.LinearGradient(0, 0, 1, 0, [
                       {
                         offset: 0,
@@ -177,28 +184,31 @@ export default {
                         color: "rgba(0, 236, 255, 1)"
                       }
                     ])
-                  ]
-                ]
+                  ],
+                  [1, "rgba(0, 80, 144, 1)"]
+                ] // 颜色
               }
             },
-            //分隔线样式。
-            splitLine: {
-              show: false
-            },
-            axisLabel: {
+            pointer: {
+              // 仪表盘指针
               show: false
             },
             axisTick: {
+              // 刻度
               show: false
             },
-            pointer: {
+            splitLine: {
+              // 分割线
               show: false
             },
-            data: [
-              {
-                value: 70
-              }
-            ]
+            axisLabel: {
+              // 刻度标签
+              show: false
+            },
+            detail: {
+              // 仪表盘详情
+              show: false
+            }
           }
         ]
       });

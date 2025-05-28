@@ -12,10 +12,10 @@
             目标值
           </span>
           <div class="schedule">
-            <div class="val"></div>
+            <div class="val" style="width: 78%;"></div>
           </div>
           <span class="label2">
-            58.6%
+            78%
           </span>
         </div>
         <div class="item">
@@ -23,10 +23,10 @@
             完成值
           </span>
           <div class="schedule">
-            <div class="val"></div>
+            <div class="val val2" style="width: 32.5%;"></div>
           </div>
-          <span class="label2">
-            58.6%
+          <span class="label2" style="color: rgba(255, 51, 85, 1)">
+            32.5%
           </span>
         </div>
       </div>
@@ -49,10 +49,10 @@
         <div ref="chart2" class="chart"></div>
         <div class="info">
           <span>
-            65%
+            73%
           </span>
           <span>
-            同方威视
+            核医疗
           </span>
         </div>
       </div>
@@ -111,7 +111,7 @@ export default {
             backgroundStyle: {
               color: "rgba(66, 66, 66, .3)"
             },
-            data: [60],
+            data: [65],
             coordinateSystem: "polar",
 
             itemStyle: {
@@ -169,7 +169,7 @@ export default {
             backgroundStyle: {
               color: "rgba(66, 66, 66, .3)"
             },
-            data: [60],
+            data: [73],
             coordinateSystem: "polar",
 
             itemStyle: {
@@ -255,6 +255,14 @@ export default {
               #00f6ff 100%
             );
             border-radius: 2px;
+          }
+
+          .val2 {
+            background: linear-gradient(
+              to right,
+              rgba(0, 80, 144, 0.5) 0%,
+              rgba(255, 51, 85, 1) 100%
+            );
           }
         }
 
