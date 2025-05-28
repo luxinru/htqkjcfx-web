@@ -46,6 +46,11 @@ module.exports = {
     // 取消打包后文件大于244k警告
     performance: {
       hints: false
+    },
+    resolve: {
+      alias: {
+        '@': require('path').resolve(__dirname, 'src')
+      }
     }
   }
 };

@@ -7,70 +7,70 @@ const routes = [
   {
     path: "/",
     name: "index",
-    component: () => import("@/views/LargeScreen/index.vue"),
-    children: [
-      {
-        path: "/jjyxjc",
-        name: "jjyxjc",
-        component: () => import("@/views/LargeScreen/jjyxjc/index.vue"),
-        meta: {
-          title: "经济运行监测"
-         }
-      },
-      {
-        path: "/zdxmjc",
-        name: "zdxmjc",
-        component: () => import("@/views/LargeScreen/zdxmjc/index.vue"),
-        meta: { 
-          title: "投资监测"
-        }
-      },
-      {
-        path: "/ksqyzl",
-        name: "ksqyzl",
-        component: () => import("@/views/LargeScreen/ksqyzl/index.vue"),
-        meta: {
-          title: "亏损企业治理"
-        }
-      },
-      {
-        path: "/htqkjcfx",
-        name: "htqkjcfx",
-        component: () => import("@/views/LargeScreen/htqkjcfx/index.vue"),
-        meta: {
-          title: "合同情况监测分析"
-        }
-      },
-      {
-        path: "/gjhjyqk",
-        name: "ksqyzl",
-        component: () => import("@/views/LargeScreen/gjhjyqk/index.vue"),
-        meta: {
-          title: "国际化经营情况"
-        }
-      },
-      {
-        path: "/jjyxztfx",
-        name: "jjyxztfx",
-        component: () => import("@/views/jjyxztfx"),
-        meta: {
-          title: "经济运行监测专题分析"
-        }
-      },
-      {
-        path: "/htqkjcztfx",
-        name: "htqkjcztfx",
-        component: () => import("@/views/htqkjcztfx"),
-        meta: {
-          title: "合同情况监测专题分析"
-        }
-      },
-      {
-        path: "/test",
-        name: "test",
-        component: () => import("@/views/test.vue")
-      }
-    ]
+    component: () => import("@/views/Home/index.vue")
+    // children: [
+    //   {
+    //     path: "/jjyxjc",
+    //     name: "jjyxjc",
+    //     component: () => import("@/views/LargeScreen/jjyxjc/index.vue"),
+    //     meta: {
+    //       title: "经济运行监测"
+    //      }
+    //   },
+    //   {
+    //     path: "/zdxmjc",
+    //     name: "zdxmjc",
+    //     component: () => import("@/views/LargeScreen/zdxmjc/index.vue"),
+    //     meta: {
+    //       title: "投资监测"
+    //     }
+    //   },
+    //   {
+    //     path: "/ksqyzl",
+    //     name: "ksqyzl",
+    //     component: () => import("@/views/LargeScreen/ksqyzl/index.vue"),
+    //     meta: {
+    //       title: "亏损企业治理"
+    //     }
+    //   },
+    //   {
+    //     path: "/htqkjcfx",
+    //     name: "htqkjcfx",
+    //     component: () => import("@/views/LargeScreen/htqkjcfx/index.vue"),
+    //     meta: {
+    //       title: "合同情况监测分析"
+    //     }
+    //   },
+    //   {
+    //     path: "/gjhjyqk",
+    //     name: "ksqyzl",
+    //     component: () => import("@/views/LargeScreen/gjhjyqk/index.vue"),
+    //     meta: {
+    //       title: "国际化经营情况"
+    //     }
+    //   },
+    //   {
+    //     path: "/jjyxztfx",
+    //     name: "jjyxztfx",
+    //     component: () => import("@/views/jjyxztfx"),
+    //     meta: {
+    //       title: "经济运行监测专题分析"
+    //     }
+    //   },
+    //   {
+    //     path: "/htqkjcztfx",
+    //     name: "htqkjcztfx",
+    //     component: () => import("@/views/htqkjcztfx"),
+    //     meta: {
+    //       title: "合同情况监测专题分析"
+    //     }
+    //   },
+    //   {
+    //     path: "/test",
+    //     name: "test",
+    //     component: () => import("@/views/test.vue")
+    //   }
+    // ]
   },
 
   {
