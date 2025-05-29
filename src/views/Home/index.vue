@@ -44,7 +44,7 @@
           </Box>
         </div>
         <div class="part">
-          <Box isEdit title="重点任务" @editClick="alert('重点任务')">
+          <Box title="重点任务">
             <Right2 />
           </Box>
         </div>

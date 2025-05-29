@@ -28,7 +28,6 @@ export default {
       var data2 = [40, 40, 40, 40];
       var barWidth = 30;
       var option = {
-        backgroundColor: "#021132",
         tooltip: {
           trigger: "item"
         },

@@ -25,6 +25,7 @@
           同比
         </span>
         <span class="red">
+          <img src="@/assets/img/home/down.png" alt="" />
           15.5%
         </span>
       </div>
@@ -55,6 +56,7 @@
           同比
         </span>
         <span>
+          <img src="@/assets/img/home/up.png" alt="" />
           20.5%
         </span>
       </div>
@@ -85,6 +87,7 @@
           同比
         </span>
         <span>
+          <img src="@/assets/img/home/up.png" alt="" />
           15.7
         </span>
       </div>
@@ -115,6 +118,7 @@
           同比
         </span>
         <span class="red">
+          <img src="@/assets/img/home/down.png" alt="" />
           2.79
         </span>
       </div>
@@ -145,6 +149,7 @@
           同比
         </span>
         <span>
+          <img src="@/assets/img/home/up.png" alt="" />
           1.5万元/人年
         </span>
       </div>
@@ -230,6 +235,8 @@ export default {
           &:nth-child(2) {
             font-size: 13px;
             color: #25ff50;
+            display: flex;
+            align-items: center;
           }
         }
       }

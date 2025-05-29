@@ -32,6 +32,10 @@ Vue.use(ElementUI);
 
 Vue.prototype.$money100m = $money100m;
 
+// 创建事件总线
+export const EventBus = new Vue();
+Vue.prototype.$EventBus = EventBus;
+
 // ant-design-vue
 // import Antd from 'ant-design-vue';
 // import "ant-design-vue/dist/antd.css";
