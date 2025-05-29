@@ -4,6 +4,12 @@
       <div class="text">
         {{ title }}
       </div>
+
+      <img
+        src="@/assets/img/home/select_active.png"
+        v-if="isEdit"
+        @click="onEditClick"
+      />
     </div>
 
     <div class="box_container" :class="type === 1 ? 'style1' : 'style2'">
@@ -25,6 +31,17 @@ export default {
     type: {
       type: Number,
       default: 1
+    },
+
+    isEdit: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  methods: {
+    onEditClick() {
+      this.$emit("editClick");
     }
   }
 };
@@ -45,17 +62,23 @@ export default {
     background-size: 100% 100%;
     display: flex;
     align-items: center;
-    padding: 0 45px 10px;
+    padding: 0 10px 10px 45px;
     box-sizing: border-box;
+    gap: 16px;
 
     .text {
-      width: 100%;
+      flex: 1 0;
       font-weight: bold;
       font-size: 18px;
       color: #ffffff;
       // background: radial-gradient(to bottom, #00ecff 0%, #ffffff 100%);
       // -webkit-background-clip: text;
       // -webkit-text-fill-color: transparent;
+    }
+
+    img {
+      margin-left: 10px;
+      cursor: pointer;
     }
   }
 

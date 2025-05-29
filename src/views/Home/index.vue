@@ -26,12 +26,12 @@
         </div>
         <div class="part">
           <div class="child">
-            <Box title="国际化经营">
+            <Box isEdit title="国际化经营" @editClick="alert('国际化经营')">
               <CenterBottom1 />
             </Box>
           </div>
           <div class="child">
-            <Box title="投资">
+            <Box isEdit title="投资" @editClick="alert('投资')">
               <CenterBottom2 />
             </Box>
           </div>
@@ -44,7 +44,7 @@
           </Box>
         </div>
         <div class="part">
-          <Box title="重点任务">
+          <Box isEdit title="重点任务" @editClick="alert('重点任务')">
             <Right2 />
           </Box>
         </div>
@@ -83,6 +83,12 @@ export default {
 
   data() {
     return {};
+  },
+
+  methods: {
+    alert(text) {
+      alert(text);
+    }
   }
 };
 </script>

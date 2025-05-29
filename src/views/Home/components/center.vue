@@ -1,7 +1,7 @@
 <template>
   <div class="center">
     <section class="top">
-      <div class="item" :class="{ active: active === 1 }" @click="active = 1">
+      <div class="item" :class="{ active: active === 1 }" @click="onChangeActive(1)">
         <div class="title">
           <img
             v-if="active === 1"
@@ -70,7 +70,7 @@
         />
       </div>
 
-      <div class="item" :class="{ active: active === 2 }" @click="active = 2">
+      <div class="item" :class="{ active: active === 2 }" @click="onChangeActive(2)">
         <div class="title">
           <img
             v-if="active === 2"
@@ -139,7 +139,7 @@
         />
       </div>
 
-      <div class="item" :class="{ active: active === 3 }" @click="active = 3">
+      <div class="item" :class="{ active: active === 3 }" @click="onChangeActive(3)">
         <div class="title">
           <img
             v-if="active === 3"
@@ -216,6 +216,12 @@
             主要产业集团外新签合同占比
           </div>
           <div ref="pieChart" class="pie-chart"></div>
+        </div>
+        <div class="part">
+          <div class="part_title">
+            主要产业利润总额情况
+          </div>
+          <div ref="chart2" class="pie-chart"></div>
         </div>
         <div class="part">
           <div class="tech-table">
@@ -355,6 +361,7 @@ export default {
       active: 1,
       partContainer: null,
       chart: null,
+      chart2: null,
       pieChart: null
     };
   },
@@ -363,15 +370,41 @@ export default {
     this.partContainer = this.$refs.partContainer;
     this.chart = this.$refs.chart;
     this.initPieChart();
+    this.initChart2();
   },
 
   methods: {
-    handleScroll(e) {
-      if (e === "left") {
-        this.partContainer.scrollLeft = 0;
+    onChangeActive(index) {
+      this.active = index;
+      // 根据索引计算目标滚动位置
+      const containerWidth = this.partContainer.clientWidth;
+      const targetScroll = (index - 1) * containerWidth;
+      this.partContainer.scrollLeft = targetScroll;
+    },
+
+    handleScroll(direction) {
+      const containerWidth = this.partContainer.clientWidth;
+      const currentScroll = this.partContainer.scrollLeft;
+      
+      let targetScroll;
+      if (direction === "left") {
+        targetScroll = Math.max(0, currentScroll - containerWidth);
+      } else if (direction === "right") {
+        const maxScroll = this.partContainer.scrollWidth - containerWidth;
+        targetScroll = Math.min(maxScroll, currentScroll + containerWidth);
       } else {
-        this.partContainer.scrollLeft = this.partContainer.scrollWidth;
+        // 如果传入的是数字索引，直接计算目标位置
+        targetScroll = (direction - 1) * containerWidth;
       }
+      
+      // 设置滚动位置
+      this.partContainer.scrollLeft = targetScroll;
+      
+      // 计算目标页面的索引（从1开始）
+      const pageIndex = Math.round(targetScroll / containerWidth) + 1;
+      
+      // 确保索引在有效范围内（1-3）
+      this.active = Math.max(1, Math.min(3, pageIndex));
     },
 
     initPieChart() {
@@ -586,12 +619,250 @@ export default {
           }
         });
       }
+    },
+
+    initChart2() {
+      if (this.$refs.chart2) {
+        this.chart2 = echarts.init(this.$refs.chart2);
+
+        const option = {
+          tooltip: {
+            trigger: "axis",
+            backgroundColor: "rgba(0, 20, 40, 0.95)",
+            borderColor: "#00ECFF",
+            borderWidth: 2,
+            textStyle: {
+              color: "#FFFFFF",
+              fontSize: 14,
+              fontWeight: 500
+            },
+            formatter: function(params) {
+              const param = params[0];
+              const value = param.value;
+              const color = value >= 0 ? "#1BFFCC" : "#FF5722";
+              return `<div style="padding: 8px;">
+                        <div style="color: #00ECFF; font-weight: bold; margin-bottom: 5px;">${param.name}</div>
+                        <div>利润总额: <span style="color: ${color};">${value}亿元</span></div>
+                      </div>`;
+            }
+          },
+          grid: {
+            left: "10%",
+            right: "10%",
+            top: "20%",
+            bottom: "5%",
+            containLabel: true
+          },
+          xAxis: {
+            type: "category",
+            data: ["核技术应用", "数字信息", "智慧能源", "中核医疗", "其他"],
+            axisLine: {
+              lineStyle: {
+                color: "#00ECFF",
+                width: 2
+              }
+            },
+            axisTick: {
+              lineStyle: {
+                color: "#00ECFF",
+                width: 1
+              }
+            },
+            axisLabel: {
+              color: "#FFFFFF",
+              fontSize: 16,
+              fontWeight: 500,
+              interval: 0,
+              rotate: 0,
+              margin: 15
+            },
+            splitLine: {
+              show: false
+            }
+          },
+          yAxis: {
+            type: "value",
+            name: "单位（亿元）",
+            nameTextStyle: {
+              color: "#00ECFF",
+              fontSize: 14,
+              fontWeight: 600,
+              padding: [0, 0, 10, 0]
+            },
+            axisLine: {
+              lineStyle: {
+                color: "#00ECFF",
+                width: 2
+              }
+            },
+            axisTick: {
+              lineStyle: {
+                color: "#00ECFF",
+                width: 1
+              }
+            },
+            axisLabel: {
+              color: "#FFFFFF",
+              fontSize: 16,
+              fontWeight: 500,
+              formatter: "{value}"
+            },
+            splitLine: {
+              lineStyle: {
+                color: "rgba(0, 236, 255, 0.2)",
+                width: 1,
+                type: "dashed"
+              }
+            }
+          },
+          series: [
+            {
+              name: "利润总额",
+              type: "bar",
+              barWidth: "50%",
+              data: [
+                {
+                  value: -2,
+                  itemStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                      { offset: 0, color: "#FF5722" },
+                      { offset: 0.5, color: "#FF7043" },
+                      { offset: 1, color: "#FF8A65" }
+                    ]),
+                    borderColor: "#FF5722",
+                    borderWidth: 2,
+                    shadowBlur: 15,
+                    shadowColor: "rgba(255, 87, 34, 0.6)"
+                  }
+                },
+                {
+                  value: 9,
+                  itemStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                      { offset: 0, color: "#1E88E5" },
+                      { offset: 0.5, color: "#29B6F6" },
+                      { offset: 1, color: "#4FC3F7" }
+                    ]),
+                    borderColor: "#1E88E5",
+                    borderWidth: 2,
+                    shadowBlur: 15,
+                    shadowColor: "rgba(30, 136, 229, 0.6)"
+                  }
+                },
+                {
+                  value: 10,
+                  itemStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                      { offset: 0, color: "#FFC107" },
+                      { offset: 0.5, color: "#FFCA28" },
+                      { offset: 1, color: "#FFD54F" }
+                    ]),
+                    borderColor: "#FFC107",
+                    borderWidth: 2,
+                    shadowBlur: 15,
+                    shadowColor: "rgba(255, 193, 7, 0.6)"
+                  }
+                },
+                {
+                  value: -3,
+                  itemStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                      { offset: 0, color: "#9C27B0" },
+                      { offset: 0.5, color: "#AB47BC" },
+                      { offset: 1, color: "#BA68C8" }
+                    ]),
+                    borderColor: "#9C27B0",
+                    borderWidth: 2,
+                    shadowBlur: 15,
+                    shadowColor: "rgba(156, 39, 176, 0.6)"
+                  }
+                },
+                {
+                  value: 8,
+                  itemStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                      { offset: 0, color: "#4CAF50" },
+                      { offset: 0.5, color: "#66BB6A" },
+                      { offset: 1, color: "#81C784" }
+                    ]),
+                    borderColor: "#4CAF50",
+                    borderWidth: 2,
+                    shadowBlur: 15,
+                    shadowColor: "rgba(76, 175, 80, 0.6)"
+                  }
+                }
+              ],
+              label: {
+                show: false
+              },
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 25,
+                  shadowOffsetX: 0,
+                  shadowColor: "rgba(0, 236, 255, 0.8)",
+                  borderWidth: 3,
+                  borderColor: "#00ECFF"
+                },
+                label: {
+                  fontSize: 14,
+                  fontWeight: 700
+                }
+              },
+              animationDelay: function (idx) {
+                return idx * 200;
+              },
+              animationEasing: 'elasticOut'
+            }
+          ]
+        };
+
+        this.chart2.setOption(option);
+
+        // 添加自动高亮效果
+        let autoHighlightTimer = setInterval(() => {
+          if (this.chart2) {
+            this.chart2.dispatchAction({
+              type: 'highlight',
+              seriesIndex: 0,
+              dataIndex: Math.floor(Math.random() * 5)
+            });
+          }
+        }, 2500);
+
+        // 鼠标悬停时停止自动高亮
+        this.chart2.on('mouseover', () => {
+          clearInterval(autoHighlightTimer);
+        });
+
+        // 鼠标离开时重新开始自动高亮
+        this.chart2.on('mouseout', () => {
+          autoHighlightTimer = setInterval(() => {
+            if (this.chart2) {
+              this.chart2.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: Math.floor(Math.random() * 5)
+              });
+            }
+          }, 2500);
+        });
+
+        // 响应式处理
+        window.addEventListener("resize", () => {
+          if (this.chart2) {
+            this.chart2.resize();
+          }
+        });
+      }
     }
   },
 
   beforeDestroy() {
     if (this.pieChart) {
       this.pieChart.dispose();
+    }
+    if (this.chart2) {
+      this.chart2.dispose();
     }
     window.removeEventListener("resize", this.resizeHandler);
   }
@@ -760,7 +1031,8 @@ export default {
   .bottom {
     position: relative;
     width: 100%;
-    height: 354px;
+    min-height: 354px;
+    flex: 1 0;
     background: url("~@/assets/img/home/box_container3.png") no-repeat center
       center;
     background-size: 100% 100%;
