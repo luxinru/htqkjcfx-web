@@ -389,7 +389,7 @@ export default {
   },
 
   mounted() {
-    this.$EventBus.$on("updateDate", (date) => {
+    this.$EventBus.$on("updateDate", date => {
       this.date = date;
     });
     this.partContainer = this.$refs.partContainer;
@@ -454,7 +454,7 @@ export default {
             return `<div style="padding: 8px;">
                         <div style="color: #00ECFF; font-weight: bold; margin-bottom: 5px;">${params.name}</div>
                         <div>金额: <span style="color: #1BFFCC;">${params.value}亿元</span></div>
-                        <div>占比: <span style="color: #FFD700;">${params.percent}%</span></div>
+                        <div>占比: <span style="color: rgba(182, 70, 31, 1);">${params.percent}%</span></div>
                       </div>`;
           }
         },
@@ -495,7 +495,7 @@ export default {
                   lineHeight: 16
                 },
                 percent: {
-                  color: "#FFD700",
+                  color: "rgba(182, 70, 31, 1)",
                   fontSize: 11,
                   fontWeight: 500,
                   lineHeight: 14
@@ -658,11 +658,19 @@ export default {
       }
 
       this.chart2 = echarts.init(this.$refs.chart2);
+      const data = [
+        { value: -2.1, name: "核技术应用", benqi: 120, rate: "8%" },
+        { value: 8.2, name: "中核医疗", benqi: 580, rate: "32%" },
+        { value: 10.1, name: "数据信息", benqi: 800, rate: "40%" },
+        { value: -5.6, name: "同方能源", benqi: 60, rate: "3%" },
+        { value: 7.9, name: "其他", benqi: 400, rate: "17%" }
+      ];
       const option = {
         tooltip: {
           trigger: "axis",
+          axisPointer: { type: "shadow" },
           backgroundColor: "rgba(0, 20, 40, 0.95)",
-          borderColor: "#00ECFF",
+          borderColor: "rgba(0, 76, 214, 1)",
           borderWidth: 2,
           textStyle: {
             color: "#FFFFFF",
@@ -671,78 +679,68 @@ export default {
           },
           formatter: function(params) {
             const param = params[0];
-            const value = param.value;
-            const color = value >= 0 ? "#1BFFCC" : "#FF5722";
+            const d = data[param.dataIndex];
             return `<div style="padding: 8px;">
-                        <div style="color: #00ECFF; font-weight: bold; margin-bottom: 5px;">${param.name}</div>
-                        <div>利润总额: <span style="color: ${color};">${value}亿元</span></div>
+                        <div style="color: rgba(125, 220, 255, 1); font-weight: bold; margin-bottom: 5px;">${d.name}</div>
+                        <div style="color: rgba(125, 220, 255, 1);">本期：<span style="color: #fff;">${d.benqi}</span></div>
+                        <div style="color: rgba(125, 220, 255, 1);">占比率：<span style="color: #fff;">${d.rate}</span></div>
                       </div>`;
           }
         },
         grid: {
-          left: "10%",
-          right: "10%",
-          top: "20%",
-          bottom: "5%",
+          left: "5%",
+          right: "5%",
+          top: "16%",
+          bottom: "2%",
           containLabel: true
         },
         xAxis: {
           type: "category",
-          data: ["核技术应用", "数字信息", "智慧能源", "中核医疗", "其他"],
+          data: data.map(d => d.name),
           axisLine: {
             lineStyle: {
-              color: "#00ECFF",
-              width: 2
+              color: "rgba(0, 187, 255, 1)",
+              width: 1
             }
           },
           axisTick: {
-            lineStyle: {
-              color: "#00ECFF",
-              width: 1
-            }
+            show: false
           },
           axisLabel: {
             color: "#FFFFFF",
             fontSize: 16,
-            fontWeight: 500,
             interval: 0,
-            rotate: 0,
-            margin: 15
-          },
-          splitLine: {
-            show: false
+            margin: 18
           }
         },
         yAxis: {
           type: "value",
+          min: -8,
           name: "单位（亿元）",
           nameTextStyle: {
-            color: "#00ECFF",
-            fontSize: 14,
-            fontWeight: 600,
-            padding: [0, 0, 10, 0]
+            color: "rgba(0, 187, 255, 1)",
+            fontSize: 16,
+            padding: [0, 0, 0, 0]
           },
           axisLine: {
             lineStyle: {
-              color: "#00ECFF",
-              width: 2
+              color: "rgba(0, 187, 255, 1)",
+              width: 1,
+              type: "dashed"
             }
           },
           axisTick: {
-            lineStyle: {
-              color: "#00ECFF",
-              width: 1
-            }
+            show: false
           },
           axisLabel: {
-            color: "#FFFFFF",
-            fontSize: 16,
-            fontWeight: 500,
+            color: "rgba(0, 187, 255, 1)",
+            fontSize: 14,
             formatter: "{value}"
           },
           splitLine: {
+            show: true,
             lineStyle: {
-              color: "rgba(0, 236, 255, 0.2)",
+              color: "rgba(0,236,255,0.15)",
               width: 1,
               type: "dashed"
             }
@@ -752,95 +750,33 @@ export default {
           {
             name: "利润总额",
             type: "bar",
-            barWidth: "50%",
-            data: [
-              {
-                value: -2,
-                itemStyle: {
-                  color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                    { offset: 0, color: "#FF5722" },
-                    { offset: 0.5, color: "#FF7043" },
-                    { offset: 1, color: "#FF8A65" }
-                  ]),
-                  borderColor: "#FF5722",
-                  borderWidth: 2,
-                  shadowBlur: 15,
-                  shadowColor: "rgba(255, 87, 34, 0.6)"
-                }
-              },
-              {
-                value: 9,
-                itemStyle: {
-                  color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                    { offset: 0, color: "#1E88E5" },
-                    { offset: 0.5, color: "#29B6F6" },
-                    { offset: 1, color: "#4FC3F7" }
-                  ]),
-                  borderColor: "#1E88E5",
-                  borderWidth: 2,
-                  shadowBlur: 15,
-                  shadowColor: "rgba(30, 136, 229, 0.6)"
-                }
-              },
-              {
-                value: 10,
-                itemStyle: {
-                  color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                    { offset: 0, color: "#FFC107" },
-                    { offset: 0.5, color: "#FFCA28" },
-                    { offset: 1, color: "#FFD54F" }
-                  ]),
-                  borderColor: "#FFC107",
-                  borderWidth: 2,
-                  shadowBlur: 15,
-                  shadowColor: "rgba(255, 193, 7, 0.6)"
-                }
-              },
-              {
-                value: -3,
-                itemStyle: {
-                  color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                    { offset: 0, color: "#9C27B0" },
-                    { offset: 0.5, color: "#AB47BC" },
-                    { offset: 1, color: "#BA68C8" }
-                  ]),
-                  borderColor: "#9C27B0",
-                  borderWidth: 2,
-                  shadowBlur: 15,
-                  shadowColor: "rgba(156, 39, 176, 0.6)"
-                }
-              },
-              {
-                value: 8,
-                itemStyle: {
-                  color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                    { offset: 0, color: "#4CAF50" },
-                    { offset: 0.5, color: "#66BB6A" },
-                    { offset: 1, color: "#81C784" }
-                  ]),
-                  borderColor: "#4CAF50",
-                  borderWidth: 2,
-                  shadowBlur: 15,
-                  shadowColor: "rgba(76, 175, 80, 0.6)"
-                }
-              }
-            ],
-            label: {
-              show: false
-            },
-            emphasis: {
+            barWidth: "38%",
+            data: data.map((d, idx) => ({
+              value: d.value,
               itemStyle: {
-                shadowBlur: 25,
-                shadowOffsetX: 0,
-                shadowColor: "rgba(0, 236, 255, 0.8)",
-                borderWidth: 3,
-                borderColor: "#00ECFF"
+                color:
+                  d.value >= 0
+                    ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        { offset: 0, color: "rgba(0, 76, 214, 1)" },
+                        { offset: 1, color: "rgba(0, 165, 234, 1)" }
+                      ])
+                    : new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        { offset: 0, color: "rgba(182, 70, 31, 1)" },
+                        { offset: 1, color: "rgba(248, 156, 124, 1)" }
+                      ])
               },
               label: {
-                fontSize: 14,
-                fontWeight: 700
+                show: true,
+                position: d.value >= 0 ? "top" : "bottom",
+                formatter: d.value,
+                color:
+                  d.value >= 0
+                    ? "rgba(0, 236, 255, 1)"
+                    : "rgba(255, 254, 112, 1)",
+                fontSize: 16,
+                offset: [0, d.value >= 0 ? -8 : 8]
               }
-            },
+            })),
             animationDelay: function(idx) {
               return idx * 200;
             },
@@ -856,7 +792,7 @@ export default {
           this.chart2.dispatchAction({
             type: "highlight",
             seriesIndex: 0,
-            dataIndex: Math.floor(Math.random() * 5)
+            dataIndex: Math.floor(Math.random() * data.length)
           });
         }
       }, 2500);
@@ -876,7 +812,7 @@ export default {
             this.chart2.dispatchAction({
               type: "highlight",
               seriesIndex: 0,
-              dataIndex: Math.floor(Math.random() * 5)
+              dataIndex: Math.floor(Math.random() * data.length)
             });
           }
         }, 2500);
