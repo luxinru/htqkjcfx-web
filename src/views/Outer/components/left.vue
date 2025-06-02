@@ -1,51 +1,46 @@
 <template>
   <div class="left">
-    <div class="item" :class="{ active: active === 0 }" @click="onItemClick(0)">
-      同方威视
-    </div>
-    <div class="item" :class="{ active: active === 1 }" @click="onItemClick(1)">
-      同方数科
-    </div>
-    <div class="item" :class="{ active: active === 2 }" @click="onItemClick(2)">
-      同方能源
-    </div>
-    <div class="item" :class="{ active: active === 3 }" @click="onItemClick(3)">
-      中核医疗
-    </div>
-    <div class="item" :class="{ active: active === 4 }" @click="onItemClick(4)">
-      中核深圳
-    </div>
-    <div class="item" :class="{ active: active === 5 }" @click="onItemClick(5)">
-      同方工业
-    </div>
-    <div class="item" :class="{ active: active === 6 }" @click="onItemClick(6)">
-      同方友友
-    </div>
-    <div class="item" :class="{ active: active === 7 }" @click="onItemClick(7)">
-      同方科创
-    </div>
-    <div class="item" :class="{ active: active === 8 }" @click="onItemClick(8)">
-      同方科技园
-    </div>
-    <div class="item" :class="{ active: active === 9 }" @click="onItemClick(9)">
-      同方物业
+    <div
+      v-for="item in list"
+      :key="item.id"
+      class="item"
+      :class="{ active: active === item.id }"
+      @click="onItemClick(item)"
+    >
+      {{ item.name }}
     </div>
   </div>
 </template>
 
 <script>
+import { api1 } from "@/api/outer";
+
 export default {
   name: "Left",
 
   data() {
     return {
-      active: 0
+      active: 0,
+      list: []
     };
   },
 
+  created() {
+    this.init();
+  },
+
   methods: {
-    onItemClick(index) {
-      this.active = index;
+    init() {
+      api1().then(res => {
+        console.log(res);
+        this.list = res;
+        this.active = this.list[0].id;
+      });
+    },
+
+    onItemClick(item) {
+      this.active = item.id;
+      this.$EventBus.$emit("left-item-click", item);
     }
   }
 };

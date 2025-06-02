@@ -100,6 +100,8 @@
 </template>
 
 <script>
+import { api6 } from "@/api/outer";
+
 export default {
   name: "Modal",
   props: {
@@ -116,93 +118,14 @@ export default {
       currentPage: 1,
       totalPages: 10,
       pageSize: 5,
-      tableData: [
-        {
-          id: 1,
-          serial: "D2-01",
-          name: "数字化转型",
-          plan: "数字化转型基础能力建设",
-          target: 3,
-          done: 2,
-          targetValue: "1.数字化转型基础能力建设...(省略)",
-          dept: "科教部",
-          progressMonth: "(1) 已经按计划100%完成试点工作...(省略)",
-          progressTotal: "(1) 已经按计划100%完成试点工作...(省略)",
-          deviation: "否",
-          forecast: ""
-        },
-        {
-          id: 2,
-          serial: "",
-          name: "产业数字化建设",
-          plan: "",
-          target: "",
-          done: "",
-          targetValue: "2.产业数字化建设",
-          dept: "科教部",
-          progressMonth: "",
-          progressTotal: "",
-          deviation: "",
-          forecast: ""
-        },
-        {
-          id: 3,
-          serial: "",
-          name: "核心工业软件研发与应用",
-          plan: "核心工业软件研发与应用",
-          target: 2,
-          done: 2,
-          targetValue: "3.核心工业软件研发与应用",
-          dept: "科教部",
-          progressMonth: "",
-          progressTotal: "",
-          deviation: "",
-          forecast: ""
-        },
-        {
-          id: 4,
-          serial: "D2-11",
-          name: "ERP平台建设",
-          plan: "ERP平台建设",
-          target: 2,
-          done: 2,
-          targetValue: "按集团公司ERP建设",
-          dept: "科教部",
-          progressMonth: "",
-          progressTotal: "",
-          deviation: "",
-          forecast: ""
-        },
-        {
-          id: 5,
-          serial: "D2-12",
-          name: "司库建设",
-          plan: "司库建设",
-          target: 4,
-          done: 1,
-          targetValue: '1.按要求完成"司库建设"',
-          dept: "科教部",
-          progressMonth: '1.按要求完成"司库"',
-          progressTotal: '1.按要求完成"司库"',
-          deviation: "否",
-          forecast: ""
-        },
-        {
-          id: 6,
-          serial: "D2-13",
-          name: "司库建设",
-          plan: "司库建设",
-          target: 4,
-          done: 3,
-          targetValue: "3按集团公司",
-          dept: "科教部",
-          progressMonth: "",
-          progressTotal: "3按集团公司",
-          deviation: "否",
-          forecast: ""
-        }
-      ]
+      tableData: []
     };
+  },
+
+  mounted() {
+    api6().then(res => {
+      this.tableData = res;
+    });
   },
 
   methods: {

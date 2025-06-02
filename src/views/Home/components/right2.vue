@@ -5,27 +5,37 @@
 </template>
 
 <script>
+import { api5 } from "@/api/outer";
 import * as echarts from "echarts";
+
 export default {
   name: "Right2",
 
   data() {
     return {
-      chart: null
+      chart: null,
+      xData2: ["总数", "正常", "滞后", "需要关注"],
+      data1: [32, 27, 13, 10],
+      data2: [40, 40, 40, 40]
     };
   },
 
   mounted() {
-    this.initChart();
+    this.init();
   },
 
   methods: {
+    init() {
+      api5().then(res => {
+        this.xData2 = res.xData2;
+        this.data1 = res.data1;
+        this.data2 = res.data2;
+        this.initChart();
+      });
+    },
     initChart() {
       this.chart = echarts.init(this.$refs.chart);
 
-      var xData2 = ["总数", "正常", "滞后", "需要关注"];
-      var data1 = [32, 27, 13, 10];
-      var data2 = [40, 40, 40, 40];
       var barWidth = 30;
       var option = {
         tooltip: {
@@ -38,7 +48,7 @@ export default {
           bottom: "15%"
         },
         xAxis: {
-          data: xData2,
+          data: this.xData2,
           axisTick: {
             show: false
           },
@@ -92,7 +102,7 @@ export default {
               color: "#163F7A",
               opacity: 0.7
             },
-            data: data2
+            data: this.data2
           },
           {
             //下半截柱子
@@ -145,7 +155,7 @@ export default {
                 }
               }
             },
-            data: data1
+            data: this.data1
           },
           {
             // 替代柱状图 默认不显示颜色，是最下方柱图（邮件营销）的value值 - 20
@@ -156,7 +166,7 @@ export default {
             itemStyle: {
               color: "transparent"
             },
-            data: data1
+            data: this.data1
           },
           {
             //上半截柱子顶部圆片
@@ -173,7 +183,7 @@ export default {
             label: {
               show: false
             },
-            data: data2
+            data: this.data2
           },
           {
             //下半截柱子顶部圆片
@@ -237,7 +247,7 @@ export default {
               // }
             },
             symbolPosition: "end",
-            data: data1
+            data: this.data1
           },
           {
             //下半截柱子底部圆片

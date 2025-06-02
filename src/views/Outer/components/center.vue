@@ -2,23 +2,25 @@
   <div class="center">
     <section class="top">
       <div
+        v-for="card in topCards"
+        :key="card.id"
         class="item"
-        :class="{ active: active === 1 }"
-        @click="onChangeActive(1)"
+        :class="{ active: active === card.id }"
+        @click="onChangeActive(card.id)"
       >
         <div class="title">
-          <img src="@/assets/img/home/center_icon1.png" alt="" />
+          <img :src="card.icon" alt="" />
 
           <div class="info">
             <div class="label">
               <span>
-                集团外营业收入
+                {{ card.title }}
               </span>
             </div>
 
-            <div class="value">
-              50.24
-              <span>亿元</span>
+            <div class="value" :style="{ color: card.valueColor }">
+              {{ card.value }}
+              <span>{{ card.unit }}</span>
             </div>
           </div>
         </div>
@@ -26,19 +28,15 @@
         <div class="content">
           <div class="content_item">
             <span>
-              同比增加：15.47亿元
+              同比增加：{{ card.compareValue }}{{ card.compareUnit }}
             </span>
-            <span>
-              ↑3.4%
-            </span>
+            <span> ↑{{ card.comparePercent }}% </span>
           </div>
           <div class="progress">
             <div class="chart_box">
-              <div ref="progressChart1" class="chart"></div>
+              <div :id="'progressChart' + card.id" class="chart"></div>
               <div class="values">
-                <span>
-                  72.4%
-                </span>
+                <span> {{ card.planRate }}% </span>
                 <span>
                   计划完成率
                 </span>
@@ -46,133 +44,13 @@
             </div>
           </div>
           <div class="content_item">
-            <span>
-              年度计划值：50.47亿元
-            </span>
+            <span> 年度计划值：{{ card.planValue }}{{ card.unit }} </span>
           </div>
         </div>
 
         <img
           class="arrow"
-          v-if="active === 1"
-          src="@/assets/img/home/arrow.png"
-          alt=""
-        />
-      </div>
-
-      <div
-        class="item"
-        :class="{ active: active === 2 }"
-        @click="onChangeActive(2)"
-      >
-        <div class="title">
-          <img src="@/assets/img/home/center_icon2.png" alt="" />
-
-          <div class="info">
-            <div class="label">
-              <span>
-                利润总额
-              </span>
-            </div>
-
-            <div class="value" style="color: rgba(255, 51, 85, 1)">
-              -2.24
-              <span>亿元</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="content">
-          <div class="content_item">
-            <span>
-              同比增加：1.47亿元
-            </span>
-            <span>
-              ↑3.4%
-            </span>
-          </div>
-          <div class="progress">
-            <div class="chart_box">
-              <div ref="progressChart2" class="chart"></div>
-              <div class="values">
-                <span>
-                  72.4%
-                </span>
-                <span>
-                  计划完成率
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="content_item">
-            <span>
-              年度计划值：50.47亿元
-            </span>
-          </div>
-        </div>
-
-        <img
-          class="arrow"
-          v-if="active === 2"
-          src="@/assets/img/home/arrow.png"
-          alt=""
-        />
-      </div>
-
-      <div
-        class="item"
-        :class="{ active: active === 3 }"
-        @click="onChangeActive(3)"
-      >
-        <div class="title">
-          <img src="@/assets/img/home/center_icon3.png" alt="" />
-
-          <div class="info">
-            <div class="label">
-              <span>
-                集团外累计新签合同
-              </span>
-            </div>
-
-            <div class="value">
-              69.24
-              <span>亿元</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="content">
-          <div class="content_item">
-            <span>
-              同比增加：255.47亿元
-            </span>
-            <span>
-              ↑3.4%
-            </span>
-          </div>
-          <div class="progress">
-            <div class="chart_box">
-              <div ref="progressChart3" class="chart"></div>
-              <div class="values">
-                <span>
-                  72.4%
-                </span>
-                <span>
-                  计划完成率
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="content_item">
-            <span>
-              年度计划值：50.47亿元
-            </span>
-          </div>
-        </div>
-
-        <img
-          class="arrow"
-          v-if="active === 3"
+          v-if="active === card.id"
           src="@/assets/img/home/arrow.png"
           alt=""
         />
@@ -194,6 +72,7 @@
 
 <script>
 import * as echarts from "echarts";
+import { api2, api3 } from "@/api/outer";
 
 export default {
   name: "Center",
@@ -206,7 +85,49 @@ export default {
       progressChart1: null,
       progressChart2: null,
       progressChart3: null,
-      lineChart: null
+      lineChart: null,
+      topCards: [],
+      lineChartData: {
+        xAxisData: [
+          "1月",
+          "2月",
+          "3月",
+          "4月",
+          "5月",
+          "6月",
+          "7月",
+          "8月",
+          "9月",
+          "10月",
+          "11月",
+          "12月"
+        ],
+        series: [
+          {
+            name: "完成值",
+            data: [2, -4, 5.5, 2, 0, 0, 0, 0, 0, 0, 0, 0],
+            color: {
+              start: "rgba(182, 70, 31, 1)",
+              end: "rgba(248, 156, 124, 1)"
+            },
+            background: "rgba(114, 59, 40, 0.3)"
+          },
+          {
+            name: "计划值",
+            data: [1.3, 2.1, 6.2, 1.1, 8.5, 8.5, 8.5, 8.5, 8.5, 8.5, 8.5, 1.2],
+            color: {
+              start: "rgba(0, 76, 214, 1)",
+              end: "rgba(0, 165, 234, 1)"
+            },
+            background: "rgba(0, 80, 144, 0.3)"
+          },
+          {
+            name: "完成率",
+            data: [150, 193, 160, 180],
+            color: "rgba(37, 255, 80, 1)"
+          }
+        ]
+      }
     };
   },
 
@@ -215,22 +136,42 @@ export default {
       this.date = date;
     });
 
-    this.initChart1();
-    this.initChart2();
-    this.initChart3();
-    this.initLineChart();
+    this.init();
+    this.initLineChartFun();
   },
 
   methods: {
+    init() {
+      api2().then(res => {
+        this.topCards = res;
+        this.$nextTick(() => {
+          this.initChart1();
+          this.initChart2();
+          this.initChart3();
+        });
+      });
+    },
+
+    initLineChartFun() {
+      api3().then(res => {
+        this.lineChartData = res;
+        this.initLineChart();
+      });
+    },
+
     onChangeActive(index) {
       this.active = index;
     },
 
     initChart1() {
+      const chartDom = document.getElementById("progressChart1");
+      if (!chartDom) return;
+
       if (this.progressChart1) {
         this.progressChart1.dispose();
       }
-      this.progressChart1 = echarts.init(this.$refs.progressChart1);
+
+      this.progressChart1 = echarts.init(chartDom);
       this.progressChart1.setOption({
         polar: {
           radius: ["60%", "70%"],
@@ -263,9 +204,8 @@ export default {
             backgroundStyle: {
               color: "rgba(66, 66, 66, .3)"
             },
-            data: [73],
+            data: [Number(this.topCards[0]?.planRate || 0)],
             coordinateSystem: "polar",
-
             itemStyle: {
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
@@ -286,10 +226,14 @@ export default {
     },
 
     initChart2() {
+      const chartDom = document.getElementById("progressChart2");
+      if (!chartDom) return;
+
       if (this.progressChart2) {
         this.progressChart2.dispose();
       }
-      this.progressChart2 = echarts.init(this.$refs.progressChart2);
+
+      this.progressChart2 = echarts.init(chartDom);
       this.progressChart2.setOption({
         polar: {
           radius: ["60%", "70%"],
@@ -322,9 +266,8 @@ export default {
             backgroundStyle: {
               color: "rgba(66, 66, 66, .3)"
             },
-            data: [73],
+            data: [Number(this.topCards[1]?.planRate || 0)],
             coordinateSystem: "polar",
-
             itemStyle: {
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
@@ -345,10 +288,14 @@ export default {
     },
 
     initChart3() {
+      const chartDom = document.getElementById("progressChart3");
+      if (!chartDom) return;
+
       if (this.progressChart3) {
         this.progressChart3.dispose();
       }
-      this.progressChart3 = echarts.init(this.$refs.progressChart3);
+
+      this.progressChart3 = echarts.init(chartDom);
       this.progressChart3.setOption({
         polar: {
           radius: ["60%", "70%"],
@@ -381,9 +328,8 @@ export default {
             backgroundStyle: {
               color: "rgba(66, 66, 66, .3)"
             },
-            data: [73],
+            data: [Number(this.topCards[2]?.planRate || 0)],
             coordinateSystem: "polar",
-
             itemStyle: {
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
@@ -420,15 +366,16 @@ export default {
             let plan = params[1] || {};
             let rate = params[2] || {};
             return `
-              <div style="font-size:16px;margin-bottom:4px;">${tar.axisValue || ''}</div>
-              本期：${tar.value !== undefined ? tar.value : '-'}亿元<br/>
-              计划值：${plan.value !== undefined ? plan.value : '-'}亿元<br/>
+              <div style="font-size:16px;margin-bottom:4px;">${tar.axisValue ||
+                ""}</div>
+              本期：${tar.value !== undefined ? tar.value : "-"}亿元<br/>
+              计划值：${plan.value !== undefined ? plan.value : "-"}亿元<br/>
               完成率：${rate.value !== undefined ? rate.value : 0}%
             `;
           }
         },
         legend: {
-          data: ["完成值", "计划值", "完成率"],
+          data: this.lineChartData.series.map(item => item.name),
           right: "3%",
           top: 0,
           textStyle: { color: "#fff" }
@@ -443,20 +390,7 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: [
-              "1月",
-              "2月",
-              "3月",
-              "4月",
-              "5月",
-              "6月",
-              "7月",
-              "8月",
-              "9月",
-              "10月",
-              "11月",
-              "12月"
-            ],
+            data: this.lineChartData.xAxisData,
             axisLabel: { color: "#fff", fontSize: 16 },
             axisLine: {
               show: true,
@@ -502,62 +436,51 @@ export default {
             splitLine: { show: false }
           }
         ],
-        series: [
-          {
-            name: "完成值",
-            type: "bar",
-            data: [2, -4, 5.5, 2, 0, 0, 0, 0, 0, 0, 0, 0],
-            barWidth: 16,
-            itemStyle: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "rgba(182, 70, 31, 1)" },
-                { offset: 1, color: "rgba(248, 156, 124, 1)" }
-              ])
-            },
-            showBackground: true,
-            backgroundStyle: {
-              color: "rgba(114, 59, 40, 0.3)"
-            }
-          },
-          {
-            name: "计划值",
-            type: "bar",
-            data: [1.3, 2.1, 6.2, 1.1, 8.5, 8.5, 8.5, 8.5, 8.5, 8.5, 8.5, 1.2],
-            barWidth: 16,
-            itemStyle: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "rgba(0, 76, 214, 1)" },
-                { offset: 1, color: "rgba(0, 165, 234, 1)" }
-              ])
-            },
-            showBackground: true,
-            backgroundStyle: {
-              color: "rgba(0, 80, 144, 0.3)"
-            }
-          },
-          {
-            name: "完成率",
-            type: "line",
-            yAxisIndex: 1,
-            data: [150, 193, 160, 180],
-            symbol: "emptyCircle",
-            symbolSize: 10,
-            itemStyle: {
-              color: "rgba(37, 255, 80, 1)"
-            },
-            lineStyle: {
-              color: "rgba(37, 255, 80, 1)",
-              width: 1
-            },
-            label: {
-              show: true,
-              position: "top",
-              formatter: "{c}%",
-              color: "rgba(37, 255, 80, 1)",
-              fontSize: 16
-            }
+        series: this.lineChartData.series.map((item, index) => {
+          if (index === 2) {
+            // 完成率是折线图
+            return {
+              name: item.name,
+              type: "line",
+              yAxisIndex: 1,
+              data: item.data,
+              symbol: "emptyCircle",
+              symbolSize: 10,
+              itemStyle: {
+                color: item.color
+              },
+              lineStyle: {
+                color: item.color,
+                width: 1
+              },
+              label: {
+                show: true,
+                position: "top",
+                formatter: "{c}%",
+                color: item.color,
+                fontSize: 16
+              }
+            };
+          } else {
+            // 完成值和计划值是柱状图
+            return {
+              name: item.name,
+              type: "bar",
+              data: item.data,
+              barWidth: 16,
+              itemStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: item.color.start },
+                  { offset: 1, color: item.color.end }
+                ])
+              },
+              showBackground: true,
+              backgroundStyle: {
+                color: item.background
+              }
+            };
           }
-        ]
+        })
       });
     }
   }

@@ -1,156 +1,37 @@
 <template>
   <div class="right1">
-    <div class="item">
+    <div class="item" v-for="(item, index) in indicators" :key="index">
       <div class="part">
         <span>
-          营业收现率
+          {{ item.name }}
         </span>
         <span>
-          14.2%
+          {{ item.value }}
         </span>
-        <span>
-          年度目标值72%
-        </span>
+        <span> 年度目标值{{ item.target }} </span>
       </div>
       <div class="part">
         <span>
-          超年度目标
+          {{ item.compareType }}
         </span>
-        <span>
-          1.2个百分点
-        </span>
-      </div>
-      <div class="part">
-        <span>
-          同比
-        </span>
-        <span class="red">
-          <img src="@/assets/img/home/down.png" alt="" />
-          15.5%
-        </span>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="part">
-        <span>
-          净资产收益率
-        </span>
-        <span>
-          17.8%
-        </span>
-        <span>
-          年度目标值72%
-        </span>
-      </div>
-      <div class="part">
-        <span>
-          年度目标差距
-        </span>
-        <span class="red">
-          1.2个百分点
+        <span :class="{ red: item.isNegative }">
+          {{ item.compareValue }}
         </span>
       </div>
       <div class="part">
         <span>
           同比
         </span>
-        <span>
-          <img src="@/assets/img/home/up.png" alt="" />
-          20.5%
-        </span>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="part">
-        <span>
-          资产负债率
-        </span>
-        <span>
-          17.8%
-        </span>
-        <span>
-          年度目标值72%
-        </span>
-      </div>
-      <div class="part">
-        <span>
-          超年度目标
-        </span>
-        <span>
-          1.2个百分点
-        </span>
-      </div>
-      <div class="part">
-        <span>
-          同比
-        </span>
-        <span>
-          <img src="@/assets/img/home/up.png" alt="" />
-          15.7
-        </span>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="part">
-        <span>
-          研发投入强度
-        </span>
-        <span>
-          17.8%
-        </span>
-        <span>
-          年度目标值72%
-        </span>
-      </div>
-      <div class="part">
-        <span>
-          超年度目标
-        </span>
-        <span>
-          1.2个百分点
-        </span>
-      </div>
-      <div class="part">
-        <span>
-          同比
-        </span>
-        <span class="red">
-          <img src="@/assets/img/home/down.png" alt="" />
-          2.79
-        </span>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="part">
-        <span>
-          全员劳动生产率
-        </span>
-        <span>
-          43万元/人年
-        </span>
-        <span>
-          年度目标值39万元/人年
-        </span>
-      </div>
-      <div class="part">
-        <span>
-          年度目标差距
-        </span>
-        <span class="red">
-          10.1万元/人年
-        </span>
-      </div>
-      <div class="part">
-        <span>
-          同比
-        </span>
-        <span>
-          <img src="@/assets/img/home/up.png" alt="" />
-          1.5万元/人年
+        <span :class="{ red: item.yearOnYear.isNegative }">
+          <img
+            :src="
+              require(`@/assets/img/home/${
+                item.yearOnYear.isNegative ? 'down' : 'up'
+              }.png`)
+            "
+            alt=""
+          />
+          {{ item.yearOnYear.value }}
         </span>
       </div>
     </div>
@@ -158,12 +39,21 @@
 </template>
 
 <script>
+import { api4 } from "@/api/outer";
+
 export default {
   name: "Right1",
 
   data() {
     return {
+      indicators: []
     };
+  },
+
+  mounted() {
+    api4().then(res => {
+      this.indicators = res;
+    });
   }
 };
 </script>
@@ -228,12 +118,12 @@ export default {
 
         span {
           &:nth-child(1) {
-            font-size: 13px;
+            font-size: 16px;
             color: #ffffff;
           }
 
           &:nth-child(2) {
-            font-size: 13px;
+            font-size: 16px;
             color: #25ff50;
             display: flex;
             align-items: center;
