@@ -123,12 +123,20 @@ export default {
   },
 
   mounted() {
-    api6().then(res => {
-      this.tableData = res;
+    this.init();
+
+    this.$EventBus.$on("left-item-click", () => {
+      this.init();
     });
   },
 
   methods: {
+    init() {
+      api6().then(res => {
+        this.tableData = res;
+      });
+    },
+
     closeModal() {
       this.$emit("close", false);
     }
