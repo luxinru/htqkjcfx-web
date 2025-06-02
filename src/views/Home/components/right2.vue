@@ -14,14 +14,21 @@ export default {
   data() {
     return {
       chart: null,
-      xData2: ["总数", "正常", "滞后", "需要关注"],
-      data1: [32, 27, 13, 10],
-      data2: [40, 40, 40, 40]
+      xData2: [],
+      data1: [],
+      data2: [],
+      date: ""
     };
   },
 
   mounted() {
     this.init();
+
+    this.$EventBus.$on("updateDate", date => {
+      this.date = date;
+
+      this.init();
+    });
   },
 
   methods: {
@@ -34,6 +41,11 @@ export default {
       });
     },
     initChart() {
+      if (this.chart) {
+        this.chart.dispose();
+        this.chart = null;
+      }
+
       this.chart = echarts.init(this.$refs.chart);
 
       var barWidth = 30;

@@ -2,9 +2,7 @@
   <div class="left2">
     <div class="title">
       <div class="label">
-        威视、数科、能源营收
-        <br />
-        占集团外营收比例
+        {{ title }}
       </div>
       <div class="values">
         <div class="item">
@@ -15,7 +13,7 @@
             <div class="val"></div>
           </div>
           <span class="label2">
-            51.9%
+            {{ targetValue }}
           </span>
         </div>
         <div class="item">
@@ -26,54 +24,26 @@
             <div class="val val2"></div>
           </div>
           <span class="label2" style="color: rgba(255, 51, 85, 1)">
-            47.7%
+            {{ completedValue }}
           </span>
         </div>
       </div>
     </div>
 
     <div class="progress">
-      <div class="item">
+      <div class="item" v-for="(item, index) in progressData" :key="index">
         <div class="labels">
           <span>
-            同方威视
+            {{ item.name }}
           </span>
           <div>
-            9.47
+            {{ item.value }}
             <span>
               亿元
             </span>
           </div>
         </div>
-        <div ref="chart1" class="chart"></div>
-      </div>
-      <div class="item">
-        <div class="labels">
-          <span>
-            同方数科
-          </span>
-          <div>
-            1.24
-            <span>
-              亿元
-            </span>
-          </div>
-        </div>
-        <div ref="chart2" class="chart"></div>
-      </div>
-      <div class="item">
-        <div class="labels">
-          <span>
-            同方能源
-          </span>
-          <div>
-            4.38
-            <span>
-              亿元
-            </span>
-          </div>
-        </div>
-        <div ref="chart3" class="chart"></div>
+        <div :id="'chart' + (index + 1)" class="chart"></div>
       </div>
     </div>
   </div>
@@ -81,6 +51,8 @@
 
 <script>
 import * as echarts from "echarts";
+import { api2 } from "@/api/home";
+
 export default {
   name: "Left2",
 
@@ -88,23 +60,64 @@ export default {
     return {
       chart1: null,
       chart2: null,
-      chart3: null
+      chart3: null,
+      title: "",
+      targetValue: "",
+      completedValue: "",
+      progressData: [],
+      date: ""
     };
   },
 
   mounted() {
-    this.initChart();
+    this.init();
+
+    this.$EventBus.$on("updateDate", date => {
+      this.date = date;
+
+      this.init();
+    });
   },
 
   methods: {
-    initChart() {
-      this.chart1 = echarts.init(this.$refs.chart1);
-      this.chart2 = echarts.init(this.$refs.chart2);
-      this.chart3 = echarts.init(this.$refs.chart3);
+    init() {
+      api2().then(res => {
+        this.title = res.title;
+        this.targetValue = res.targetValue;
+        this.completedValue = res.completedValue;
+        this.progressData = res.progressData;
+        this.$nextTick(() => {
+          this.initChart();
+        });
+      });
+    },
 
-      this.chart1.setOption(this.getOptions(0.7));
-      this.chart2.setOption(this.getOptions(0.5));
-      this.chart3.setOption(this.getOptions(0.4));
+    initChart() {
+      setTimeout(() => {
+        if (this.chart1) {
+          this.chart1.dispose();
+          this.chart1 = null;
+        }
+
+        if (this.chart2) {
+          this.chart2.dispose();
+          this.chart2 = null;
+        }
+
+        if (this.chart3) {
+          this.chart3.dispose();
+          this.chart3 = null;
+        }
+
+        this.chart1 = echarts.init(document.getElementById("chart1"));
+        this.chart2 = echarts.init(document.getElementById("chart2"));
+        this.chart3 = echarts.init(document.getElementById("chart3"));
+
+        this.progressData.forEach((item, index) => {
+          const chart = this[`chart${index + 1}`];
+          chart.setOption(this.getOptions(item.chartValue));
+        });
+      }, 0);
     },
 
     getOptions(val) {

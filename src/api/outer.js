@@ -48,6 +48,7 @@ const api2 = function(id) {
     {
       id: 1,
       icon: require("@/assets/img/home/center_icon1.png"),
+      iconActive: require("@/assets/img/home/center_icon1_active.png"),
       title: "集团外营业收入",
       value: "50.24",
       unit: "亿元",
@@ -61,6 +62,7 @@ const api2 = function(id) {
     {
       id: 2,
       icon: require("@/assets/img/home/center_icon2.png"),
+      iconActive: require("@/assets/img/home/center_icon2_active.png"),
       title: "利润总额",
       value: "-2.24",
       unit: "亿元",
@@ -74,6 +76,7 @@ const api2 = function(id) {
     {
       id: 3,
       icon: require("@/assets/img/home/center_icon3.png"),
+      iconActive: require("@/assets/img/home/center_icon3_active.png"),
       title: "集团外累计新签合同",
       value: "69.24",
       unit: "亿元",

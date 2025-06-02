@@ -6,27 +6,25 @@
 
         <div class="info">
           <span class="label">
-            营业收入
+            {{ dataList[0]?.label }}
           </span>
           <div class="value">
-            20.24
+            {{ dataList[0]?.value }}
             <span>
-              亿元
+              {{ dataList[0]?.unit }}
             </span>
           </div>
         </div>
       </div>
 
       <span class="tip">
-        年度计划值: 33.47亿元
+        年度计划值: {{ dataList[0]?.planValue }}{{ dataList[0]?.unit }}
       </span>
 
       <div class="chart_box">
         <div ref="chart1" class="chart"></div>
         <div class="info">
-          <span>
-            76%
-          </span>
+          <span> {{ dataList[0]?.completionRate }}% </span>
           <span>
             计划完成率
           </span>
@@ -42,26 +40,26 @@
 
         <div class="info">
           <span class="label">
-            新签合同额
+            {{ dataList[1]?.label }}
           </span>
-          <div class="value" style="color: rgba(63, 241, 255, 1)">
-            25.24
+          <div class="value" :style="{ color: dataList[1]?.valueColor }">
+            {{ dataList[1]?.value }}
             <span>
-              亿元
+              {{ dataList[1]?.unit }}
             </span>
           </div>
         </div>
       </div>
 
       <span class="tip">
-        年度计划值: 40.47亿元
+        年度计划值: {{ dataList[1]?.planValue }}{{ dataList[1]?.unit }}
       </span>
 
       <div class="chart_box">
         <div ref="chart2" class="chart"></div>
         <div class="info">
-          <span style="color: rgba(63, 241, 255, 1)">
-            85%
+          <span :style="{ color: dataList[1]?.valueColor }">
+            {{ dataList[1]?.completionRate }}%
           </span>
           <span>
             计划完成率
@@ -76,6 +74,7 @@
 
 <script>
 import * as echarts from "echarts";
+import { api4 } from "@/api/home";
 
 export default {
   name: "CenterBottom1",
@@ -83,20 +82,42 @@ export default {
   data() {
     return {
       chart1: null,
-      chart2: null
+      chart2: null,
+      dataList: [],
+      date: ""
     };
   },
 
   mounted() {
-    this.chart1 = echarts.init(this.$refs.chart1);
-    this.chart2 = echarts.init(this.$refs.chart2);
+    this.init();
 
-    this.initChart1();
-    this.initChart2();
+    this.$EventBus.$on("updateDate", date => {
+      this.date = date;
+
+      this.init();
+    });
   },
 
   methods: {
+    init() {
+      api4().then(res => {
+        this.dataList = res;
+
+        this.$nextTick(() => {
+          this.initChart1();
+          this.initChart2();
+        });
+      });
+    },
+
     initChart1() {
+      if (this.chart1) {
+        this.chart1.dispose();
+        this.chart1 = null;
+      }
+
+      this.chart1 = echarts.init(this.$refs.chart1);
+
       this.chart1.setOption({
         series: [
           {
@@ -110,11 +131,10 @@ export default {
             axisLine: {
               show: true,
               lineStyle: {
-                // 轴线样式
-                width: 12, // 宽度
+                width: 12,
                 color: [
                   [
-                    (76 / 100).toFixed(2),
+                    (this.dataList[0].completionRate / 100).toFixed(2),
                     new echarts.graphic.LinearGradient(0, 0, 1, 0, [
                       {
                         offset: 0,
@@ -127,27 +147,22 @@ export default {
                     ])
                   ],
                   [1, "rgba(0, 80, 144, 1)"]
-                ] // 颜色
+                ]
               }
             },
             pointer: {
-              // 仪表盘指针
               show: false
             },
             axisTick: {
-              // 刻度
               show: false
             },
             splitLine: {
-              // 分割线
               show: false
             },
             axisLabel: {
-              // 刻度标签
               show: false
             },
             detail: {
-              // 仪表盘详情
               show: false
             }
           }
@@ -156,6 +171,13 @@ export default {
     },
 
     initChart2() {
+      if (this.chart2) {
+        this.chart2.dispose();
+        this.chart2 = null;
+      }
+
+      this.chart2 = echarts.init(this.$refs.chart2);
+
       this.chart2.setOption({
         series: [
           {
@@ -169,11 +191,10 @@ export default {
             axisLine: {
               show: true,
               lineStyle: {
-                // 轴线样式
-                width: 12, // 宽度
+                width: 12,
                 color: [
                   [
-                    (85 / 100).toFixed(2),
+                    (this.dataList[1].completionRate / 100).toFixed(2),
                     new echarts.graphic.LinearGradient(0, 0, 1, 0, [
                       {
                         offset: 0,
@@ -186,27 +207,22 @@ export default {
                     ])
                   ],
                   [1, "rgba(0, 80, 144, 1)"]
-                ] // 颜色
+                ]
               }
             },
             pointer: {
-              // 仪表盘指针
               show: false
             },
             axisTick: {
-              // 刻度
               show: false
             },
             splitLine: {
-              // 分割线
               show: false
             },
             axisLabel: {
-              // 刻度标签
               show: false
             },
             detail: {
-              // 仪表盘详情
               show: false
             }
           }

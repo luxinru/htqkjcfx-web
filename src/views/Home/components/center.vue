@@ -3,25 +3,23 @@
     <section class="top">
       <div
         class="item"
-        :class="{ active: active === 1 }"
-        @click="onChangeActive(1)"
+        v-for="card in topCards"
+        :key="card.id"
+        :class="{ active: active === card.id }"
+        @click="onChangeActive(card.id)"
       >
         <div class="title">
-          <img
-            v-if="active === 1"
-            src="@/assets/img/home/center_icon1_active.png"
-            alt=""
-          />
-          <img v-else src="@/assets/img/home/center_icon1.png" alt="" />
+          <img v-if="active === card.id" :src="card.iconActive" alt="" />
+          <img v-else :src="card.icon" alt="" />
 
           <div class="info">
             <div class="label">
               <span>
-                集团外营业收入
+                {{ card.title }}
               </span>
 
               <img
-                v-if="active === 1"
+                v-if="active === card.id"
                 src="@/assets/img/home/select_active.png"
                 alt=""
               />
@@ -29,8 +27,8 @@
             </div>
 
             <div class="value">
-              50.24
-              <span>亿元</span>
+              {{ card.value }}
+              <span>{{ card.unit }}</span>
             </div>
           </div>
         </div>
@@ -38,11 +36,9 @@
         <div class="content">
           <div class="content_item">
             <span>
-              同比增加：15.47亿元
+              同比增加：{{ card.compareValue }}{{ card.compareUnit }}
             </span>
-            <span>
-              ↑3.4%
-            </span>
+            <span> ↑{{ card.comparePercent }}% </span>
           </div>
           <div class="content_item">
             <div class="progress">
@@ -50,171 +46,21 @@
                 <span>
                   计划完成率
                 </span>
-                <span>
-                  72.4%
-                </span>
+                <span> {{ card.planRate }}% </span>
               </div>
               <div class="bar">
-                <div class="val" style="width: 72.4%;"></div>
+                <div class="val" :style="{ width: card.planRate + '%' }"></div>
               </div>
             </div>
           </div>
           <div class="content_item">
-            <span>
-              年度计划值：50.47亿元
-            </span>
+            <span> 年度计划值：{{ card.planValue }} </span>
           </div>
         </div>
 
         <img
           class="arrow"
-          v-if="active === 1"
-          src="@/assets/img/home/arrow.png"
-          alt=""
-        />
-      </div>
-
-      <div
-        class="item"
-        :class="{ active: active === 2 }"
-        @click="onChangeActive(2)"
-      >
-        <div class="title">
-          <img
-            v-if="active === 2"
-            src="@/assets/img/home/center_icon2_active.png"
-            alt=""
-          />
-          <img v-else src="@/assets/img/home/center_icon2.png" alt="" />
-
-          <div class="info">
-            <div class="label">
-              <span>
-                利润总额
-              </span>
-
-              <img
-                v-if="active === 2"
-                src="@/assets/img/home/select_active.png"
-                alt=""
-              />
-              <img v-else src="@/assets/img/home/select.png" alt="" />
-            </div>
-
-            <div class="value" style="color: rgba(255, 51, 85, 1)">
-              -2.24
-              <span>亿元</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="content">
-          <div class="content_item">
-            <span>
-              同比增加：1.47亿元
-            </span>
-            <span>
-              ↑3.4%
-            </span>
-          </div>
-          <div class="content_item">
-            <div class="progress">
-              <div class="labels">
-                <span>
-                  计划完成率
-                </span>
-                <span>
-                  72.4%
-                </span>
-              </div>
-              <div class="bar">
-                <div class="val" style="width: 72.4%;"></div>
-              </div>
-            </div>
-          </div>
-          <div class="content_item">
-            <span>
-              年度计划值：50.47亿元
-            </span>
-          </div>
-        </div>
-
-        <img
-          class="arrow"
-          v-if="active === 2"
-          src="@/assets/img/home/arrow.png"
-          alt=""
-        />
-      </div>
-
-      <div
-        class="item"
-        :class="{ active: active === 3 }"
-        @click="onChangeActive(3)"
-      >
-        <div class="title">
-          <img
-            v-if="active === 3"
-            src="@/assets/img/home/center_icon3_active.png"
-            alt=""
-          />
-          <img v-else src="@/assets/img/home/center_icon3.png" alt="" />
-
-          <div class="info">
-            <div class="label">
-              <span>
-                集团外累计新签合同
-              </span>
-
-              <img
-                v-if="active === 3"
-                src="@/assets/img/home/select_active.png"
-                alt=""
-              />
-              <img v-else src="@/assets/img/home/select.png" alt="" />
-            </div>
-
-            <div class="value">
-              69.24
-              <span>亿元</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="content">
-          <div class="content_item">
-            <span>
-              同比增加：255.47亿元
-            </span>
-            <span>
-              ↑3.4%
-            </span>
-          </div>
-          <div class="content_item">
-            <div class="progress">
-              <div class="labels">
-                <span>
-                  计划完成率
-                </span>
-                <span>
-                  72.4%
-                </span>
-              </div>
-              <div class="bar">
-                <div class="val" style="width: 72.4%;"></div>
-              </div>
-            </div>
-          </div>
-          <div class="content_item">
-            <span>
-              年度计划值：50.47亿元
-            </span>
-          </div>
-        </div>
-
-        <img
-          class="arrow"
-          v-if="active === 3"
+          v-if="active === card.id"
           src="@/assets/img/home/arrow.png"
           alt=""
         />
@@ -263,86 +109,14 @@
               <div class="table-body">
                 <table class="body-table">
                   <tbody>
-                    <tr>
-                      <td>同方威视</td>
-                      <td>782.65</td>
-                      <td>985.36</td>
-                      <td>12%</td>
-                      <td>269.23</td>
-                      <td>124.4</td>
-                      <td>-12.69%</td>
-                    </tr>
-                    <tr>
-                      <td>同方数科</td>
-                      <td>55.21</td>
-                      <td>47.23</td>
-                      <td>32%</td>
-                      <td>147.23</td>
-                      <td>13.42</td>
-                      <td>-12.69%</td>
-                    </tr>
-                    <tr>
-                      <td>同方能源</td>
-                      <td>412.3</td>
-                      <td>441.23</td>
-                      <td>55.23%</td>
-                      <td>5.47</td>
-                      <td>258</td>
-                      <td>-12.69%</td>
-                    </tr>
-                    <tr>
-                      <td>中核医疗</td>
-                      <td>143.2</td>
-                      <td>46.28</td>
-                      <td>47.69%</td>
-                      <td>14.69</td>
-                      <td>36.1</td>
-                      <td>-12.69%</td>
-                    </tr>
-                    <tr>
-                      <td>中核深圳</td>
-                      <td>52.0</td>
-                      <td>25.36</td>
-                      <td>51.64%</td>
-                      <td>4.95</td>
-                      <td>63</td>
-                      <td>-12.69%</td>
-                    </tr>
-                    <tr>
-                      <td>同方工业</td>
-                      <td>45.96</td>
-                      <td>456.82</td>
-                      <td>14.84%</td>
-                      <td>44.2</td>
-                      <td>57.23</td>
-                      <td>-12.69%</td>
-                    </tr>
-                    <tr>
-                      <td>同方友友</td>
-                      <td>412.3</td>
-                      <td>412.3</td>
-                      <td>47.69%</td>
-                      <td>147.23</td>
-                      <td>13.42</td>
-                      <td>-12.69%</td>
-                    </tr>
-                    <tr>
-                      <td>同方科创</td>
-                      <td>143.2</td>
-                      <td>143.2</td>
-                      <td>51.64%</td>
-                      <td>5.47</td>
-                      <td>258</td>
-                      <td>-12.69%</td>
-                    </tr>
-                    <tr>
-                      <td>同方科技园</td>
-                      <td>52.0</td>
-                      <td>52.0</td>
-                      <td>14.84%</td>
-                      <td>14.69</td>
-                      <td>36.1</td>
-                      <td>-12.69%</td>
+                    <tr v-for="(item, index) in tableData" :key="index">
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.currentValue }}</td>
+                      <td>{{ item.planValue }}</td>
+                      <td>{{ item.completionRate }}</td>
+                      <td>{{ item.lastYearValue }}</td>
+                      <td>{{ item.growthValue }}</td>
+                      <td>{{ item.growthRate }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -369,6 +143,8 @@
 
 <script>
 import * as echarts from "echarts";
+import { api2 } from "@/api/outer";
+import { api6, api7, api8 } from "@/api/home";
 
 export default {
   name: "Center",
@@ -384,23 +160,56 @@ export default {
       isHovering: false,
       autoHighlightTimer: null,
       autoRotateTimer: null,
-      date: new Date().getFullYear() + "年" + (new Date().getMonth() + 1) + "月"
+      date:
+        new Date().getFullYear() + "年" + (new Date().getMonth() + 1) + "月",
+      topCards: [],
+      pieChartData: [],
+      barChartData: [],
+      tableData: []
     };
   },
 
   mounted() {
-    this.$EventBus.$on("updateDate", date => {
-      this.date = date;
-    });
+    this.init();
+
     this.partContainer = this.$refs.partContainer;
     this.$nextTick(() => {
       this.initPieChart();
       this.initChart2();
+      this.initTableData();
       this.startAutoScroll();
+    });
+
+    this.$EventBus.$on("updateDate", date => {
+      this.date = date;
+
+      this.init();
+
+      this.partContainer = this.$refs.partContainer;
+      this.$nextTick(() => {
+        this.initPieChart();
+        this.initChart2();
+        this.initTableData();
+        this.startAutoScroll();
+      });
     });
   },
 
   methods: {
+    init() {
+      api2().then(res => {
+        this.topCards = res;
+      });
+    },
+
+    async initTableData() {
+      try {
+        this.tableData = await api8();
+      } catch (error) {
+        console.error("获取表格数据失败:", error);
+      }
+    },
+
     onChangeActive(index) {
       this.active = index;
       this.$nextTick(() => {
@@ -429,7 +238,7 @@ export default {
       this.partContainer.scrollLeft = targetScroll;
     },
 
-    initPieChart() {
+    async initPieChart() {
       if (!this.$refs.pieChart) return;
 
       if (this.pieChart) {
@@ -437,219 +246,172 @@ export default {
         this.pieChart = null;
       }
 
-      this.pieChart = echarts.init(this.$refs.pieChart);
-
-      const option = {
-        tooltip: {
-          trigger: "item",
-          backgroundColor: "rgba(0, 20, 40, 0.95)",
-          borderColor: "#00ECFF",
-          borderWidth: 2,
-          textStyle: {
-            color: "#FFFFFF",
-            fontSize: 14,
-            fontWeight: 500
-          },
-          formatter: function(params) {
-            return `<div style="padding: 8px;">
-                        <div style="color: #00ECFF; font-weight: bold; margin-bottom: 5px;">${params.name}</div>
-                        <div>金额: <span style="color: #1BFFCC;">${params.value}亿元</span></div>
-                        <div>占比: <span style="color: rgba(182, 70, 31, 1);">${params.percent}%</span></div>
-                      </div>`;
+      try {
+        // 获取饼图数据
+        const pieData = await api6();
+        this.pieChartData = pieData.map(item => ({
+          value: item.value,
+          name: item.name,
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(
+              0,
+              0,
+              1,
+              1,
+              item.itemStyle.color.colorStops
+            )
           }
-        },
-        legend: {
-          show: false
-        },
-        series: [
-          {
-            name: "新签合同",
-            type: "pie",
-            radius: ["35%", "75%"],
-            center: ["50%", "55%"],
-            avoidLabelOverlap: false,
-            itemStyle: {
-              borderRadius: 0,
-              borderColor: "rgba(0, 236, 255, 0.3)",
-              borderWidth: 1,
-              shadowBlur: 15,
-              shadowColor: "rgba(0, 236, 255, 0.4)"
+        }));
+
+        this.pieChart = echarts.init(this.$refs.pieChart);
+
+        const option = {
+          tooltip: {
+            trigger: "item",
+            backgroundColor: "rgba(0, 20, 40, 0.95)",
+            borderColor: "#00ECFF",
+            borderWidth: 2,
+            textStyle: {
+              color: "#FFFFFF",
+              fontSize: 14,
+              fontWeight: 500
             },
-            label: {
-              show: true,
-              position: "outside",
-              formatter: function(params) {
-                return `{name|${params.name}}\n{value|${params.value}亿元}\n{percent|${params.percent}%}`;
-              },
-              rich: {
-                name: {
-                  color: "#FFFFFF",
-                  fontSize: 13,
-                  fontWeight: 600,
-                  lineHeight: 18
-                },
-                value: {
-                  color: "#1BFFCC",
-                  fontSize: 12,
-                  fontWeight: 500,
-                  lineHeight: 16
-                },
-                percent: {
-                  color: "rgba(182, 70, 31, 1)",
-                  fontSize: 11,
-                  fontWeight: 500,
-                  lineHeight: 14
-                }
-              },
-              distance: 20
-            },
-            labelLine: {
-              show: true,
-              length: 15,
-              length2: 8,
-              lineStyle: {
-                color: "#00ECFF",
-                width: 1.5,
-                type: "solid"
-              }
-            },
-            emphasis: {
+            formatter: function(params) {
+              return `<div style="padding: 8px;">
+                          <div style="color: #00ECFF; font-weight: bold; margin-bottom: 5px;">${params.name}</div>
+                          <div>金额: <span style="color: #1BFFCC;">${params.value}亿元</span></div>
+                          <div>占比: <span style="color: rgba(182, 70, 31, 1);">${params.percent}%</span></div>
+                        </div>`;
+            }
+          },
+          legend: {
+            show: false
+          },
+          series: [
+            {
+              name: "新签合同",
+              type: "pie",
+              radius: ["35%", "75%"],
+              center: ["50%", "55%"],
+              avoidLabelOverlap: false,
               itemStyle: {
-                shadowBlur: 25,
-                shadowOffsetX: 0,
-                shadowColor: "rgba(0, 236, 255, 0.8)",
-                borderWidth: 2,
-                borderColor: "#00ECFF"
+                borderRadius: 0,
+                borderColor: "rgba(0, 236, 255, 0.3)",
+                borderWidth: 1,
+                shadowBlur: 15,
+                shadowColor: "rgba(0, 236, 255, 0.4)"
               },
               label: {
-                fontSize: 16,
-                fontWeight: 700
+                show: true,
+                position: "outside",
+                formatter: function(params) {
+                  return `{name|${params.name}}\n{value|${params.value}亿元}\n{percent|${params.percent}%}`;
+                },
+                rich: {
+                  name: {
+                    color: "#FFFFFF",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    lineHeight: 18
+                  },
+                  value: {
+                    color: "#1BFFCC",
+                    fontSize: 12,
+                    fontWeight: 500,
+                    lineHeight: 16
+                  },
+                  percent: {
+                    color: "rgba(182, 70, 31, 1)",
+                    fontSize: 11,
+                    fontWeight: 500,
+                    lineHeight: 14
+                  }
+                },
+                distance: 20
               },
               labelLine: {
+                show: true,
+                length: 15,
+                length2: 8,
                 lineStyle: {
-                  width: 2,
-                  color: "#1BFFCC"
-                }
-              }
-            },
-            animationType: "scale",
-            animationEasing: "elasticOut",
-            animationDelay: function(idx) {
-              return Math.random() * 200;
-            },
-            data: [
-              {
-                value: 60.71,
-                name: "中核医疗",
-                itemStyle: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [
-                    { offset: 0, color: "#4FC3F7" },
-                    { offset: 0.5, color: "#29B6F6" },
-                    { offset: 1, color: "#1E88E5" }
-                  ])
+                  color: "#00ECFF",
+                  width: 1.5,
+                  type: "solid"
                 }
               },
-              {
-                value: 45.7,
-                name: "核技术应用",
+              emphasis: {
                 itemStyle: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [
-                    { offset: 0, color: "#FF8A65" },
-                    { offset: 0.5, color: "#FF7043" },
-                    { offset: 1, color: "#FF5722" }
-                  ])
+                  shadowBlur: 25,
+                  shadowOffsetX: 0,
+                  shadowColor: "rgba(0, 236, 255, 0.8)",
+                  borderWidth: 2,
+                  borderColor: "#00ECFF"
+                },
+                label: {
+                  fontSize: 16,
+                  fontWeight: 700
+                },
+                labelLine: {
+                  lineStyle: {
+                    width: 2,
+                    color: "#1BFFCC"
+                  }
                 }
               },
-              {
-                value: 30.5,
-                name: "智慧能源",
-                itemStyle: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [
-                    { offset: 0, color: "#FFD54F" },
-                    { offset: 0.5, color: "#FFCA28" },
-                    { offset: 1, color: "#FFC107" }
-                  ])
-                }
+              animationType: "scale",
+              animationEasing: "elasticOut",
+              animationDelay: function(idx) {
+                return Math.random() * 200;
               },
-              {
-                value: 24.6,
-                name: "其他",
-                itemStyle: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [
-                    { offset: 0, color: "#81C784" },
-                    { offset: 0.5, color: "#66BB6A" },
-                    { offset: 1, color: "#4CAF50" }
-                  ])
-                }
-              },
-              {
-                value: 23.2,
-                name: "核医疗",
-                itemStyle: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [
-                    { offset: 0, color: "#BA68C8" },
-                    { offset: 0.5, color: "#AB47BC" },
-                    { offset: 1, color: "#9C27B0" }
-                  ])
-                }
-              },
-              {
-                value: 21.7,
-                name: "数字信息",
-                itemStyle: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [
-                    { offset: 0, color: "#4DB6AC" },
-                    { offset: 0.5, color: "#26A69A" },
-                    { offset: 1, color: "#009688" }
-                  ])
-                }
-              }
-            ]
-          }
-        ]
-      };
+              data: this.pieChartData
+            }
+          ]
+        };
 
-      this.pieChart.setOption(option);
+        this.pieChart.setOption(option);
 
-      this.autoRotateTimer = setInterval(() => {
-        if (this.pieChart) {
-          this.pieChart.dispatchAction({
-            type: "highlight",
-            seriesIndex: 0,
-            dataIndex: Math.floor(Math.random() * 6)
-          });
-        }
-      }, 3000);
-
-      this.pieChart.on("mouseover", () => {
-        if (this.autoRotateTimer) {
-          clearInterval(this.autoRotateTimer);
-        }
-      });
-
-      this.pieChart.on("mouseout", () => {
-        if (this.autoRotateTimer) {
-          clearInterval(this.autoRotateTimer);
-        }
         this.autoRotateTimer = setInterval(() => {
           if (this.pieChart) {
             this.pieChart.dispatchAction({
               type: "highlight",
               seriesIndex: 0,
-              dataIndex: Math.floor(Math.random() * 6)
+              dataIndex: Math.floor(Math.random() * this.pieChartData.length)
             });
           }
         }, 3000);
-      });
 
-      window.addEventListener("resize", () => {
-        if (this.pieChart) {
-          this.pieChart.resize();
-        }
-      });
+        this.pieChart.on("mouseover", () => {
+          if (this.autoRotateTimer) {
+            clearInterval(this.autoRotateTimer);
+          }
+        });
+
+        this.pieChart.on("mouseout", () => {
+          if (this.autoRotateTimer) {
+            clearInterval(this.autoRotateTimer);
+          }
+          this.autoRotateTimer = setInterval(() => {
+            if (this.pieChart) {
+              this.pieChart.dispatchAction({
+                type: "highlight",
+                seriesIndex: 0,
+                dataIndex: Math.floor(Math.random() * this.pieChartData.length)
+              });
+            }
+          }, 3000);
+        });
+
+        window.addEventListener("resize", () => {
+          if (this.pieChart) {
+            this.pieChart.resize();
+          }
+        });
+      } catch (error) {
+        console.error("初始化饼图失败:", error);
+      }
     },
 
-    initChart2() {
+    async initChart2() {
       if (!this.$refs.chart2) return;
 
       if (this.chart2) {
@@ -657,172 +419,172 @@ export default {
         this.chart2 = null;
       }
 
-      this.chart2 = echarts.init(this.$refs.chart2);
-      const data = [
-        { value: -2.1, name: "核技术应用", benqi: 120, rate: "8%" },
-        { value: 8.2, name: "中核医疗", benqi: 580, rate: "32%" },
-        { value: 10.1, name: "数据信息", benqi: 800, rate: "40%" },
-        { value: -5.6, name: "同方能源", benqi: 60, rate: "3%" },
-        { value: 7.9, name: "其他", benqi: 400, rate: "17%" }
-      ];
-      const option = {
-        tooltip: {
-          trigger: "axis",
-          axisPointer: { type: "shadow" },
-          backgroundColor: "rgba(0, 20, 40, 0.95)",
-          borderColor: "rgba(0, 76, 214, 1)",
-          borderWidth: 2,
-          textStyle: {
-            color: "#FFFFFF",
-            fontSize: 14,
-            fontWeight: 500
-          },
-          formatter: function(params) {
-            const param = params[0];
-            const d = data[param.dataIndex];
-            return `<div style="padding: 8px;">
-                        <div style="color: rgba(125, 220, 255, 1); font-weight: bold; margin-bottom: 5px;">${d.name}</div>
-                        <div style="color: rgba(125, 220, 255, 1);">本期：<span style="color: #fff;">${d.benqi}</span></div>
-                        <div style="color: rgba(125, 220, 255, 1);">占比率：<span style="color: #fff;">${d.rate}</span></div>
-                      </div>`;
-          }
-        },
-        grid: {
-          left: "5%",
-          right: "5%",
-          top: "16%",
-          bottom: "2%",
-          containLabel: true
-        },
-        xAxis: {
-          type: "category",
-          data: data.map(d => d.name),
-          axisLine: {
-            lineStyle: {
-              color: "rgba(0, 187, 255, 1)",
-              width: 1
-            }
-          },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            color: "#FFFFFF",
-            fontSize: 16,
-            interval: 0,
-            margin: 18
-          }
-        },
-        yAxis: {
-          type: "value",
-          min: -8,
-          name: "单位（亿元）",
-          nameTextStyle: {
-            color: "rgba(0, 187, 255, 1)",
-            fontSize: 16,
-            padding: [0, 0, 0, 0]
-          },
-          axisLine: {
-            lineStyle: {
-              color: "rgba(0, 187, 255, 1)",
-              width: 1,
-              type: "dashed"
-            }
-          },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            color: "rgba(0, 187, 255, 1)",
-            fontSize: 14,
-            formatter: "{value}"
-          },
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: "rgba(0,236,255,0.15)",
-              width: 1,
-              type: "dashed"
-            }
-          }
-        },
-        series: [
-          {
-            name: "利润总额",
-            type: "bar",
-            barWidth: "38%",
-            data: data.map((d, idx) => ({
-              value: d.value,
-              itemStyle: {
-                color:
-                  d.value >= 0
-                    ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: "rgba(0, 76, 214, 1)" },
-                        { offset: 1, color: "rgba(0, 165, 234, 1)" }
-                      ])
-                    : new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: "rgba(182, 70, 31, 1)" },
-                        { offset: 1, color: "rgba(248, 156, 124, 1)" }
-                      ])
-              },
-              label: {
-                show: true,
-                position: d.value >= 0 ? "top" : "bottom",
-                formatter: d.value,
-                color:
-                  d.value >= 0
-                    ? "rgba(0, 236, 255, 1)"
-                    : "rgba(255, 254, 112, 1)",
-                fontSize: 16,
-                offset: [0, d.value >= 0 ? -8 : 8]
-              }
-            })),
-            animationDelay: function(idx) {
-              return idx * 200;
+      try {
+        // 获取柱状图数据
+        this.barChartData = await api7();
+
+        this.chart2 = echarts.init(this.$refs.chart2);
+        const option = {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: { type: "shadow" },
+            backgroundColor: "rgba(0, 20, 40, 0.95)",
+            borderColor: "rgba(0, 76, 214, 1)",
+            borderWidth: 2,
+            textStyle: {
+              color: "#FFFFFF",
+              fontSize: 14,
+              fontWeight: 500
             },
-            animationEasing: "elasticOut"
-          }
-        ]
-      };
-      this.chart2.setOption(option);
-      this.chart2.resize();
+            formatter: params => {
+              const param = params[0];
+              const d = this.barChartData[param.dataIndex];
+              return `<div style="padding: 8px;">
+                          <div style="color: rgba(125, 220, 255, 1); font-weight: bold; margin-bottom: 5px;">${d.name}</div>
+                          <div style="color: rgba(125, 220, 255, 1);">本期：<span style="color: #fff;">${d.benqi}</span></div>
+                          <div style="color: rgba(125, 220, 255, 1);">占比率：<span style="color: #fff;">${d.rate}</span></div>
+                        </div>`;
+            }
+          },
+          grid: {
+            left: "5%",
+            right: "5%",
+            top: "16%",
+            bottom: "2%",
+            containLabel: true
+          },
+          xAxis: {
+            type: "category",
+            data: this.barChartData.map(d => d.name),
+            axisLine: {
+              lineStyle: {
+                color: "rgba(0, 187, 255, 1)",
+                width: 1
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              color: "#FFFFFF",
+              fontSize: 16,
+              interval: 0,
+              margin: 18
+            }
+          },
+          yAxis: {
+            type: "value",
+            min: -8,
+            name: "单位（亿元）",
+            nameTextStyle: {
+              color: "rgba(0, 187, 255, 1)",
+              fontSize: 16,
+              padding: [0, 0, 0, 0]
+            },
+            axisLine: {
+              lineStyle: {
+                color: "rgba(0, 187, 255, 1)",
+                width: 1,
+                type: "dashed"
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              color: "rgba(0, 187, 255, 1)",
+              fontSize: 14,
+              formatter: "{value}"
+            },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: "rgba(0,236,255,0.15)",
+                width: 1,
+                type: "dashed"
+              }
+            }
+          },
+          series: [
+            {
+              name: "利润总额",
+              type: "bar",
+              barWidth: "38%",
+              data: this.barChartData.map((d, idx) => ({
+                value: d.value,
+                itemStyle: {
+                  color:
+                    d.value >= 0
+                      ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                          { offset: 0, color: "rgba(0, 76, 214, 1)" },
+                          { offset: 1, color: "rgba(0, 165, 234, 1)" }
+                        ])
+                      : new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                          { offset: 0, color: "rgba(182, 70, 31, 1)" },
+                          { offset: 1, color: "rgba(248, 156, 124, 1)" }
+                        ])
+                },
+                label: {
+                  show: true,
+                  position: d.value >= 0 ? "top" : "bottom",
+                  formatter: d.value,
+                  color:
+                    d.value >= 0
+                      ? "rgba(0, 236, 255, 1)"
+                      : "rgba(255, 254, 112, 1)",
+                  fontSize: 16,
+                  offset: [0, d.value >= 0 ? -8 : 8]
+                }
+              })),
+              animationDelay: function(idx) {
+                return idx * 200;
+              },
+              animationEasing: "elasticOut"
+            }
+          ]
+        };
+        this.chart2.setOption(option);
+        this.chart2.resize();
 
-      this.autoHighlightTimer = setInterval(() => {
-        if (this.chart2) {
-          this.chart2.dispatchAction({
-            type: "highlight",
-            seriesIndex: 0,
-            dataIndex: Math.floor(Math.random() * data.length)
-          });
-        }
-      }, 2500);
-
-      this.chart2.on("mouseover", () => {
-        if (this.autoHighlightTimer) {
-          clearInterval(this.autoHighlightTimer);
-        }
-      });
-
-      this.chart2.on("mouseout", () => {
-        if (this.autoHighlightTimer) {
-          clearInterval(this.autoHighlightTimer);
-        }
         this.autoHighlightTimer = setInterval(() => {
           if (this.chart2) {
             this.chart2.dispatchAction({
               type: "highlight",
               seriesIndex: 0,
-              dataIndex: Math.floor(Math.random() * data.length)
+              dataIndex: Math.floor(Math.random() * this.barChartData.length)
             });
           }
         }, 2500);
-      });
 
-      window.addEventListener("resize", () => {
-        if (this.chart2) {
-          this.chart2.resize();
-        }
-      });
+        this.chart2.on("mouseover", () => {
+          if (this.autoHighlightTimer) {
+            clearInterval(this.autoHighlightTimer);
+          }
+        });
+
+        this.chart2.on("mouseout", () => {
+          if (this.autoHighlightTimer) {
+            clearInterval(this.autoHighlightTimer);
+          }
+          this.autoHighlightTimer = setInterval(() => {
+            if (this.chart2) {
+              this.chart2.dispatchAction({
+                type: "highlight",
+                seriesIndex: 0,
+                dataIndex: Math.floor(Math.random() * this.barChartData.length)
+              });
+            }
+          }, 2500);
+        });
+
+        window.addEventListener("resize", () => {
+          if (this.chart2) {
+            this.chart2.resize();
+          }
+        });
+      } catch (error) {
+        console.error("初始化柱状图失败:", error);
+      }
     },
 
     startAutoScroll() {
@@ -947,6 +709,8 @@ export default {
           display: flex;
           align-items: center;
           justify-content: space-between;
+          padding: 0 16px;
+          box-sizing: border-box;
 
           span {
             &:nth-child(1) {

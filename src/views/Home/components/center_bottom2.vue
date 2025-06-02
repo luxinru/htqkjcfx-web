@@ -1,109 +1,47 @@
 <template>
   <div class="center_bottom2">
-    <div class="item">
-      <img
-        class="icon"
-        src="@/assets/img/home/center_bottom2_icon1.png"
-        alt=""
-      />
+    <div class="item" v-for="(item, index) in dataList" :key="index">
+      <img class="icon" :src="item.icon" alt="" />
 
       <div class="center_bottom2_container">
         <div class="part">
           <div class="child">
             <div class="label1">
-              固投投资金额
+              {{ item.investment.label }}
             </div>
             <div class="label2">
-              52.91
+              {{ item.investment.value }}
               <span>
-                亿元
+                {{ item.investment.unit }}
               </span>
             </div>
           </div>
 
           <div class="child">
             <div class="value1">
-              年度计划值: 83亿元
+              年度计划值: {{ item.investment.planValue }}
             </div>
             <div class="value2">
-              计划完成率: 45%
+              计划完成率: {{ item.investment.completionRate }}
             </div>
           </div>
         </div>
         <div class="part">
           <div class="child">
             <div class="label1">
-              固投投资项目数
+              {{ item.project.label }}
             </div>
             <div class="label2">
-              6
+              {{ item.project.value }}
               <span>
-                个
+                {{ item.project.unit }}
               </span>
             </div>
           </div>
 
           <div class="child">
-            <div class="value1">
-              正常: 5个
-            </div>
-            <div class="value2">
-              滞后: 1个
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="item">
-      <img
-        class="icon"
-        src="@/assets/img/home/center_bottom2_icon2.png"
-        alt=""
-      />
-
-      <div class="center_bottom2_container">
-        <div class="part">
-          <div class="child">
-            <div class="label1">
-              股投投资金额
-            </div>
-            <div class="label2">
-              45.91
-              <span>
-                亿元
-              </span>
-            </div>
-          </div>
-
-          <div class="child">
-            <div class="value1">
-              年度计划值: 123亿元
-            </div>
-            <div class="value2">
-              计划完成率: 60%
-            </div>
-          </div>
-        </div>
-        <div class="part">
-          <div class="child">
-            <div class="label1">
-              股投投资项目数
-            </div>
-            <div class="label2">
-              7
-              <span>
-                个
-              </span>
-            </div>
-          </div>
-
-          <div class="child">
-            <div class="value1">
-              正常: 5个
-            </div>
-            <div class="value2">
-              滞后: 2个
-            </div>
+            <div class="value1">正常: {{ item.project.normal }}</div>
+            <div class="value2">滞后: {{ item.project.lagging }}</div>
           </div>
         </div>
       </div>
@@ -112,8 +50,34 @@
 </template>
 
 <script>
+import { api5 } from "@/api/home";
+
 export default {
-  name: "CenterBottom2"
+  name: "CenterBottom2",
+  data() {
+    return {
+      dataList: [],
+      date: ""
+    };
+  },
+
+  mounted() {
+    this.init();
+
+    this.$EventBus.$on("updateDate", date => {
+      this.date = date;
+
+      this.init();
+    });
+  },
+
+  methods: {
+    init() {
+      api5().then(res => {
+        this.dataList = res;
+      });
+    }
+  }
 };
 </script>
 

@@ -46,14 +46,27 @@ export default {
 
   data() {
     return {
-      indicators: []
+      indicators: [],
+      date: ""
     };
   },
 
   mounted() {
-    api4().then(res => {
-      this.indicators = res;
+    this.init();
+
+    this.$EventBus.$on("updateDate", date => {
+      this.date = date;
+
+      this.init();
     });
+  },
+
+  methods: {
+    init() {
+      api4().then(res => {
+        this.indicators = res;
+      });
+    }
   }
 };
 </script>

@@ -12,21 +12,22 @@
             目标值
           </span>
           <div class="schedule">
-            <div class="val" style="width: 78%;"></div>
+            <div class="val" :style="{ width: targetValue + '%' }"></div>
           </div>
-          <span class="label2">
-            78%
-          </span>
+          <span class="label2"> {{ targetValue }}% </span>
         </div>
         <div class="item">
           <span class="label1">
             完成值
           </span>
           <div class="schedule">
-            <div class="val val2" style="width: 32.5%;"></div>
+            <div
+              class="val val2"
+              :style="{ width: completedValue + '%' }"
+            ></div>
           </div>
           <span class="label2" style="color: rgba(255, 51, 85, 1)">
-            32.5%
+            {{ completedValue }}%
           </span>
         </div>
       </div>
@@ -36,9 +37,7 @@
       <div class="item">
         <div ref="chart1" class="chart"></div>
         <div class="info">
-          <span>
-            65%
-          </span>
+          <span> {{ chart1Value }}% </span>
           <span>
             同方威视
           </span>
@@ -48,9 +47,7 @@
       <div class="item">
         <div ref="chart2" class="chart"></div>
         <div class="info">
-          <span>
-            73%
-          </span>
+          <span> {{ chart2Value }}% </span>
           <span>
             核医疗
           </span>
@@ -62,22 +59,47 @@
 
 <script>
 import * as echarts from "echarts";
+import { api3 } from "@/api/home";
+
 export default {
   name: "Left3",
 
   data() {
     return {
       chart1: null,
-      chart2: null
+      chart2: null,
+      targetValue: "",
+      completedValue: "",
+      chart1Value: "",
+      chart2Value: "",
+      date: ""
     };
   },
 
   mounted() {
-    this.initChart1();
-    this.initChart2();
+    this.init();
+
+    this.$EventBus.$on("updateDate", date => {
+      this.date = date;
+
+      this.init();
+    });
   },
 
   methods: {
+    init() {
+      api3().then(res => {
+        this.targetValue = res.targetValue;
+        this.completedValue = res.completedValue;
+        this.chart1Value = res.chart1Value;
+        this.chart2Value = res.chart2Value;
+
+        this.$nextTick(() => {
+          this.initChart1();
+          this.initChart2();
+        });
+      });
+    },
     initChart1() {
       var option = {
         polar: {
@@ -111,7 +133,7 @@ export default {
             backgroundStyle: {
               color: "rgba(66, 66, 66, .3)"
             },
-            data: [65],
+            data: [this.chart1Value],
             coordinateSystem: "polar",
 
             itemStyle: {
@@ -131,6 +153,11 @@ export default {
           }
         ]
       };
+
+      if (this.chart1) {
+        this.chart1.dispose();
+        this.chart1 = null;
+      }
 
       this.chart1 = echarts.init(this.$refs.chart1);
       this.chart1.setOption(option);
@@ -169,7 +196,7 @@ export default {
             backgroundStyle: {
               color: "rgba(66, 66, 66, .3)"
             },
-            data: [73],
+            data: [this.chart2Value],
             coordinateSystem: "polar",
 
             itemStyle: {
@@ -189,6 +216,11 @@ export default {
           }
         ]
       };
+
+      if (this.chart2) {
+        this.chart2.dispose();
+        this.chart2 = null;
+      }
 
       this.chart2 = echarts.init(this.$refs.chart2);
       this.chart2.setOption(option);
