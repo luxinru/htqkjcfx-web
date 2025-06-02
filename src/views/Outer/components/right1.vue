@@ -51,9 +51,19 @@ export default {
   },
 
   mounted() {
-    api4().then(res => {
-      this.indicators = res;
+    this.init();
+
+    this.$EventBus.$on("left-item-click", () => {
+      this.init();
     });
+  },
+
+  methods: {
+    init() {
+      api4().then(res => {
+        this.indicators = res;
+      });
+    }
   }
 };
 </script>

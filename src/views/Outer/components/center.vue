@@ -138,6 +138,11 @@ export default {
 
     this.init();
     this.initLineChartFun();
+
+    this.$EventBus.$on("left-item-click", () => {
+      this.init();
+      this.initLineChartFun();
+    });
   },
 
   methods: {

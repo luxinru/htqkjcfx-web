@@ -22,6 +22,10 @@ export default {
 
   mounted() {
     this.init();
+
+    this.$EventBus.$on("left-item-click", () => {
+      this.init();
+    });
   },
 
   methods: {
@@ -34,6 +38,9 @@ export default {
       });
     },
     initChart() {
+      if (this.chart) {
+        this.chart.dispose();
+      }
       this.chart = echarts.init(this.$refs.chart);
 
       var barWidth = 30;
