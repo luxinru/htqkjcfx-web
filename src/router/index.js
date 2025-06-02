@@ -74,6 +74,11 @@ const routes = [
   },
 
   {
+    path: "/outer",
+    name: "outer",
+    component: () => import("@/views/Outer/index.vue")
+  },
+  {
     path: "/digitalplatform",
     name: "digitalPlatform",
     component: () => import("@/views/DigitalPlatform/index.vue"),
