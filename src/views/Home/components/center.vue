@@ -78,7 +78,9 @@
           <div class="part_title">
             主要产业集团外累计新签合同占比
           </div>
-          <div ref="pieChart" class="pie-chart"></div>
+          <div class="pie-chart">
+            <Pie />
+          </div>
         </div>
         <div class="part" v-show="active === 2">
           <div class="part_title">
@@ -143,11 +145,16 @@
 
 <script>
 import * as echarts from "echarts";
+import Pie from "./pie.vue";
 import { api2 } from "@/api/outer";
 import { api6, api7, api8 } from "@/api/home";
 
 export default {
   name: "Center",
+
+  components: {
+    Pie
+  },
 
   data() {
     return {
@@ -174,10 +181,10 @@ export default {
 
     this.partContainer = this.$refs.partContainer;
     this.$nextTick(() => {
-      this.initPieChart();
+      // this.initPieChart();
       this.initChart2();
       this.initTableData();
-      this.startAutoScroll();
+      // this.startAutoScroll();
     });
 
     this.$EventBus.$on("updateDate", date => {
@@ -187,10 +194,10 @@ export default {
 
       this.partContainer = this.$refs.partContainer;
       this.$nextTick(() => {
-        this.initPieChart();
+        // this.initPieChart();
         this.initChart2();
         this.initTableData();
-        this.startAutoScroll();
+        // this.startAutoScroll();
       });
     });
   },
