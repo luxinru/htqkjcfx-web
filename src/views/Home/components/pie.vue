@@ -3,148 +3,296 @@
 </template>
 
 <script>
-import * as THREE from "three";
-import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
-import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import * as echarts from "echarts/core";
+import { SurfaceChart } from "echarts-gl/charts";
+import { Grid3DComponent } from "echarts-gl/components";
+import { CanvasRenderer } from "echarts/renderers";
+
+echarts.use([SurfaceChart, Grid3DComponent, CanvasRenderer]);
 
 export default {
   name: "Pie",
-  mounted() {
-    this.initThree();
+  data() {
+    return {
+      echartData: [
+        {
+          value: 43,
+          name: "中核医疗"
+        },
+        {
+          value: 17,
+          name: "智慧能源"
+        },
+        {
+          value: 16,
+          name: "核技术应用"
+        },
+        {
+          value: 14,
+          name: "其他"
+        },
+        {
+          value: 10,
+          name: "数字信息"
+        }
+      ]
+    };
   },
+
+  mounted() {
+    this.seriesData = this.echartData.map((item, index) => {
+      return {
+        ...item,
+        // value: Math.sqrt(item.value).toFixed(0) * 100,
+        actValue: item.value,
+        label: {
+          show: true,
+          position: "outside",
+          borderRadius: 5,
+          padding: [0, 5, 3, -3],
+          fontSize: 14
+        }
+      };
+    });
+
+    this.option = this.getPie3D(this.seriesData, 0);
+
+    this.$nextTick(() => {
+      this.initEchart();
+    });
+  },
+
   methods: {
-    initThree() {
-      // 获取容器尺寸
-      const container = this.$refs.container;
-      const width = container.clientWidth;
-      const height = container.clientHeight;
+    initEchart() {
+      if (this.echart) {
+        this.echart.dispose();
+        this.echart = null;
+      }
+      this.echart = echarts.init(this.$refs.container);
+      this.echart.setOption(this.option);
 
-      // 数据和配色
-      const data = [44, 23, 18, 14];
-      const colors = [0x338aff, 0xff4b5c, 0xffa534, 0x2ecc71];
-      const labels = ["44%", "23%", "18%", "14%"];
-      const radius = Math.min(width, height) * 0.35; // 增大饼图比例
-      const thickness = radius * 0.3;
-      const explode = [0.08, 0.12, 0.1, 0.06]; // 分块偏移
-
-      // 场景
-      const scene = new THREE.Scene();
-
-      // 相机
-      const camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
-      camera.position.set(0, radius * 1.5, radius * 2.5); // 根据半径调整相机位置
-      camera.lookAt(0, 0, 0);
-
-      // 渲染器（透明背景）
-      const renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        alpha: true
+      // 添加点击事件处理
+      this.echart.on("click", params => {
+        if (params.seriesType === "surface") {
+          const series = this.option.series;
+          series.forEach((item, index) => {
+            if (item.type === "surface") {
+              const isSelected = index === params.seriesIndex;
+              item.pieStatus.selected = isSelected;
+              item.parametricEquation = this.getParametricEquation(
+                item.pieData.startRatio,
+                item.pieData.endRatio,
+                isSelected,
+                false,
+                item.pieStatus.k,
+                10
+              );
+            }
+          });
+          this.echart.setOption(this.option);
+        }
       });
-      renderer.setSize(width, height);
-      renderer.setClearColor(0x000000, 0);
-      renderer.shadowMap.enabled = true;
+    },
 
-      // 添加轨道控制器
-      const controls = new OrbitControls(camera, renderer.domElement);
-      controls.enableDamping = true; // 添加阻尼效果
-      controls.dampingFactor = 0.05;
-      controls.screenSpacePanning = false;
-      controls.minDistance = radius * 2;
-      controls.maxDistance = radius * 4;
-      controls.maxPolarAngle = Math.PI / 2;
+    getParametricEquation(startRatio, endRatio, isSelected, isHovered, k, h) {
+      const midRatio = (startRatio + endRatio) / 2;
+      const startRadian = startRatio * Math.PI * 2;
+      const endRadian = endRatio * Math.PI * 2;
+      const midRadian = midRatio * Math.PI * 2;
 
-      // 光源
-      const light = new THREE.DirectionalLight(0xffffff, 1.1);
-      light.position.set(100, 200, 200);
-      light.castShadow = true;
-      scene.add(light);
-      scene.add(new THREE.AmbientLight(0xffffff, 0.45));
+      // 如果只有一个扇形，则不实现选中效果
+      if (startRatio === 0 && endRatio === 1) {
+        isSelected = false;
+      }
 
-      // 饼图绘制
-      let startAngle = 0;
-      const total = data.reduce((a, b) => a + b, 0);
-      for (let i = 0; i < data.length; i++) {
-        const value = data[i];
-        const angle = (value / total) * Math.PI * 2;
-        const endAngle = startAngle + angle;
-        // 分块偏移
-        const midAngle = startAngle + angle / 2;
-        const x = Math.cos(midAngle) * explode[i] * radius;
-        const z = Math.sin(midAngle) * explode[i] * radius;
-        // 扇形几何体
-        const shape = new THREE.Shape();
-        shape.absarc(0, 0, radius, startAngle, endAngle, false);
-        shape.lineTo(0, 0);
-        const geometry = new THREE.ExtrudeGeometry(shape, {
-          depth: thickness,
-          bevelEnabled: false
-        });
-        geometry.rotateX(-Math.PI / 2);
-        geometry.translate(x, -thickness / 2, z);
-        // 材质
-        const material = new THREE.MeshPhongMaterial({
-          color: colors[i],
-          shininess: 80,
-          specular: 0xffffff
-        });
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
-        scene.add(mesh);
-        // 文字标签
-        const loader = new FontLoader();
-        loader.load(
-          "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/fonts/helvetiker_bold.typeface.json",
-          font => {
-            const textGeo = new TextGeometry(labels[i], {
-              font: font,
-              size: radius * 0.15, // 根据半径调整文字大小
-              height: 4,
-              curveSegments: 8,
-              bevelEnabled: true,
-              bevelThickness: 1,
-              bevelSize: 1,
-              bevelSegments: 2
-            });
-            textGeo.center();
-            const textMaterial = new THREE.MeshPhongMaterial({
-              color: 0xffffff
-            });
-            const textMesh = new THREE.Mesh(textGeo, textMaterial);
-            // 文字放在每个扇区的中间上方
-            const tx =
-              Math.cos(midAngle) * (radius * 0.7 + explode[i] * radius);
-            const tz =
-              Math.sin(midAngle) * (radius * 0.7 + explode[i] * radius);
-            textMesh.position.set(tx, thickness / 2 + 10, tz);
-            textMesh.castShadow = true;
-            scene.add(textMesh);
+      k = typeof k !== "undefined" ? k : 1 / 3;
+      // 修改偏移量，增加展开距离
+      const offsetX = isSelected ? Math.cos(midRadian) * 0.3 : 0;
+      const offsetY = isSelected ? Math.sin(midRadian) * 0.3 : 0;
+      const hoverRate = isHovered ? 1.05 : 1;
+
+      return {
+        u: {
+          min: -Math.PI,
+          max: Math.PI * 3,
+          step: Math.PI / 32
+        },
+        v: {
+          min: 0,
+          max: Math.PI * 2,
+          step: Math.PI / 20
+        },
+        x: function(u, v) {
+          if (u < startRadian) {
+            return (
+              offsetX +
+              Math.cos(startRadian) * (1 + Math.cos(v) * k) * hoverRate
+            );
           }
+          if (u > endRadian) {
+            return (
+              offsetX + Math.cos(endRadian) * (1 + Math.cos(v) * k) * hoverRate
+            );
+          }
+          return offsetX + Math.cos(u) * (1 + Math.cos(v) * k) * hoverRate;
+        },
+        y: function(u, v) {
+          if (u < startRadian) {
+            return (
+              offsetY +
+              Math.sin(startRadian) * (1 + Math.cos(v) * k) * hoverRate
+            );
+          }
+          if (u > endRadian) {
+            return (
+              offsetY + Math.sin(endRadian) * (1 + Math.cos(v) * k) * hoverRate
+            );
+          }
+          return offsetY + Math.sin(u) * (1 + Math.cos(v) * k) * hoverRate;
+        },
+        z: function(u, v) {
+          if (u < -Math.PI * 0.5) {
+            return Math.sin(u);
+          }
+          if (u > Math.PI * 2.5) {
+            return Math.sin(u);
+          }
+          return Math.sin(v) > 0 ? 60 : -1;
+        }
+      };
+    },
+
+    getPie3D(pieData, internalDiameterRatio) {
+      const series = [];
+      let sumValue = 0;
+      let startValue = 0;
+      let endValue = 0;
+      const legendData = [];
+      const k =
+        typeof internalDiameterRatio !== "undefined"
+          ? (1 - internalDiameterRatio) / (1 + internalDiameterRatio)
+          : 1 / 3;
+      for (let i = 0; i < pieData.length; i += 1) {
+        sumValue += pieData[i].value;
+        const seriesItem = {
+          name:
+            typeof pieData[i].name === "undefined"
+              ? `series${i}`
+              : pieData[i].name,
+          type: "surface",
+          parametric: true,
+          wireframe: {
+            show: false
+          },
+          pieData: pieData[i],
+          pieStatus: {
+            selected: false,
+            hovered: false,
+            k
+          }
+        };
+        if (typeof pieData[i].itemStyle !== "undefined") {
+          seriesItem.itemStyle = {
+            color: pieData[i].itemStyle.color,
+            opacity: pieData[i].itemStyle.opacity
+          };
+        }
+        series.push(seriesItem);
+      }
+      for (let i = 0; i < series.length; i += 1) {
+        endValue = startValue + series[i].pieData.value;
+        series[i].pieData.startRatio = startValue / sumValue;
+        series[i].pieData.endRatio = endValue / sumValue;
+        series[i].parametricEquation = this.getParametricEquation(
+          series[i].pieData.startRatio,
+          series[i].pieData.endRatio,
+          false,
+          false,
+          k,
+          10
         );
-        startAngle = endAngle;
+        startValue = endValue;
+        legendData.push(series[i].name);
       }
 
-      // 渲染到页面
-      this.$refs.container.innerHTML = "";
-      this.$refs.container.appendChild(renderer.domElement);
-
-      // 动画
-      function animate() {
-        requestAnimationFrame(animate);
-        controls.update(); // 更新控制器
-        renderer.render(scene, camera);
-      }
-      animate();
-
-      // 监听窗口大小变化
-      window.addEventListener('resize', () => {
-        const newWidth = container.clientWidth;
-        const newHeight = container.clientHeight;
-        camera.aspect = newWidth / newHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(newWidth, newHeight);
+      series.push({
+        name: "其他",
+        type: "pie",
+        label: {
+          show: true,
+          position: "outside",
+          opacity: 1,
+          formatter: params => {
+            return `${params.name} ${params.data.actValue}%`;
+          },
+          color: "#fff",
+          fontSize: 12
+        },
+        labelLine: {
+          show: true,
+          length: 50,
+          length2: 20,
+          lineStyle: {
+            color: "rgba(255, 255, 255, 0.3)"
+          }
+        },
+        startAngle: -30, //起始角度，支持范围[0, 360]。
+        clockwise: false, //饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
+        radius: ["40%", "60%"],
+        center: ["50%", "50%"],
+        data: pieData,
+        itemStyle: {
+          opacity: 0
+        }
       });
+
+      // 准备待返回的配置项，把准备好的series 传入。
+      const option = {
+        title: {
+          show: false
+        },
+        // legend: {
+        //   show: false,
+        // },
+        tooltip: {
+          trigger: "item",
+          formatter: params => {
+            const item = pieData.find(d => d.name === params.seriesName);
+            if (item) {
+              return `${params.marker}${item.name}：${item.value}%`;
+            }
+            return params.seriesName;
+          }
+        },
+        xAxis3D: {
+          min: -1,
+          max: 1
+        },
+        yAxis3D: {
+          min: -1,
+          max: 1
+        },
+        zAxis3D: {
+          min: -1,
+          max: 1
+        },
+        grid3D: {
+          show: false,
+          top: 0,
+          boxHeight: 1,
+          viewControl: {
+            alpha: 40,
+            beta: 45,
+            rotateSensitivity: 5,
+            zoomSensitivity: 1,
+            panSensitivity: 1,
+            autoRotate: false,
+            distance: 300
+          }
+        },
+        series
+      };
+      return option;
     }
   }
 };

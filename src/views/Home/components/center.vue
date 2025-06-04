@@ -8,53 +8,65 @@
         :class="{ active: active === card.id }"
         @click="onChangeActive(card.id)"
       >
-        <div class="title">
-          <img v-if="active === card.id" :src="card.iconActive" alt="" />
-          <img v-else :src="card.icon" alt="" />
+        <img
+          v-if="active === card.id"
+          class="bg"
+          src="@/assets/img/home/center_bg1_active.png"
+          alt=""
+        />
+        <img v-else class="bg" src="@/assets/img/home/center_bg1.png" alt="" />
+        <div class="item_content">
+          <div class="title">
+            <img v-if="active === card.id" :src="card.iconActive" alt="" />
+            <img v-else :src="card.icon" alt="" />
 
-          <div class="info">
-            <div class="label">
-              <span>
-                {{ card.title }}
-              </span>
-
-              <img
-                v-if="active === card.id"
-                src="@/assets/img/home/select_active.png"
-                alt=""
-              />
-              <img v-else src="@/assets/img/home/select.png" alt="" />
-            </div>
-
-            <div class="value">
-              {{ card.value }}
-              <span>{{ card.unit }}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="content">
-          <div class="content_item">
-            <span>
-              同比增加：{{ card.compareValue }}{{ card.compareUnit }}
-            </span>
-            <span> ↑{{ card.comparePercent }}% </span>
-          </div>
-          <div class="content_item">
-            <div class="progress">
-              <div class="labels">
+            <div class="info">
+              <div class="label">
                 <span>
-                  计划完成率
+                  {{ card.title }}
                 </span>
-                <span> {{ card.planRate }}% </span>
+
+                <img
+                  v-if="active === card.id"
+                  src="@/assets/img/home/select_active.png"
+                  alt=""
+                />
+                <img v-else src="@/assets/img/home/select.png" alt="" />
               </div>
-              <div class="bar">
-                <div class="val" :style="{ width: card.planRate + '%' }"></div>
+
+              <div class="value">
+                {{ card.value }}
+                <span>{{ card.unit }}</span>
               </div>
             </div>
           </div>
-          <div class="content_item">
-            <span> 年度计划值：{{ card.planValue }} </span>
+
+          <div class="content">
+            <div class="content_item">
+              <span>
+                同比增加：{{ card.compareValue }}{{ card.compareUnit }}
+              </span>
+              <span> ↑{{ card.comparePercent }}% </span>
+            </div>
+            <div class="content_item">
+              <div class="progress">
+                <div class="labels">
+                  <span>
+                    计划完成率
+                  </span>
+                  <span> {{ card.planRate }}% </span>
+                </div>
+                <div class="bar">
+                  <div
+                    class="val"
+                    :style="{ width: card.planRate + '%' }"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="content_item">
+              <span> 年度计划值：{{ card.planValue }} </span>
+            </div>
           </div>
         </div>
 
@@ -637,6 +649,13 @@ export default {
   box-sizing: border-box;
   flex-shrink: 0;
 }
+
+@property --border-gradient-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0turn;
+}
+
 .center {
   width: 100%;
   height: 100%;
@@ -645,6 +664,7 @@ export default {
   justify-content: space-between;
 
   .top {
+    position: relative;
     width: 100%;
     height: 240px;
     display: flex;
@@ -653,124 +673,159 @@ export default {
     .item {
       position: relative;
       flex: 1 0;
-      background: url("~@/assets/img/home/center_bg1.png") no-repeat center
-        center;
-      background-size: 100% 100%;
-      padding: 20px 25px 20px 10px;
+      background-image: conic-gradient(
+        from var(--border-gradient-angle) at 50% 50%,
+        transparent,
+        #70ffaf 14%,
+        transparent 17%
+      );
+      background-size: contain;
+      animation: buttonBorderSpin 5s linear infinite 0ms;
       box-sizing: border-box;
+      padding: 1px;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
 
-      .title {
-        width: 100%;
-        height: 90px;
-        display: flex;
-        align-items: center;
+      @keyframes buttonBorderSpin {
+        0% {
+          --border-gradient-angle: 0turn;
+        }
 
-        .info {
-          flex: 1 0;
-          display: flex;
-          flex-direction: column;
-
-          .label {
-            display: flex;
-            align-items: center;
-            font-size: 16px;
-            color: #ffffff;
-
-            span {
-              flex: 1 0;
-            }
-
-            img {
-              cursor: pointer;
-            }
-          }
-
-          .value {
-            font-weight: 400;
-            font-size: 36px;
-            color: #1bffcc;
-
-            span {
-              font-size: 14px;
-            }
-          }
+        100% {
+          --border-gradient-angle: 1turn;
         }
       }
 
-      .content {
+      .bg {
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        width: calc(100% - 2px);
+        height: calc(100% - 2px);
+      }
+
+      .item_content {
+        position: relative;
         width: 100%;
-        flex: 1 0;
+        height: 100%;
+        padding: 20px 25px 20px 10px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        padding: 16px 0 0;
+        align-items: center;
+        justify-content: center;
         box-sizing: border-box;
-
-        .content_item {
+        .title {
+          position: relative;
           width: 100%;
-          flex: 1 0;
+          height: 90px;
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          padding: 0 16px;
-          box-sizing: border-box;
 
-          span {
-            &:nth-child(1) {
-              font-size: 16px;
-              color: #00ecff;
-            }
-
-            &:nth-child(2) {
-              font-size: 16px;
-              color: #25ff50;
-            }
-          }
-
-          .progress {
-            width: 100%;
+          .info {
+            flex: 1 0;
             display: flex;
             flex-direction: column;
 
-            .labels {
+            .label {
               display: flex;
               align-items: center;
-              justify-content: space-between;
+              font-size: 16px;
+              color: #ffffff;
 
               span {
-                font-size: 16px;
-                color: #ffffff;
+                flex: 1 0;
+              }
+
+              img {
+                cursor: pointer;
               }
             }
 
-            .bar {
-              position: relative;
-              width: 100%;
-              height: 4px;
-              background: rgba(0, 0, 0, 0.2);
-              margin-top: 5px;
+            .value {
+              font-weight: 400;
+              font-size: 36px;
+              color: #1bffcc;
 
-              .val {
-                position: absolute;
-                left: 0;
-                top: 0;
-                height: 100%;
-                background: linear-gradient(90deg, #cf6100 0%, #fffe70 100%);
-                border-radius: 2px;
-                animation: progressAnimation 1.5s ease-in-out;
-                transform-origin: left;
+              span {
+                font-size: 14px;
+              }
+            }
+          }
+        }
+
+        .content {
+          position: relative;
+          width: 100%;
+          flex: 1 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 16px 0 0;
+          box-sizing: border-box;
+
+          .content_item {
+            width: 100%;
+            flex: 1 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            box-sizing: border-box;
+
+            span {
+              &:nth-child(1) {
+                font-size: 16px;
+                color: #00ecff;
               }
 
-              @keyframes progressAnimation {
-                from {
-                  transform: scaleX(0);
+              &:nth-child(2) {
+                font-size: 16px;
+                color: #25ff50;
+              }
+            }
+
+            .progress {
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+
+              .labels {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                span {
+                  font-size: 16px;
+                  color: #ffffff;
                 }
-                to {
-                  transform: scaleX(1);
+              }
+
+              .bar {
+                position: relative;
+                width: 100%;
+                height: 4px;
+                background: rgba(0, 0, 0, 0.2);
+                margin-top: 5px;
+
+                .val {
+                  position: absolute;
+                  left: 0;
+                  top: 0;
+                  height: 100%;
+                  background: linear-gradient(90deg, #cf6100 0%, #fffe70 100%);
+                  border-radius: 2px;
+                  animation: progressAnimation 1.5s ease-in-out;
+                  transform-origin: left;
+                }
+
+                @keyframes progressAnimation {
+                  from {
+                    transform: scaleX(0);
+                  }
+                  to {
+                    transform: scaleX(1);
+                  }
                 }
               }
             }
@@ -784,12 +839,6 @@ export default {
         width: 31px;
         height: 16px;
       }
-    }
-
-    .active {
-      background: url("~@/assets/img/home/center_bg1_active.png") no-repeat
-        center center;
-      background-size: 100% 100%;
     }
   }
 
