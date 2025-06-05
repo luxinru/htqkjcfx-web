@@ -14,7 +14,7 @@ export default {
   mounted () {},
   methods: {}
 }
-</script>
+</script>a
 
 <style  lang="scss">
 .App {

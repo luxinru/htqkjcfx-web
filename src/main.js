@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import './styles/common.scss';
+import autofit from 'autofit.js'
 
 // Vue.config.productionTip = false;
 // 公共样式
@@ -45,6 +46,8 @@ Vue.prototype.$EventBus = EventBus;
 // });
 // Vue.use(Antd);
 // Vue.component('IconFont', IconFont)
+
+autofit.init()
 
 new Vue({
   router,
