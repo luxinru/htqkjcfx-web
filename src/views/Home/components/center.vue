@@ -1043,11 +1043,11 @@ export default {
             border-bottom: 1px solid rgba(0, 236, 255, 0.2);
             cursor: pointer;
 
-            &:hover {
-              background: rgba(0, 236, 255, 0.1);
-              box-shadow: 0 0 20px rgba(0, 236, 255, 0.3);
-              transform: translateY(-2px);
-            }
+            // &:hover {
+            //   background: rgba(0, 236, 255, 0.1);
+            //   box-shadow: 0 0 20px rgba(0, 236, 255, 0.3);
+            //   transform: translateY(-2px);
+            // }
 
             &:nth-child(even) {
               background: rgba(27, 255, 204, 0.05);
