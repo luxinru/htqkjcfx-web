@@ -34,9 +34,16 @@
                 <img v-else src="@/assets/img/home/select.png" alt="" />
               </div>
 
-              <div class="value">
-                {{ card.value }}
-                <span>{{ card.unit }}</span>
+              <div class="value" :class="{ red: card.value < 0 }" >
+                <ReasonModal
+                  title="具体原因"
+                  reason="亏损主要原因是因为同方科创新签合同减少，收入减少。"
+                  ZBBM="ZBBM"
+                  DWBM="DWBM"
+                >
+                  {{ card.value }}
+                  <span>{{ card.unit }}</span>
+                </ReasonModal>
               </div>
             </div>
           </div>
@@ -158,6 +165,7 @@
 <script>
 import * as echarts from "echarts";
 import Pie from "./pie.vue";
+import ReasonModal from "@/components/reason_modal.vue";
 import { api2 } from "@/api/outer";
 import { api6, api7, api8 } from "@/api/home";
 
@@ -165,7 +173,8 @@ export default {
   name: "Center",
 
   components: {
-    Pie
+    Pie,
+    ReasonModal
   },
 
   data() {
@@ -749,6 +758,10 @@ export default {
 
               span {
                 font-size: 14px;
+              }
+
+              &.red {
+                color: rgba(255, 51, 85, 1);
               }
             }
           }

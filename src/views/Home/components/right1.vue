@@ -123,7 +123,7 @@ export default {
 
       &:nth-child(2),
       &:nth-child(3) {
-        padding: 10px 20px;
+        padding: 10px;
         box-sizing: border-box;
         justify-content: center;
         align-items: center;
@@ -131,12 +131,12 @@ export default {
 
         span {
           &:nth-child(1) {
-            font-size: 16px;
+            font-size: 14px;
             color: #ffffff;
           }
 
           &:nth-child(2) {
-            font-size: 16px;
+            font-size: 14px;
             color: #25ff50;
             display: flex;
             align-items: center;
