@@ -143,7 +143,7 @@ export default {
             display: flex;
             align-items: baseline;
             font-weight: 400;
-            font-size: 24px;
+            font-size: 18px;
             color: #3ff1ff;
 
             span {

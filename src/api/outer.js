@@ -168,7 +168,7 @@ const api4 = function() {
       compareValue: "1.2个百分点",
       isNegative: false,
       yearOnYear: {
-        value: "15.7",
+        value: "15.7%",
         isNegative: false
       }
     },
@@ -180,7 +180,7 @@ const api4 = function() {
       compareValue: "1.2个百分点",
       isNegative: false,
       yearOnYear: {
-        value: "2.79",
+        value: "2.79%",
         isNegative: true
       }
     },

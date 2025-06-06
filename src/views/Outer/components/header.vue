@@ -1,5 +1,7 @@
 <template>
   <div class="header">
+    <div class="back" @click="$router.back()"></div>
+
     <img src="@/assets/img/home/header_title.png" alt="" />
 
     <section class="date">
@@ -92,6 +94,23 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .back {
+    position: absolute;
+    left: 20px;
+    margin-bottom: 24px;
+    width: 20px;
+    height: 18px;
+    background: url("~@/assets/img/outer/back.png") no-repeat center center;
+    background-size: 100% 100%;
+
+    &:hover {
+      cursor: pointer;
+      background: url("~@/assets/img/outer/back_active.png") no-repeat center
+        center;
+      background-size: 100% 100%;
+    }
+  }
 
   // .text {
   //   font-weight: bold;

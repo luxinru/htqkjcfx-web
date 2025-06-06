@@ -107,8 +107,8 @@ export default {
 
       k = typeof k !== "undefined" ? k : 1 / 3;
       // 修改偏移量，增加展开距离
-      const offsetX = isSelected ? Math.cos(midRadian) * 0.3 : 0;
-      const offsetY = isSelected ? Math.sin(midRadian) * 0.3 : 0;
+      const offsetX = isSelected ? Math.cos(midRadian) * 0.5 : 0;
+      const offsetY = isSelected ? Math.sin(midRadian) * 0.5 : 0;
       const hoverRate = isHovered ? 1.05 : 1;
 
       return {
@@ -157,7 +157,7 @@ export default {
           if (u > Math.PI * 2.5) {
             return Math.sin(u);
           }
-          return Math.sin(v) > 0 ? 60 : -1;
+          return Math.sin(v) > 0 ? 40 : -1;
         }
       };
     },
@@ -189,6 +189,26 @@ export default {
             selected: false,
             hovered: false,
             k
+          },
+          label: {
+            show: true,
+            position: 'outside',
+            formatter: params => {
+              return `${params.name} ${params.data.actValue}%`;
+            },
+            color: '#fff',
+            fontSize: 12,
+            distance: 80,
+            alignTo: 'edge',
+            edgeDistance: '10%'
+          },
+          labelLine: {
+            show: true,
+            length: 80,
+            length2: 30,
+            lineStyle: {
+              color: 'rgba(255, 255, 255, 0.3)'
+            }
           }
         };
         if (typeof pieData[i].itemStyle !== "undefined") {
@@ -206,7 +226,7 @@ export default {
         series[i].parametricEquation = this.getParametricEquation(
           series[i].pieData.startRatio,
           series[i].pieData.endRatio,
-          false,
+          i === 3,
           false,
           k,
           10
@@ -226,24 +246,30 @@ export default {
             return `${params.name} ${params.data.actValue}%`;
           },
           color: "#fff",
-          fontSize: 12
+          fontSize: 12,
+          distanceToLabelLine: 5,
+          alignTo: 'edge',
+          edgeDistance: '10%'
         },
         labelLine: {
           show: true,
-          length: 50,
-          length2: 20,
+          length: 80,
+          length2: 30,
           lineStyle: {
             color: "rgba(255, 255, 255, 0.3)"
-          }
+          },
+          smooth: true
         },
-        startAngle: -30, //起始角度，支持范围[0, 360]。
-        clockwise: false, //饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
-        radius: ["40%", "60%"],
+        startAngle: 240,
+        clockwise: false,
+        radius: ["0%", "100%"],
         center: ["50%", "50%"],
         data: pieData,
         itemStyle: {
           opacity: 0
-        }
+        },
+        zlevel: -1,
+        silent: true
       });
 
       // 准备待返回的配置项，把准备好的series 传入。
@@ -278,16 +304,16 @@ export default {
         },
         grid3D: {
           show: false,
-          top: 0,
+          top: '-10%',
           boxHeight: 1,
           viewControl: {
-            alpha: 40,
-            beta: 45,
+            alpha: 25,
+            beta: 85,
             rotateSensitivity: 5,
             zoomSensitivity: 1,
             panSensitivity: 1,
             autoRotate: false,
-            distance: 300
+            distance: 200
           }
         },
         series

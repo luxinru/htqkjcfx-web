@@ -110,7 +110,7 @@ export default {
 
           &:nth-child(2) {
             font-weight: 400;
-            font-size: 22px;
+            font-size: 18px;
             color: #3ff1ff;
           }
 

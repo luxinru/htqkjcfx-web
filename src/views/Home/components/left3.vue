@@ -340,7 +340,7 @@ export default {
         span {
           &:nth-child(1) {
             font-weight: 400;
-            font-size: 24rpx;
+            font-size: 18rpx;
             color: #ffffff;
           }
 

@@ -30,11 +30,31 @@
                   v-if="active === card.id"
                   src="@/assets/img/home/select_active.png"
                   alt=""
+                  @click.stop="
+                    $router.push({
+                      path: '/outer',
+                      query: {
+                        id: card.id
+                      }
+                    })
+                  "
                 />
-                <img v-else src="@/assets/img/home/select.png" alt="" />
+                <img
+                  v-else
+                  src="@/assets/img/home/select.png"
+                  alt=""
+                  @click.stop="
+                    $router.push({
+                      path: '/outer',
+                      query: {
+                        id: card.id
+                      }
+                    })
+                  "
+                />
               </div>
 
-              <div class="value" :class="{ red: card.value < 0 }" >
+              <div class="value" :class="{ red: card.value < 0 }">
                 <ReasonModal
                   title="具体原因"
                   reason="亏损主要原因是因为同方科创新签合同减少，收入减少。"
@@ -753,7 +773,7 @@ export default {
 
             .value {
               font-weight: 400;
-              font-size: 36px;
+              font-size: 30px;
               color: #1bffcc;
 
               span {
