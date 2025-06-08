@@ -79,6 +79,11 @@ const routes = [
     component: () => import("@/views/Outer/index.vue")
   },
   {
+    path: "/contract",
+    name: "contract",
+    component: () => import("@/views/Contract/index.vue")
+  },
+  {
     path: "/digitalplatform",
     name: "digitalPlatform",
     component: () => import("@/views/DigitalPlatform/index.vue"),
