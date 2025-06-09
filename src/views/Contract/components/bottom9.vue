@@ -1,171 +1,76 @@
 <template>
-  <div class="bottom3">
-    <section class="tabs">
-      <div class="tab" :class="{ active: active === 1 }" @click="active = 1">
-        境内
-      </div>
-      <div class="tab" :class="{ active: active === 2 }" @click="active = 2">
-        境外
-      </div>
-    </section>
-
+  <div class="bottom9">
     <section class="table">
       <table>
         <thead>
           <tr>
             <th>
-              排名
+              序号
             </th>
             <th>
-              地区
+              客户价值划分
             </th>
             <th>
-              合同总金额(含税)
+              客户名称
             </th>
             <th>
-              合同数量
+              粘性
             </th>
             <th>
-              客户数量
+              忠诚度
+            </th>
+            <th>
+              贡献度
+            </th>
+            <th>
+              R(最近新签合同时间范围/天）
+            </th>
+            <th>
+              F(合同签订数量/个)
+            </th>
+            <th>
+              M(签订合同总额/万元）
+            </th>
+            <th>
+              采取措施参考
             </th>
           </tr>
         </thead>
 
         <tbody>
-          <tr>
+          <tr v-for="index in 4" :key="index">
             <td>
-              <img src="~@/assets/img/contract/icon14.png" alt="" />
+              {{ index }}
             </td>
             <td>
-              黑龙江省
+              重要价值客户
             </td>
             <td>
-              123,12345
+              沈阳同方科技园消防系统升级改造项目
             </td>
             <td>
-              2285
+              高
+              <img src="~@/assets/img/contract/up.png" alt="" />
             </td>
             <td>
-              532
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img src="~@/assets/img/contract/icon15.png" alt="" />
+              高
+              <img src="~@/assets/img/contract/up.png" alt="" />
             </td>
             <td>
-              山东省
+              高
+              <img src="~@/assets/img/contract/up.png" alt="" />
             </td>
             <td>
-              123,12345
+              22
             </td>
             <td>
-              987
+              22
             </td>
             <td>
-              412
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img src="~@/assets/img/contract/icon16.png" alt="" />
+              22
             </td>
             <td>
-              甘肃省
-            </td>
-            <td>
-              123,12345
-            </td>
-            <td>
-              752
-            </td>
-            <td>
-              255
-            </td>
-          </tr>
-          <tr>
-            <td>
-              4
-            </td>
-            <td>
-              云南省
-            </td>
-            <td>
-              123,12345
-            </td>
-            <td>
-              651
-            </td>
-            <td>
-              222
-            </td>
-          </tr>
-          <tr>
-            <td>
-              5
-            </td>
-            <td>
-              河南省
-            </td>
-            <td>
-              123,12345
-            </td>
-            <td>
-              400
-            </td>
-            <td>
-              112
-            </td>
-          </tr>
-          <tr>
-            <td>
-              6
-            </td>
-            <td>
-              河北省
-            </td>
-            <td>
-              123,12345
-            </td>
-            <td>
-              200
-            </td>
-            <td>
-              111
-            </td>
-          </tr>
-          <tr>
-            <td>
-              7
-            </td>
-            <td>
-              重庆
-            </td>
-            <td>
-              123,12345
-            </td>
-            <td>
-              150
-            </td>
-            <td>
-              100
-            </td>
-          </tr>
-          <tr>
-            <td>
-              8
-            </td>
-            <td>
-              天津
-            </td>
-            <td>
-              123,12345
-            </td>
-            <td>
-              140
-            </td>
-            <td>
-              50
+              中国人民共和...
             </td>
           </tr>
         </tbody>
@@ -206,61 +111,57 @@
 
 <script>
 export default {
-  name: "bottom3",
+  name: "bottom9",
 
   data() {
     return {
-      active: 1,
       currentPage: 1,
-      totalPages: 10
+      totalPages: 10,
+      options: [
+        {
+          label: "中央企业",
+          value: "1"
+        },
+        {
+          label: "国有企业",
+          value: "2"
+        }
+      ],
+      options2: [
+        {
+          label: "农业",
+          value: "1"
+        },
+        {
+          label: "制造业",
+          value: "2"
+        },
+        {
+          label: "服务业",
+          value: "3"
+        }
+      ]
     };
+  },
+  methods: {
+    handleChange(value) {
+      console.log(value);
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.bottom3 {
+.bottom9 {
   width: 100%;
   height: 100%;
-  aspect-ratio: 659 / 479;
-  display: flex;
-  flex-direction: column;
-  padding: 16px 0 16px 16px;
+  padding: 16px 0 0 0;
   box-sizing: border-box;
-
-  .tabs {
-    width: 100%;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
-    .tab {
-      width: max-content;
-      padding: 0 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 66, 119, 0.4);
-      border-radius: 5px;
-      border: 1px solid #005090;
-      font-weight: normal;
-      font-size: 14px;
-      color: #6bd8ff;
-      cursor: pointer;
-    }
-
-    .active {
-      background: #004277;
-      border: 1px solid #707070;
-      color: #ffffff;
-    }
-  }
+  overflow: hidden;
 
   .table {
     width: 100%;
-    flex: 1 0;
-    margin-top: 16px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

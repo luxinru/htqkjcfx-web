@@ -14,7 +14,7 @@
         class="proportion"
         :class="{ up: item.status === 'up', down: item.status === 'down' }"
       >
-        <span>
+        <span v-if="item.status !== ''">
           同比：
         </span>
         <img
@@ -163,7 +163,7 @@ export default {
       img {
         margin-right: 3px;
       }
-    } 
+    }
 
     .up {
       color: #25ff50;

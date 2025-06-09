@@ -32,21 +32,77 @@
           客户分析
         </div>
         <div class="box box1" style="padding: 0;">
-          <bottom1 />
+          <bottom1 :active="active" @update:active="handleActive" />
         </div>
         <div class="box box2">
-          <div class="box_title">
-            <img src="~@/assets/img/contract/icon6.png" alt="" />
-          </div>
-          <div class="box_container">
-            <div class="box_container_part">
-              <bottom2 />
+          <template v-if="active === 1">
+            <div class="box_title">
+              <img src="~@/assets/img/contract/icon6.png" alt="" />
             </div>
-            <div class="line"></div>
-            <div class="box_container_part">
-              <bottom3 />
+            <div class="box_container">
+              <div class="box_container_part">
+                <bottom2 />
+              </div>
+              <div class="line"></div>
+              <div class="box_container_part">
+                <bottom3 />
+              </div>
             </div>
-          </div>
+          </template>
+
+          <template v-if="active === 2 || active === 3">
+            <div class="box_title">
+              <img src="~@/assets/img/contract/icon17.png" alt="" />
+            </div>
+            <div class="box_container">
+              <bottom4 />
+            </div>
+          </template>
+
+          <template v-if="active === 4">
+            <div class="box_title">
+              <img src="~@/assets/img/contract/icon18.png" alt="" />
+            </div>
+            <div class="box_container">
+              <div class="box_container_part">
+                <bottom5 />
+              </div>
+              <div class="line"></div>
+              <div class="box_container_part">
+                <bottom5 />
+              </div>
+            </div>
+          </template>
+
+          <template v-if="active === 5">
+            <div class="box_title">
+              <img src="~@/assets/img/contract/icon19.png" alt="" />
+            </div>
+            <div class="box_container">
+              <div class="box_container_part">
+                <bottom6 />
+              </div>
+              <div class="line"></div>
+              <div class="box_container_part">
+                <bottom7 />
+              </div>
+            </div>
+          </template>
+
+          <template v-if="active === 6">
+            <div class="box_title">
+              <img src="~@/assets/img/contract/icon19.png" alt="" />
+            </div>
+            <div class="box_container column">
+              <div class="box_container_part">
+                <bottom8 />
+              </div>
+              <div class="line"></div>
+              <div class="box_container_part">
+                <bottom9 />
+              </div>
+            </div>
+          </template>
         </div>
       </div>
     </section>
@@ -61,6 +117,12 @@ import top3 from "./components/top3.vue";
 import bottom1 from "./components/bottom1.vue";
 import bottom2 from "./components/bottom2.vue";
 import bottom3 from "./components/bottom3.vue";
+import bottom4 from "./components/bottom4.vue";
+import bottom5 from "./components/bottom5.vue";
+import bottom6 from "./components/bottom6.vue";
+import bottom7 from "./components/bottom7.vue";
+import bottom8 from "./components/bottom8.vue";
+import bottom9 from "./components/bottom9.vue";
 
 export default {
   name: "Contract",
@@ -72,14 +134,26 @@ export default {
     top3,
     bottom1,
     bottom2,
-    bottom3
+    bottom3,
+    bottom4,
+    bottom5,
+    bottom6,
+    bottom7,
+    bottom8,
+    bottom9
   },
 
   data() {
-    return {};
+    return {
+      active: 6
+    };
   },
   mounted() {},
-  methods: {}
+  methods: {
+    handleActive(index) {
+      this.active = index;
+    }
+  }
 };
 </script>
 
@@ -165,12 +239,28 @@ export default {
           .box_container_part {
             flex: 1 0;
             height: 100%;
+            overflow: hidden;
           }
 
           .line {
             width: 0;
             height: 464px;
             border-left: 1px dashed rgba(0, 105, 202, 1);
+          }
+        }
+
+        .column {
+          flex-direction: column;
+
+          .box_container_part {
+            width: 100%;
+            flex: 1 0;
+          }
+
+          .line {
+            width: 100%;
+            height: 0;
+            border-top: 1px dashed rgba(0, 105, 202, 1);
           }
         }
       }

@@ -1,6 +1,6 @@
 <template>
   <div class="bottom1">
-    <div class="item" :class="{ active: active === 1 }" @click="active = 1">
+    <div class="item" :class="{ active: active === 1 }" @click="handleClick(1)">
       <div class="labels">
         <span>
           客户地域分布
@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="item" :class="{ active: active === 2 }" @click="active = 2">
+    <div class="item" :class="{ active: active === 2 }" @click="handleClick(2)">
       <div class="labels">
         <span>
           客户数量
@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <div class="item" :class="{ active: active === 3 }" @click="active = 3">
+    <div class="item" :class="{ active: active === 3 }" @click="handleClick(3)">
       <div class="labels">
         <span>
           本年新增客户数量
@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div class="item" :class="{ active: active === 4 }" @click="active = 4">
+    <div class="item" :class="{ active: active === 4 }" @click="handleClick(4)">
       <div class="labels">
         <span>
           客户企业类型
@@ -62,7 +62,7 @@
       </div>
     </div>
 
-    <div class="item" :class="{ active: active === 5 }" @click="active = 5">
+    <div class="item" :class="{ active: active === 5 }" @click="handleClick(5)">
       <div class="labels">
         <span>
           客户贡献度
@@ -80,7 +80,7 @@
       </div>
     </div>
 
-    <div class="item" :class="{ active: active === 6 }" @click="active = 6">
+    <div class="item" :class="{ active: active === 6 }" @click="handleClick(6)">
       <div class="labels">
         <span>
           价值标签
@@ -94,7 +94,7 @@
         <span>
           256
         </span>
-      </div> 
+      </div>
     </div>
   </div>
 </template>
@@ -103,10 +103,21 @@
 export default {
   name: "bottom1",
 
+  props: {
+    active: {
+      type: Number,
+      default: 1
+    }
+  },
+
   data() {
-    return {
-      active: 1
-    };
+    return {};
+  },
+
+  methods: {
+    handleClick(index) {
+      this.$emit("update:active", index);
+    }
   }
 };
 </script>

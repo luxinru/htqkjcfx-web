@@ -4,6 +4,10 @@
 
     <img src="@/assets/img/home/header_title.png" alt="" />
 
+    <div class="org" @click="toggleOrgList">
+      组织机构
+    </div>
+
     <section class="date">
       截止日期:
       <div class="select_box" @click="toggleYearDropdown">
@@ -35,14 +39,25 @@
       </div>
       月
     </section>
+
+    <section class="org_list" :class="{ show: isShowOrgList }">
+      <OrgTree />
+    </section>
   </div>
 </template>
 
 <script>
+import OrgTree from "./org_tree.vue";
 export default {
   name: "Header",
+
+  components: {
+    OrgTree
+  },
+
   data() {
     return {
+      isShowOrgList: true,
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
       showYearDropdown: false,
@@ -62,19 +77,26 @@ export default {
   },
 
   methods: {
+    toggleOrgList() {
+      this.isShowOrgList = !this.isShowOrgList;
+    },
+
     toggleYearDropdown() {
       this.showYearDropdown = !this.showYearDropdown;
       this.showMonthDropdown = false;
     },
+
     toggleMonthDropdown() {
       this.showMonthDropdown = !this.showMonthDropdown;
       this.showYearDropdown = false;
     },
+
     selectYear(year) {
       this.year = year;
       this.showYearDropdown = false;
       this.$EventBus.$emit("updateDate", `${year}年${this.month}月`);
     },
+    
     selectMonth(month) {
       this.month = month;
       this.showMonthDropdown = false;
@@ -98,7 +120,7 @@ export default {
   .back {
     position: absolute;
     left: 20px;
-    margin-bottom: 24px;
+    margin-bottom: 26px;
     width: 20px;
     height: 18px;
     background: url("~@/assets/img/outer/back.png") no-repeat center center;
@@ -110,6 +132,24 @@ export default {
         center;
       background-size: 100% 100%;
     }
+  }
+
+  .org {
+    position: absolute;
+    left: 128px;
+    margin-bottom: 26px;
+    width: 140px;
+    height: 34px;
+    background: url("~@/assets/img/contract/header_btn.png") no-repeat center
+      center;
+    background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
   }
 
   // .text {
@@ -163,6 +203,28 @@ export default {
           }
         }
       }
+    }
+  }
+
+  .org_list {
+    position: fixed;
+    left: 0;
+    bottom: 16px;
+    width: 374px;
+    height: 1018px;
+    background: url("~@/assets/img/contract/org_bac.png") no-repeat center center;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    padding: 30px 16px;
+    box-sizing: border-box;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    
+    &.show {
+      left: 10px;
+      transform: translateX(0);
     }
   }
 }
