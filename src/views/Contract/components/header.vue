@@ -57,7 +57,7 @@ export default {
 
   data() {
     return {
-      isShowOrgList: true,
+      isShowOrgList: false,
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
       showYearDropdown: false,

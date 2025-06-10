@@ -7,13 +7,39 @@
       <img src="@/assets/img/contract/search.png" alt="" />
     </div>
 
-    <section class="tree"></section>
+    <section class="tree">
+      <div
+        v-for="item in orgList"
+        :key="item.id"
+        :style="{
+          paddingLeft: 0 + 'px',
+          lineHeight: '40px',
+          fontSize: '16px',
+          color: 'rgba(107, 216, 255, 1)',
+          fontWeight: 'normal',
+          cursor: 'pointer'
+        }"
+      >
+        {{ item.name }}
+        <tree-children
+          v-if="item.children && item.children.length"
+          :children="item.children"
+          :level="1"
+        />
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
+import treeChildren from './tree_children.vue';
+
 export default {
   name: "OrgTree",
+
+  components: {
+    treeChildren
+  },
 
   data() {
     return {
@@ -126,9 +152,7 @@ export default {
         }
       ]
     };
-  },
-
-  methods: {}
+  }
 };
 </script>
 
