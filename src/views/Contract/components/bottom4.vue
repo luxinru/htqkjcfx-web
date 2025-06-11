@@ -29,8 +29,24 @@
               <th>客户名称</th>
               <th>企业类型</th>
               <th>所属行业</th>
-              <th>合同总金额(含税)</th>
-              <th>合同数量</th>
+              <th>
+                <div class="th">
+                  合同总金额(含税)
+                  <div class="sort">
+                    <div class="up"></div>
+                    <div class="down"></div>
+                  </div>
+                </div>
+              </th>
+              <th>
+                <div class="th">
+                  合同数量
+                  <div class="sort">
+                    <div class="up"></div>
+                    <div class="down"></div>
+                  </div>
+                </div>
+              </th>
               <th>所属区域</th>
             </tr>
           </thead>
@@ -327,6 +343,50 @@ export default {
             &:nth-child(7) {
               width: 150px;
             } // 所属区域
+
+            .th {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 4px;
+            } 
+
+            .sort {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              gap: 2px;
+              cursor: pointer;
+
+              .up {
+                width: 11px;
+                height: 6px;
+                background: url("~@/assets/img/contract/sort_up_default.png")
+                  no-repeat center center;
+                background-size: 100% 100%;
+
+                &:hover {
+                  background: url("~@/assets/img/contract/sort_up_active.png")
+                    no-repeat center center;
+                  background-size: 100% 100%;
+                }
+              }
+
+              .down {
+                width: 11px;
+                height: 6px;
+                background: url("~@/assets/img/contract/sort_down_default.png")
+                  no-repeat center center;
+                background-size: 100% 100%;
+
+                &:hover {
+                  background: url("~@/assets/img/contract/sort_down_active.png")
+                    no-repeat center center;
+                  background-size: 100% 100%;
+                }
+              }
+            }
           }
         }
       }

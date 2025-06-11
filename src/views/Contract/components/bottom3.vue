@@ -1,10 +1,10 @@
 <template>
   <div class="bottom3">
     <section class="tabs">
-      <div class="tab" :class="{ active: active === 1 }" @click="active = 1">
+      <div class="tab" :class="{ active: active === 1 }" @click="onChange(1)">
         境内
       </div>
-      <div class="tab" :class="{ active: active === 2 }" @click="active = 2">
+      <div class="tab" :class="{ active: active === 2 }" @click="onChange(2)">
         境外
       </div>
     </section>
@@ -20,13 +20,31 @@
               地区
             </th>
             <th>
-              合同总金额(含税)
+              <div class="th">
+                合同总金额(含税)
+                <div class="sort">
+                  <div class="up"></div>
+                  <div class="down"></div>
+                </div>
+              </div>
             </th>
             <th>
-              合同数量
+              <div class="th">
+                合同数量
+                <div class="sort">
+                  <div class="up"></div>
+                  <div class="down"></div>
+                </div>
+              </div>
             </th>
             <th>
-              客户数量
+              <div class="th">
+                客户数量
+                <div class="sort">
+                  <div class="up"></div>
+                  <div class="down"></div>
+                </div>
+              </div>
             </th>
           </tr>
         </thead>
@@ -161,6 +179,13 @@ export default {
 
     formatNumber(num) {
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+
+    onChange(type) {
+      this.active = type;
+      this.currentPage = 1;
+      this.getData();
+      this.$EventBus.$emit("updateContractType", type);
     }
   }
 };
@@ -238,6 +263,50 @@ export default {
             font-size: 16px;
             color: #6bd8ff;
             text-align: center;
+
+            .th {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 4px;
+            }
+
+            .sort {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              gap: 2px;
+              cursor: pointer;
+
+              .up {
+                width: 11px;
+                height: 6px;
+                background: url("~@/assets/img/contract/sort_up_default.png")
+                  no-repeat center center;
+                background-size: 100% 100%;
+
+                &:hover {
+                  background: url("~@/assets/img/contract/sort_up_active.png")
+                    no-repeat center center;
+                  background-size: 100% 100%;
+                }
+              }
+
+              .down {
+                width: 11px;
+                height: 6px;
+                background: url("~@/assets/img/contract/sort_down_default.png")
+                  no-repeat center center;
+                background-size: 100% 100%;
+
+                &:hover {
+                  background: url("~@/assets/img/contract/sort_down_active.png")
+                    no-repeat center center;
+                  background-size: 100% 100%;
+                }
+              }
+            }
           }
         }
       }
