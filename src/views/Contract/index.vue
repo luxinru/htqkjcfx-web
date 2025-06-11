@@ -7,7 +7,7 @@
         <div class="side">
           合同分析
         </div>
-        <div class="box box1">
+        <!-- <div class="box box1">
           <div class="box_title">
             <img src="~@/assets/img/contract/icon8.png" alt="" />
           </div>
@@ -17,6 +17,9 @@
         </div>
         <div class="box box2" style="padding: 0;">
           <top2 />
+        </div> -->
+        <div class="box box4" style="padding: 0;">
+          <top4 />
         </div>
         <div class="box box3">
           <div class="box_title">
@@ -114,6 +117,7 @@ import Header from "./components/header.vue";
 import top1 from "./components/top1.vue";
 import top2 from "./components/top2.vue";
 import top3 from "./components/top3.vue";
+import top4 from "./components/top4.vue";
 import bottom1 from "./components/bottom1.vue";
 import bottom2 from "./components/bottom2.vue";
 import bottom3 from "./components/bottom3.vue";
@@ -132,6 +136,7 @@ export default {
     top1,
     top2,
     top3,
+    top4,
     bottom1,
     bottom2,
     bottom3,
@@ -278,10 +283,14 @@ export default {
       }
 
       .box3 {
-        flex: 610 0;
-        background: url("~@/assets/img/contract/icon4.png") no-repeat center
+        flex: 916 0;
+        background: url("~@/assets/img/contract/icon20.png") no-repeat center
           center;
         background-size: 100% 100%;
+      }
+
+      .box4 {
+        flex: 594 0;
       }
     }
 
