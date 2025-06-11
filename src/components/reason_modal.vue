@@ -31,24 +31,56 @@ export default {
       modalStyle: {
         top: "100px",
         left: "100px"
-      }
+      },
+      // 记录点击事件坐标
+      clickX: 0,
+      clickY: 0
     };
   },
   methods: {
     openModal(e) {
+      // 保存点击坐标
+      this.clickX = e.clientX;
+      this.clickY = e.clientY;
+      
       this.visible = true;
       this.$nextTick(() => {
-        // 获取包裹元素的位置信息
-        const wrapper = this.$el;
-        const rect = wrapper.getBoundingClientRect();
         const modalWidth = 453; // 弹窗宽度，需与样式一致
-        const left = rect.left + (rect.width - modalWidth) / 2;
-        const top = rect.bottom + 8; // 距离底部8px
+        const modalHeight = 132; // 弹窗高度，与样式保持一致
+        
+        // 使用事件的clientX/Y精确定位，不依赖于元素位置
+        // 使弹窗中心点与点击位置对齐
+        const left = this.clickX - (modalWidth / 2);
+        const top = this.clickY + 20; // 在点击位置下方20px
+        
+        // 确保弹窗不会超出视口边缘
+        const viewportWidth = document.documentElement.clientWidth;
+        const viewportHeight = document.documentElement.clientHeight;
+        
+        let adjustedLeft = left;
+        let adjustedTop = top;
+        
+        // 水平边界处理
+        if (left + modalWidth > viewportWidth) {
+          adjustedLeft = viewportWidth - modalWidth - 10;
+        }
+        if (adjustedLeft < 10) {
+          adjustedLeft = 10;
+        }
+        
+        // 垂直边界处理
+        if (top + modalHeight > viewportHeight) {
+          // 如果下方空间不足，则显示在点击位置上方
+          adjustedTop = this.clickY - modalHeight - 10;
+        }
+        if (adjustedTop < 10) {
+          adjustedTop = 10;
+        }
 
         this.modalStyle = {
           position: "fixed",
-          top: top + "px",
-          left: left + "px",
+          top: adjustedTop + "px",
+          left: adjustedLeft + "px",
           minWidth: modalWidth + "px",
           zIndex: 1001
         };

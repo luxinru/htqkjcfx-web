@@ -151,7 +151,16 @@
                 <table class="body-table">
                   <tbody>
                     <tr v-for="(item, index) in tableData" :key="index">
-                      <td>{{ item.name }}</td>
+                      <td>
+                        <ReasonModal
+                          title="具体原因"
+                          reason="亏损主要原因是因为同方科创新签合同减少，收入减少。"
+                          ZBBM="ZBBM"
+                          DWBM="DWBM"
+                        >
+                          {{ item.name }}
+                        </ReasonModal>
+                      </td>
                       <td>{{ item.currentValue }}</td>
                       <td>{{ item.planValue }}</td>
                       <td>{{ item.completionRate }}</td>
@@ -225,7 +234,7 @@ export default {
       // this.initPieChart();
       this.initChart2();
       this.initTableData();
-      // this.startAutoScroll();
+      this.startAutoScroll();
     });
 
     this.$EventBus.$on("updateDate", date => {
@@ -238,7 +247,7 @@ export default {
         // this.initPieChart();
         this.initChart2();
         this.initTableData();
-        // this.startAutoScroll();
+        this.startAutoScroll();
       });
     });
   },

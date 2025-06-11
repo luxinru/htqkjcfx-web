@@ -152,7 +152,7 @@ export default {
 
   data() {
     return {
-      active: 6
+      active: 1
     };
   },
   mounted() {},

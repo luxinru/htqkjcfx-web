@@ -25,18 +25,42 @@
               <td>{{ item.name }}</td>
               <td>
                 {{ item.nx }}
-                <img v-if="item.nxtb > 0" src="~@/assets/img/contract/up.png" alt="" />
-                <img v-else-if="item.nxtb < 0" src="~@/assets/img/contract/down.png" alt="" />
+                <img
+                  v-if="item.nxtb > 0"
+                  src="~@/assets/img/contract/up.png"
+                  alt=""
+                />
+                <img
+                  v-else-if="item.nxtb < 0"
+                  src="~@/assets/img/contract/down.png"
+                  alt=""
+                />
               </td>
               <td>
                 {{ item.zcd }}
-                <img v-if="item.zcdtb > 0" src="~@/assets/img/contract/up.png" alt="" />
-                <img v-else-if="item.zcdtb < 0" src="~@/assets/img/contract/down.png" alt="" />
+                <img
+                  v-if="item.zcdtb > 0"
+                  src="~@/assets/img/contract/up.png"
+                  alt=""
+                />
+                <img
+                  v-else-if="item.zcdtb < 0"
+                  src="~@/assets/img/contract/down.png"
+                  alt=""
+                />
               </td>
               <td>
                 {{ item.gxd }}
-                <img v-if="item.gxdtb > 0" src="~@/assets/img/contract/up.png" alt="" />
-                <img v-else-if="item.gxdtb < 0" src="~@/assets/img/contract/down.png" alt="" />
+                <img
+                  v-if="item.gxdtb > 0"
+                  src="~@/assets/img/contract/up.png"
+                  alt=""
+                />
+                <img
+                  v-else-if="item.gxdtb < 0"
+                  src="~@/assets/img/contract/down.png"
+                  alt=""
+                />
               </td>
               <td>{{ item.R }}</td>
               <td>{{ item.F }}</td>
@@ -55,7 +79,10 @@
         >
           首页
         </button>
-        <button :disabled="currentPage === 1" @click="handlePageChange(currentPage - 1)">
+        <button
+          :disabled="currentPage === 1"
+          @click="handlePageChange(currentPage - 1)"
+        >
           &lt;
         </button>
         <template v-for="(item, index) in paginationItems">
@@ -63,10 +90,14 @@
             v-if="item.type === 'number'"
             :class="{ active: item.value === currentPage }"
             @click="handlePageChange(item.value)"
-          >{{ item.value }}</span>
+            >{{ item.value }}</span
+          >
           <span v-else class="ellipsis">{{ item.value }}</span>
         </template>
-        <button :disabled="currentPage === totalPages" @click="handlePageChange(currentPage + 1)">
+        <button
+          :disabled="currentPage === totalPages"
+          @click="handlePageChange(currentPage + 1)"
+        >
           &gt;
         </button>
         <button
@@ -101,37 +132,37 @@ export default {
     paginationItems() {
       const items = [];
       const maxVisiblePages = 5; // 最多显示的页码数
-      
+
       if (this.totalPages <= maxVisiblePages) {
         // 如果总页数小于等于最大显示页数，显示所有页码
         for (let i = 1; i <= this.totalPages; i++) {
-          items.push({ type: 'number', value: i });
+          items.push({ type: "number", value: i });
         }
       } else {
         // 始终显示第一页
-        items.push({ type: 'number', value: 1 });
-        
+        items.push({ type: "number", value: 1 });
+
         // 计算当前页附近的页码
         let start = Math.max(2, this.currentPage - 1);
         let end = Math.min(this.totalPages - 1, this.currentPage + 1);
-        
+
         // 调整起始和结束页码，确保显示足够的页码
         if (start > 2) {
-          items.push({ type: 'ellipsis', value: '...' });
+          items.push({ type: "ellipsis", value: "..." });
         }
-        
+
         for (let i = start; i <= end; i++) {
-          items.push({ type: 'number', value: i });
+          items.push({ type: "number", value: i });
         }
-        
+
         if (end < this.totalPages - 1) {
-          items.push({ type: 'ellipsis', value: '...' });
+          items.push({ type: "ellipsis", value: "..." });
         }
-        
+
         // 始终显示最后一页
-        items.push({ type: 'number', value: this.totalPages });
+        items.push({ type: "number", value: this.totalPages });
       }
-      
+
       return items;
     }
   },
@@ -147,7 +178,7 @@ export default {
         time: "2024-11",
         pageNum: this.currentPage,
         pageSize: this.pageSize
-      }
+      };
       const res = await api.queryPfmPage(options);
       if (res) {
         // 制造假数据方便调试
@@ -217,12 +248,15 @@ export default {
       tbody {
         tr {
           height: 40px;
-          background: linear-gradient(
-            0,
-            rgba(0, 66, 119, 0.6) 0%,
-            rgba(12, 43, 75, 0.6) 100%
-          );
-          border: 1px solid #707070;
+          &:nth-child(even) {
+            border-top: 1px solid #0069ca;
+            border-bottom: 1px solid #0069ca;
+            background: rgba(0, 80, 144, 0.2);
+          }
+
+          // 奇数列
+          &:nth-child(odd) {
+          }
           td {
             font-weight: normal;
             font-size: 16px;
@@ -237,13 +271,9 @@ export default {
           }
 
           &:hover {
-            background: linear-gradient(
-              0,
-              rgba(0, 105, 202, 0.8) 0%,
-              rgba(0, 105, 202, 0) 50%,
-              rgba(0, 105, 202, 0) 100%
-            );
+            background: rgba(0, 80, 144, 0.4);
             cursor: pointer;
+            border: 1px solid #00ecff;
 
             td {
               color: #fff;

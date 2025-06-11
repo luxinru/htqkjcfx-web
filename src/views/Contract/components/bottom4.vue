@@ -77,7 +77,10 @@
         >
           首页
         </button>
-        <button :disabled="currentPage === 1" @click="handlePageChange(currentPage - 1)">
+        <button
+          :disabled="currentPage === 1"
+          @click="handlePageChange(currentPage - 1)"
+        >
           &lt;
         </button>
         <span
@@ -87,7 +90,10 @@
           @click="handlePageChange(page)"
           >{{ page }}</span
         >
-        <button :disabled="currentPage === totalPages" @click="handlePageChange(currentPage + 1)">
+        <button
+          :disabled="currentPage === totalPages"
+          @click="handlePageChange(currentPage + 1)"
+        >
           &gt;
         </button>
         <button
@@ -119,8 +125,8 @@ export default {
       options: [],
       options2: [],
       tableData: [],
-      selectedType: '',
-      selectedIndustry: '',
+      selectedType: "",
+      selectedIndustry: "",
       loading: false
     };
   },
@@ -163,14 +169,14 @@ export default {
           qytm: this.selectedType,
           hytm: this.selectedIndustry
         });
-        
+
         if (res) {
           this.tableData = res.list || [];
           this.total = res.total || 0;
           this.totalPages = res.pages || 1;
         }
       } catch (error) {
-        console.error('获取数据失败:', error);
+        console.error("获取数据失败:", error);
       } finally {
         this.loading = false;
       }
@@ -197,8 +203,8 @@ export default {
     },
 
     formatAmount(amount) {
-      if (!amount) return '0.00';
-      return amount.toLocaleString('zh-CN', {
+      if (!amount) return "0.00";
+      return amount.toLocaleString("zh-CN", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       });
@@ -290,7 +296,7 @@ export default {
         height: 40px;
         border: 1px solid #0069ca;
         background: rgba(0, 80, 144, 0.6);
-        
+
         tr {
           th {
             font-weight: normal;
@@ -300,13 +306,27 @@ export default {
             padding: 0 10px;
             white-space: nowrap;
 
-            &:nth-child(1) { width: 80px; }  // 排名
-            &:nth-child(2) { width: 300px; } // 客户名称
-            &:nth-child(3) { width: 150px; } // 企业类型
-            &:nth-child(4) { width: 150px; } // 所属行业
-            &:nth-child(5) { width: 180px; } // 合同总金额
-            &:nth-child(6) { width: 120px; } // 合同数量
-            &:nth-child(7) { width: 150px; } // 所属区域
+            &:nth-child(1) {
+              width: 80px;
+            } // 排名
+            &:nth-child(2) {
+              width: 300px;
+            } // 客户名称
+            &:nth-child(3) {
+              width: 150px;
+            } // 企业类型
+            &:nth-child(4) {
+              width: 150px;
+            } // 所属行业
+            &:nth-child(5) {
+              width: 180px;
+            } // 合同总金额
+            &:nth-child(6) {
+              width: 120px;
+            } // 合同数量
+            &:nth-child(7) {
+              width: 150px;
+            } // 所属区域
           }
         }
       }
@@ -314,12 +334,15 @@ export default {
       tbody {
         tr {
           height: 40px;
-          background: linear-gradient(
-            0,
-            rgba(0, 66, 119, 0.6) 0%,
-            rgba(12, 43, 75, 0.6) 100%
-          );
-          border: 1px solid #707070;
+          &:nth-child(even) {
+            border-top: 1px solid #0069ca;
+            border-bottom: 1px solid #0069ca;
+            background: rgba(0, 80, 144, 0.2);
+          }
+
+          // 奇数列
+          &:nth-child(odd) {
+          }
           td {
             font-weight: normal;
             font-size: 16px;
@@ -328,23 +351,33 @@ export default {
             padding: 0 10px;
             white-space: nowrap;
 
-            &:nth-child(1) { width: 80px; }  // 排名
-            &:nth-child(2) { width: 300px; } // 客户名称
-            &:nth-child(3) { width: 150px; } // 企业类型
-            &:nth-child(4) { width: 150px; } // 所属行业
-            &:nth-child(5) { width: 180px; } // 合同总金额
-            &:nth-child(6) { width: 120px; } // 合同数量
-            &:nth-child(7) { width: 150px; } // 所属区域
+            &:nth-child(1) {
+              width: 80px;
+            } // 排名
+            &:nth-child(2) {
+              width: 300px;
+            } // 客户名称
+            &:nth-child(3) {
+              width: 150px;
+            } // 企业类型
+            &:nth-child(4) {
+              width: 150px;
+            } // 所属行业
+            &:nth-child(5) {
+              width: 180px;
+            } // 合同总金额
+            &:nth-child(6) {
+              width: 120px;
+            } // 合同数量
+            &:nth-child(7) {
+              width: 150px;
+            } // 所属区域
           }
 
           &:hover {
-            background: linear-gradient(
-              0,
-              rgba(0, 105, 202, 0.8) 0%,
-              rgba(0, 105, 202, 0) 50%,
-              rgba(0, 105, 202, 0) 100%
-            );
+            background: rgba(0, 80, 144, 0.4);
             cursor: pointer;
+            border: 1px solid #00ecff;
 
             td {
               color: #fff;

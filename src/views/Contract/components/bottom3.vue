@@ -52,7 +52,14 @@
               <span v-else>{{ (currentPage - 1) * pageSize + index + 1 }}</span>
             </td>
             <td>
-              {{ item.dq }}
+              <ReasonModal
+                title="具体原因"
+                reason="亏损主要原因是因为同方科创新签合同减少，收入减少。"
+                ZBBM="ZBBM"
+                DWBM="DWBM"
+              >
+                {{ item.dq }}
+              </ReasonModal>
             </td>
             <td>
               {{ formatNumber(item.htje) }}
@@ -102,8 +109,14 @@
 
 <script>
 import api from "@/api/new/contract";
+import ReasonModal from "@/components/reason_modal.vue";
+
 export default {
   name: "bottom3",
+
+  components: {
+    ReasonModal
+  },
 
   data() {
     return {
@@ -235,12 +248,16 @@ export default {
         table-layout: fixed;
         tr {
           height: 40px;
-          background: linear-gradient(
-            0,
-            rgba(0, 66, 119, 0.6) 0%,
-            rgba(12, 43, 75, 0.6) 100%
-          );
-          border: 1px solid #707070;
+          // 偶数列
+          &:nth-child(even) {
+            border-top: 1px solid #0069ca;
+            border-bottom: 1px solid #0069ca;
+            background: rgba(0, 80, 144, 0.2);
+          }
+
+          // 奇数列
+          &:nth-child(odd) {
+          }
           td {
             font-weight: normal;
             font-size: 16px;
@@ -249,13 +266,9 @@ export default {
           }
 
           &:hover {
-            background: linear-gradient(
-              0,
-              rgba(0, 105, 202, 0.8) 0%,
-              rgba(0, 105, 202, 0) 50%,
-              rgba(0, 105, 202, 0) 100%
-            );
+            background: rgba(0, 80, 144, 0.4);
             cursor: pointer;
+            border: 1px solid #00ecff;
 
             td {
               color: #fff;

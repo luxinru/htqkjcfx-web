@@ -16,7 +16,11 @@
               </th>
               <th>
                 客户签订合同总额（万元）
-                <img src="@/assets/img/home/select.png" alt="" @click="onOpenModal" />
+                <img
+                  src="@/assets/img/home/select.png"
+                  alt=""
+                  @click="onOpenModal"
+                />
               </th>
             </tr>
           </thead>
@@ -264,12 +268,15 @@ export default {
       tbody {
         tr {
           height: 40px;
-          background: linear-gradient(
-            0,
-            rgba(0, 66, 119, 0.6) 0%,
-            rgba(12, 43, 75, 0.6) 100%
-          );
-          border: 1px solid #707070;
+          &:nth-child(even) {
+            border-top: 1px solid #0069ca;
+            border-bottom: 1px solid #0069ca;
+            background: rgba(0, 80, 144, 0.2);
+          }
+
+          // 奇数列
+          &:nth-child(odd) {
+          }
           td {
             font-weight: normal;
             font-size: 16px;
@@ -278,13 +285,9 @@ export default {
           }
 
           &:hover {
-            background: linear-gradient(
-              0,
-              rgba(0, 105, 202, 0.8) 0%,
-              rgba(0, 105, 202, 0) 50%,
-              rgba(0, 105, 202, 0) 100%
-            );
+            background: rgba(0, 80, 144, 0.4);
             cursor: pointer;
+            border: 1px solid #00ecff;
 
             td {
               color: #fff;
