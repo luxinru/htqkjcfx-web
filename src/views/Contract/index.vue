@@ -72,7 +72,7 @@
               </div>
               <div class="line"></div>
               <div class="box_container_part">
-                <bottom5 />
+                <bottom10 />
               </div>
             </div>
           </template>
@@ -127,6 +127,7 @@ import bottom6 from "./components/bottom6.vue";
 import bottom7 from "./components/bottom7.vue";
 import bottom8 from "./components/bottom8.vue";
 import bottom9 from "./components/bottom9.vue";
+import bottom10 from "./components/bottom10.vue";
 
 export default {
   name: "Contract",
@@ -145,7 +146,8 @@ export default {
     bottom6,
     bottom7,
     bottom8,
-    bottom9
+    bottom9,
+    bottom10
   },
 
   data() {

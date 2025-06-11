@@ -15,6 +15,7 @@
 
 <script>
 import * as echarts from "echarts";
+import api from "@/api/new/contract";
 
 export default {
   name: "top3",
@@ -22,15 +23,35 @@ export default {
   data() {
     return {
       active: 1,
-      chart: null
+      chart: null,
+      chartData: {
+        times: [],
+        datas: []
+      }
     };
   },
 
   mounted() {
-    this.init();
+    this.getData();
   },
 
   methods: {
+    async getData() {
+      const res = await api.queryHtjebhqk({
+        dwbm: "61C4D1289BD84D179AC848A7279C2959",
+        time: "2024-11"
+      });
+      console.error(res);
+
+      if (res && res.length > 0) {
+        const currentData = res[this.active - 1];
+        this.chartData = {
+          times: currentData.times,
+          datas: currentData.datas
+        };
+        this.init();
+      }
+    },
     init() {
       if (this.chart) {
         this.chart.dispose();
@@ -55,15 +76,7 @@ export default {
         xAxis: {
           type: "category",
           boundaryGap: true,
-          data: [
-            "2024.04",
-            "2024.06",
-            "2024.08",
-            "2024.10",
-            "2024.12",
-            "2025.02",
-            "2025.04"
-          ],
+          data: this.chartData.times,
           axisLine: {
             lineStyle: {
               color: "#0a4a78"
@@ -106,14 +119,13 @@ export default {
               color: "rgba(0, 80, 144, 1)",
               type: "dashed"
             }
-          },
-          interval: 10
+          }
         },
         series: [
           {
             name: this.active === 1 ? "累计新签合同额" : "期末手持合同总额",
             type: "line",
-            data: [35, 40, 45, 45, 48, 52, 75],
+            data: this.chartData.datas,
             symbol: "circle",
             symbolSize: 5,
             itemStyle: {
@@ -140,7 +152,7 @@ export default {
 
   watch: {
     active() {
-      this.init();
+      this.getData();
     }
   }
 };

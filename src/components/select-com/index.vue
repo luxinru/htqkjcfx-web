@@ -3,7 +3,7 @@
     <span class="title">{{ title }}</span>
     <div class="select_box" @click="toggleDropdown">
       <span class="label">{{
-        selectedOption ? selectedOption.label : options[0].label
+        selectedOption ? selectedOption.label : (options.length > 0 ? options[0].label : '请选择')
       }}</span>
       <img
         src="~@/assets/img/contract/select-icon.png"

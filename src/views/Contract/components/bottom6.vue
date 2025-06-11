@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import api from "@/api/new/contract";
 export default {
   name: "bottom6",
 
@@ -39,6 +40,23 @@ export default {
     return {
       active: 1
     };
+  },
+
+  async mounted() {
+    await this.queryKhgxdfx();
+  },
+
+  methods: {
+    async queryKhgxdfx() {
+      const res = await api.queryKhgxdfx({
+        dwbm: "6B51EA03CC8C4168876E3EA97A29B15E",
+        time: "2024-11",
+        // 0 合同总金额 1 合同营收总额
+        type: this.active === 1 ? "0" : "1"
+      });
+
+      console.error(res);
+    }
   }
 };
 </script>

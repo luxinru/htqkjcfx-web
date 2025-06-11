@@ -1,7 +1,7 @@
 <template>
-  <div class="bottom5">
+  <div class="bottom10">
     <span class="title">
-      新签客户合同额
+      手持客户合同额
     </span>
     <section class="container_box">
       <div class="chart_box">
@@ -35,7 +35,7 @@ import * as echarts from "echarts";
 import progressBar from "@/components/progress-bar/index.vue";
 
 export default {
-  name: "bottom5",
+  name: "bottom10",
   components: {
     progressBar
   },
@@ -62,13 +62,13 @@ export default {
       
       if (res && Array.isArray(res)) {
         // 计算总金额
-        this.totalAmount = res.reduce((sum, item) => sum + item.xqyhhte, 0);
+        this.totalAmount = res.reduce((sum, item) => sum + item.ncyhhte, 0);
         
         // 处理数据
         this.list = res.map(item => {
-          const percent = (item.xqyhhte / this.totalAmount * 100).toFixed(2);
+          const percent = (item.ncyhhte / this.totalAmount * 100).toFixed(2);
           return {
-            value: item.xqyhhte,
+            value: item.ncyhhte,
             name: item.type,
             color: this.getColorByType(item.type),
             percent: parseFloat(percent)
@@ -137,10 +137,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bottom5 {
+.bottom10 {
   width: 100%;
   height: 100%;
-  padding: 16px 40px 16px 0;
+  padding: 16px 40px 16px 16px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

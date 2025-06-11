@@ -95,6 +95,7 @@
 </template>
 
 <script>
+import api from "@/api/new/contract";
 import * as echarts from "echarts";
 
 export default {
@@ -141,7 +142,13 @@ export default {
   },
 
   methods: {
-    init() {
+    async init() {
+      const res = await api.queryKhpfms({
+        dwbm: "6B51EA03CC8C4168876E3EA97A29B15E",
+        time: "2024-11"
+      });
+      console.error(res);
+
       if (this.chart) {
         this.chart.dispose();
         this.chart = null;

@@ -32,140 +32,36 @@
         </thead>
 
         <tbody>
-          <tr>
+          <tr v-for="(item, index) in dataList" :key="index">
             <td>
-              <img src="~@/assets/img/contract/icon14.png" alt="" />
+              <img
+                v-if="(currentPage - 1) * pageSize + index + 1 === 1"
+                src="~@/assets/img/contract/icon14.png"
+                alt=""
+              />
+              <img
+                v-else-if="(currentPage - 1) * pageSize + index + 1 === 2"
+                src="~@/assets/img/contract/icon15.png"
+                alt=""
+              />
+              <img
+                v-else-if="(currentPage - 1) * pageSize + index + 1 === 3"
+                src="~@/assets/img/contract/icon16.png"
+                alt=""
+              />
+              <span v-else>{{ (currentPage - 1) * pageSize + index + 1 }}</span>
             </td>
             <td>
-              黑龙江省
+              {{ item.dq }}
             </td>
             <td>
-              123,12345
+              {{ formatNumber(item.htje) }}
             </td>
             <td>
-              2285
+              {{ item.htsl }}
             </td>
             <td>
-              532
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img src="~@/assets/img/contract/icon15.png" alt="" />
-            </td>
-            <td>
-              山东省
-            </td>
-            <td>
-              123,12345
-            </td>
-            <td>
-              987
-            </td>
-            <td>
-              412
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img src="~@/assets/img/contract/icon16.png" alt="" />
-            </td>
-            <td>
-              甘肃省
-            </td>
-            <td>
-              123,12345
-            </td>
-            <td>
-              752
-            </td>
-            <td>
-              255
-            </td>
-          </tr>
-          <tr>
-            <td>
-              4
-            </td>
-            <td>
-              云南省
-            </td>
-            <td>
-              123,12345
-            </td>
-            <td>
-              651
-            </td>
-            <td>
-              222
-            </td>
-          </tr>
-          <tr>
-            <td>
-              5
-            </td>
-            <td>
-              河南省
-            </td>
-            <td>
-              123,12345
-            </td>
-            <td>
-              400
-            </td>
-            <td>
-              112
-            </td>
-          </tr>
-          <tr>
-            <td>
-              6
-            </td>
-            <td>
-              河北省
-            </td>
-            <td>
-              123,12345
-            </td>
-            <td>
-              200
-            </td>
-            <td>
-              111
-            </td>
-          </tr>
-          <tr>
-            <td>
-              7
-            </td>
-            <td>
-              重庆
-            </td>
-            <td>
-              123,12345
-            </td>
-            <td>
-              150
-            </td>
-            <td>
-              100
-            </td>
-          </tr>
-          <tr>
-            <td>
-              8
-            </td>
-            <td>
-              天津
-            </td>
-            <td>
-              123,12345
-            </td>
-            <td>
-              140
-            </td>
-            <td>
-              50
+              {{ item.yhsl }}
             </td>
           </tr>
         </tbody>
@@ -175,7 +71,7 @@
         <button
           class="btn"
           :disabled="currentPage === 1"
-          @click="currentPage--"
+          @click="currentPage = 1"
         >
           首页
         </button>
@@ -205,6 +101,7 @@
 </template>
 
 <script>
+import api from "@/api/new/contract";
 export default {
   name: "bottom3",
 
@@ -212,8 +109,46 @@ export default {
     return {
       active: 1,
       currentPage: 1,
-      totalPages: 10
+      pageSize: 10,
+      totalPages: 1,
+      dataList: []
     };
+  },
+
+  watch: {
+    currentPage() {
+      this.getData();
+    },
+
+    active() {
+      this.currentPage = 1;
+      this.getData();
+    }
+  },
+
+  mounted() {
+    this.getData();
+  },
+
+  methods: {
+    async getData() {
+      const res = await api.queryKhdyfbList({
+        dwbm: "61C4D1289BD84D179AC848A7279C2959",
+        time: "2024-11",
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        type: this.active === 1 ? 0 : 1
+      });
+
+      if (res) {
+        this.dataList = res.list || [];
+        this.totalPages = res.pages || 1;
+      }
+    },
+
+    formatNumber(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
   }
 };
 </script>
@@ -264,16 +199,26 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
 
     table {
       width: 100%;
       border-collapse: collapse;
+      overflow-y: auto;
+      flex: 1;
+      display: block;
+      max-height: calc(100% - 50px);
 
       thead {
         width: 100%;
         height: 40px;
         border: 1px solid #0069ca;
         background: rgba(0, 80, 144, 0.6);
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        display: table;
+        table-layout: fixed;
         tr {
           th {
             font-weight: normal;
@@ -285,6 +230,9 @@ export default {
       }
 
       tbody {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
         tr {
           height: 40px;
           background: linear-gradient(
@@ -323,6 +271,8 @@ export default {
     align-items: center;
     justify-content: flex-end;
     gap: 4px;
+    height: 50px;
+    margin-top: 10px;
 
     .btn {
       width: 60px;

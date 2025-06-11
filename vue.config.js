@@ -14,7 +14,7 @@ module.exports = {
     // 如果你与后台联调，让他把服务注册到网关上，不要配置他的本地地址，尤其不要配置了他的本地地址还提交上去。
     proxy: {
       "/stat/prod-api/": {
-        target: `http://10.10.60.18/`,
+        target: `https://m1.apifoxmock.com/m1/6532816-6235274-default/`,
         // target: "http://192.168.1.60:58889/",
         changeOrigin: true
         // rewrite: path => {
