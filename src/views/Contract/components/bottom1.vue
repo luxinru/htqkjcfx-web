@@ -5,9 +5,11 @@
         <span>
           客户地域分布
         </span>
-        <span>
-          境外
-        </span>
+        <TextCarousel
+          :text-list="['境内', '境外']"
+          :height="20"
+          :interval="3000"
+        />
       </div>
 
       <div class="values">
@@ -51,7 +53,11 @@
           客户企业类型
         </span>
         <span>
-          个体工商户 / 较去年增长11个
+          <TextCarousel
+            :text-list="['个体工商户', '较去年增长11个']"
+            :height="20"
+            :interval="3000"
+          />
         </span>
       </div>
 
@@ -100,8 +106,14 @@
 </template>
 
 <script>
+import TextCarousel from "@/components/TextCarousel.vue";
+
 export default {
   name: "bottom1",
+
+  components: {
+    TextCarousel
+  },
 
   props: {
     active: {
