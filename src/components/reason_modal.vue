@@ -38,24 +38,28 @@ export default {
     };
   },
   methods: {
-    openModal(e) {
-      // 保存点击坐标
-      this.clickX = e.clientX;
-      this.clickY = e.clientY;
+        openModal(e) {
+      // 获取页面缩放比例
+      const scaleRatio = window.screen.width / 1920;
+      
+      // 保存点击坐标，转换到未缩放的坐标系
+      this.clickX = e.clientX / scaleRatio;
+      this.clickY = e.clientY / scaleRatio;
       
       this.visible = true;
       this.$nextTick(() => {
-        const modalWidth = 453; // 弹窗宽度，需与样式一致
-        const modalHeight = 132; // 弹窗高度，与样式保持一致
+        // 弹窗尺寸使用基准尺寸（不需要缩放，因为CSS会自动跟随页面缩放）
+        const modalWidth = 453;
+        const modalHeight = 132;
         
-        // 使用事件的clientX/Y精确定位，不依赖于元素位置
+        // 计算弹窗位置（在未缩放的坐标系中）
         // 使弹窗中心点与点击位置对齐
-        const left = this.clickX - (modalWidth / 2);
-        const top = this.clickY + 20; // 在点击位置下方20px
+        const left = this.clickX - modalWidth / 2;
+        const top = this.clickY; // y坐标与鼠标位置一致
         
-        // 确保弹窗不会超出视口边缘
-        const viewportWidth = document.documentElement.clientWidth;
-        const viewportHeight = document.documentElement.clientHeight;
+        // 确保弹窗不会超出视口边缘（在未缩放的坐标系中）
+        const viewportWidth = 1920; // 使用基准视口宽度
+        const viewportHeight = 1080; // 使用基准视口高度
         
         let adjustedLeft = left;
         let adjustedTop = top;
@@ -81,7 +85,8 @@ export default {
           position: "fixed",
           top: adjustedTop + "px",
           left: adjustedLeft + "px",
-          minWidth: modalWidth + "px",
+          width: modalWidth + "px",
+          height: modalHeight + "px",
           zIndex: 1001
         };
       });
@@ -104,6 +109,7 @@ export default {
   z-index: 1000;
 }
 .modal-content {
+  position: fixed;
   width: 453px;
   height: 132px;
   background-image: url("~@/assets/img/home/reason_top.png"),
