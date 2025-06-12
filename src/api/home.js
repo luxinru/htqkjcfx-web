@@ -30,7 +30,7 @@ const api1 = function() {
 const api2 = function() {
   return Promise.resolve({
     title: "威视、数科、能源营收\n占集团外营收比例",
-    targetValue: "51.9%",
+    targetValue: "51.99%",
     completedValue: "47.7%",
     progressData: [
       {

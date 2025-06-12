@@ -1175,35 +1175,35 @@ export default {
     }
   }
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      #00ecff 50%,
-      transparent 100%
-    );
-    animation: scanLine 3s linear infinite;
-    z-index: 1;
-  }
+  // &::before {
+  //   content: "";
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   right: 0;
+  //   height: 2px;
+  //   background: linear-gradient(
+  //     90deg,
+  //     transparent 0%,
+  //     #00ecff 50%,
+  //     transparent 100%
+  //   );
+  //   animation: scanLine 3s linear infinite;
+  //   z-index: 1;
+  // }
 
-  @keyframes scanLine {
-    0% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
-    100% {
-      transform: translateY(300px);
-      opacity: 0;
-    }
-  }
+  // @keyframes scanLine {
+  //   0% {
+  //     transform: translateY(0);
+  //     opacity: 1;
+  //   }
+  //   50% {
+  //     opacity: 0.5;
+  //   }
+  //   100% {
+  //     transform: translateY(300px);
+  //     opacity: 0;
+  //   }
+  // }
 }
 </style>

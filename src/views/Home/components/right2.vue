@@ -110,6 +110,7 @@ export default {
             barWidth: barWidth,
             barGap: "-100%",
             z: 0,
+            silent: true, // 禁用该系列的鼠标交互
             itemStyle: {
               color: "#163F7A",
               opacity: 0.7
@@ -118,7 +119,7 @@ export default {
           },
           {
             //下半截柱子
-            name: "2020",
+            name: "",
             type: "bar",
             barWidth: barWidth,
             barGap: "-100%",
@@ -178,6 +179,7 @@ export default {
             itemStyle: {
               color: "transparent"
             },
+            silent: true, // 禁用该系列的鼠标交互
             data: this.data1
           },
           {
@@ -195,6 +197,7 @@ export default {
             label: {
               show: false
             },
+            silent: true, // 禁用该系列的鼠标交互
             data: this.data2
           },
           {
@@ -259,7 +262,8 @@ export default {
               // }
             },
             symbolPosition: "end",
-            data: this.data1
+            data: this.data1,
+            silent: true // 禁用该系列的鼠标交互
           },
           {
             //下半截柱子底部圆片
@@ -312,7 +316,8 @@ export default {
                 }
               }
             },
-            data: [1, 1, 1, 1, 1]
+            data: [1, 1, 1, 1, 1],
+            silent: true // 禁用该系列的鼠标交互
           }
         ]
       };

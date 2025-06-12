@@ -262,6 +262,7 @@ export default {
       .item {
         display: flex;
         align-items: center;
+        justify-content: flex-end;
         gap: 5px;
 
         .label1 {
@@ -298,6 +299,7 @@ export default {
         }
 
         .label2 {
+          width: 65px;
           font-weight: 400;
           font-size: 18px;
           color: #00ecff;
