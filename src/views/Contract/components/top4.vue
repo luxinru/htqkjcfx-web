@@ -75,11 +75,7 @@ export default {
     formatValue(value) {
       if (typeof value === "number") {
         // 如果数值大于等于1亿，转换为亿元单位
-        if (value >= 100000000) {
-          return (value / 100000000).toFixed(2);
-        }
-        // 如果数值大于等于1万，转换为万元单位
-        else if (value >= 10000) {
+        if (value >= 10000) {
           return (value / 10000).toFixed(2);
         }
         // 其他情况直接返回原值
