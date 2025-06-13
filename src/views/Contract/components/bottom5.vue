@@ -62,7 +62,7 @@ export default {
   methods: {
     async queryKhlxfx() {
       const res = await api.queryKhlxfx({
-        dwbm: "6B51EA03CC8C4168876E3EA97A29B15E",
+        dwbm: localStorage.getItem("org") || "6B51EA03CC8C4168876E3EA97A29B15E",
         time: "2024-11"
       });
 

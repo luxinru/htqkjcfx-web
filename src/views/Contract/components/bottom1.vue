@@ -68,7 +68,9 @@ export default {
     },
 
     async getKhzb() {
-      const res = await api.queryKhzb({});
+      const res = await api.queryKhzb({
+        dwbm: localStorage.getItem("org")
+      });
       this.list = res || [];
     }
   }

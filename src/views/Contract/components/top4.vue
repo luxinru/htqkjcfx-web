@@ -65,7 +65,7 @@ export default {
   methods: {
     async init() {
       const res = await api.queryZhiBiaoList({
-        dwbm: "61C4D1289BD84D179AC848A7279C2959",
+        dwbm: localStorage.getItem("org") || "61C4D1289BD84D179AC848A7279C2959",
         time: "2024-11"
       });
       if (res && Array.isArray(res)) {

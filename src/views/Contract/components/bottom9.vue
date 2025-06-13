@@ -179,7 +179,7 @@ export default {
   methods: {
     async init() {
       const options = {
-        dwbm: "6B51EA03CC8C4168876E3EA97A29B15E",
+        dwbm: localStorage.getItem("org") || "6B51EA03CC8C4168876E3EA97A29B15E",
         time: "2024-11",
         pageNum: this.currentPage,
         pageSize: this.pageSize

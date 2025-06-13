@@ -59,7 +59,7 @@ export default {
     
     async queryKhgxdfx() {
       const res = await api.queryKhgxdfx({
-        dwbm: "6B51EA03CC8C4168876E3EA97A29B15E",
+        dwbm: localStorage.getItem("org") || "6B51EA03CC8C4168876E3EA97A29B15E",
         time: "2024-11",
         // 0 合同总金额 1 合同营收总额
         type: this.active === 1 ? "0" : "1"

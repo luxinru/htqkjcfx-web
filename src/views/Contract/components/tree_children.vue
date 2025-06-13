@@ -72,6 +72,7 @@ export default {
       this.$set(this.expandedMap, id, !this.expandedMap[id]);
     },
     onNameClick(child) {
+      localStorage.setItem("org", child.id);
       this.$EventBus.$emit("orgChange", child);
     }
   }

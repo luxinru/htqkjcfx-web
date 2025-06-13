@@ -165,7 +165,7 @@ export default {
   methods: {
     async queryMltmsFun() {
       const res = await api.queryMltms({
-        mlbm: "9B911F3C07A74A5DA8A740433026A821"
+        mlbm: localStorage.getItem("org") || "9B911F3C07A74A5DA8A740433026A821"
       });
       this.options = res.map(item => ({
         label: item.tmzwmc,
@@ -175,7 +175,7 @@ export default {
 
     async queryMltmsListFun() {
       const res = await api.queryMltmsList({
-        mlbm: "33E0059767634F74A177179B622C97E9",
+        mlbm: localStorage.getItem("org") || "33E0059767634F74A177179B622C97E9",
         parentItemCode: ""
       });
       this.options2 = res.map(item => ({
@@ -188,7 +188,7 @@ export default {
       try {
         this.loading = true;
         const res = await api.queryKhslList({
-          mlbm: "9B911F3C07A74A5DA8A740433026A821",
+          mlbm: localStorage.getItem("org") || "9B911F3C07A74A5DA8A740433026A821",
           pageNum: this.currentPage,
           pageSize: this.pageSize,
           qytm: this.selectedType,

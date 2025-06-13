@@ -162,7 +162,6 @@ export default {
   mounted() {
     this.getData();
 
-    
     this.$EventBus.$on("orgChange", org => {
       this.getData();
     });
@@ -171,7 +170,7 @@ export default {
   methods: {
     async getData() {
       const res = await api.queryKhdyfbList({
-        dwbm: "61C4D1289BD84D179AC848A7279C2959",
+        dwbm: localStorage.getItem("org") || "61C4D1289BD84D179AC848A7279C2959",
         time: "2024-11",
         pageNum: this.currentPage,
         pageSize: this.pageSize,
