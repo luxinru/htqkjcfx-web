@@ -49,5 +49,13 @@ export default {
 
   queryPfmPage(data) {
     return axios.get(`${server}/api/jjyxjcV2/pfmPage`, { params: data });
+  },
+
+  queryKhzb(data) {
+    return axios.get(`${server}/api/jjyxjcV2/khzb`, { params: data });
+  },
+
+  queryKhpfmConfig(data) {
+    return axios.get(`${server}/api/jjyxjcV2/khpfmConfig`, { params: data });
   }
 };

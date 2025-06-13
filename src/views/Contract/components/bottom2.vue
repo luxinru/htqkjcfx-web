@@ -53,8 +53,6 @@ export default {
       this.initChina();
       // this.initWorld();
 
-      this.$EventBus.$off("updateContractType");
-
       this.$EventBus.$on("updateContractType", type => {
         this.contractType = type;
         if (type === 1) {

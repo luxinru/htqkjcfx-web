@@ -1,104 +1,29 @@
 <template>
   <div class="bottom1">
-    <div class="item" :class="{ active: active === 1 }" @click="handleClick(1)">
+    <div
+      v-for="(item, index) in list"
+      :key="index"
+      class="item"
+      :class="{ active: active === index + 1 }"
+      @click="handleClick(index + 1)"
+    >
       <div class="labels">
         <span>
-          客户地域分布
+          {{ item.name }}
         </span>
         <TextCarousel
-          :text-list="['境内', '境外']"
+          v-if="item.values && item.values.length > 0"
+          :text-list="
+            item.values ? item.values.map(v => v.name + ' ' + v.value) : []
+          "
           :height="20"
           :interval="3000"
         />
       </div>
 
-      <div class="values">
+      <div v-if="item.value" class="values">
         <span>
-          2
-        </span>
-      </div>
-    </div>
-
-    <div class="item" :class="{ active: active === 2 }" @click="handleClick(2)">
-      <div class="labels">
-        <span>
-          客户数量
-        </span>
-      </div>
-
-      <div class="values">
-        <span>
-          2995
-        </span>
-      </div>
-    </div>
-
-    <div class="item" :class="{ active: active === 3 }" @click="handleClick(3)">
-      <div class="labels">
-        <span>
-          本年新增客户数量
-        </span>
-      </div>
-
-      <div class="values">
-        <span>
-          155
-        </span>
-      </div>
-    </div>
-
-    <div class="item" :class="{ active: active === 4 }" @click="handleClick(4)">
-      <div class="labels">
-        <span>
-          客户企业类型
-        </span>
-        <span>
-          <TextCarousel
-            :text-list="['个体工商户', '较去年增长11个']"
-            :height="20"
-            :interval="3000"
-          />
-        </span>
-      </div>
-
-      <div class="values">
-        <span>
-          29
-        </span>
-      </div>
-    </div>
-
-    <div class="item" :class="{ active: active === 5 }" @click="handleClick(5)">
-      <div class="labels">
-        <span>
-          客户贡献度
-        </span>
-        <span>
-          TOP2厦门国贸...
-        </span>
-      </div>
-
-      <div class="values">
-        <span></span>
-        <span>
-          合同金额占比4.36%
-        </span>
-      </div>
-    </div>
-
-    <div class="item" :class="{ active: active === 6 }" @click="handleClick(6)">
-      <div class="labels">
-        <span>
-          价值标签
-        </span>
-        <span>
-          重要价值客户
-        </span>
-      </div>
-
-      <div class="values">
-        <span>
-          256
+          {{ item.value }}
         </span>
       </div>
     </div>
@@ -106,6 +31,7 @@
 </template>
 
 <script>
+import api from "@/api/new/contract";
 import TextCarousel from "@/components/TextCarousel.vue";
 
 export default {
@@ -123,12 +49,27 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      list: []
+    };
+  },
+
+  mounted() {
+    this.getKhzb();
+
+    this.$EventBus.$on("orgChange", org => {
+      this.getKhzb();
+    });
   },
 
   methods: {
     handleClick(index) {
       this.$emit("update:active", index);
+    },
+
+    async getKhzb() {
+      const res = await api.queryKhzb({});
+      this.list = res || [];
     }
   }
 };

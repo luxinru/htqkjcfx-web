@@ -94,7 +94,7 @@
 
           <template v-if="active === 6">
             <div class="box_title">
-              <img src="~@/assets/img/contract/icon19.png" alt="" />
+              <img src="~@/assets/img/contract/icon24.png" alt="" />
             </div>
             <div class="box_container column">
               <div class="box_container_part">
