@@ -23,8 +23,8 @@
               <div class="th">
                 合同总金额(含税)
                 <div class="sort">
-                  <div class="up"></div>
-                  <div class="down"></div>
+                  <div class="up" @click="onSort('htje', 'asc')"></div>
+                  <div class="down" @click="onSort('htje', 'desc')"></div>
                 </div>
               </div>
             </th>
@@ -32,8 +32,8 @@
               <div class="th">
                 合同数量
                 <div class="sort">
-                  <div class="up"></div>
-                  <div class="down"></div>
+                  <div class="up" @click="onSort('htsl', 'asc')"></div>
+                  <div class="down" @click="onSort('htsl', 'desc')"></div>
                 </div>
               </div>
             </th>
@@ -41,8 +41,8 @@
               <div class="th">
                 客户数量
                 <div class="sort">
-                  <div class="up"></div>
-                  <div class="down"></div>
+                  <div class="up" @click="onSort('yhsl', 'asc')"></div>
+                  <div class="down" @click="onSort('yhsl', 'desc')"></div>
                 </div>
               </div>
             </th>
@@ -142,7 +142,9 @@ export default {
       currentPage: 1,
       pageSize: 10,
       totalPages: 1,
-      dataList: []
+      dataList: [],
+      sortType: "asc",
+      sortField: "htje"
     };
   },
 
@@ -159,6 +161,11 @@ export default {
 
   mounted() {
     this.getData();
+
+    
+    this.$EventBus.$on("orgChange", org => {
+      this.getData();
+    });
   },
 
   methods: {
@@ -168,7 +175,9 @@ export default {
         time: "2024-11",
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        type: this.active === 1 ? 0 : 1
+        type: this.active === 1 ? 0 : 1,
+        sortField: this.sortField,
+        sortType: this.sortType
       });
 
       if (res) {
@@ -186,6 +195,12 @@ export default {
       this.currentPage = 1;
       this.getData();
       this.$EventBus.$emit("updateContractType", type);
+    },
+
+    onSort(field, type) {
+      this.sortField = field;
+      this.sortType = type;
+      this.getData();
     }
   }
 };

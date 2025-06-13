@@ -13,7 +13,6 @@
           display: 'flex',
           alignItems: 'center'
         }"
-        @click.stop="toggle(child.id)"
       >
         <img
           :src="require('@/assets/img/contract/tree_icon1.png')"
@@ -26,6 +25,7 @@
               : 'rotate(0deg)',
             transition: 'transform 0.2s'
           }"
+          @click.stop="toggle(child.id)"
         />
         <img
           v-if="child.children && child.children.length"
@@ -39,7 +39,7 @@
           alt=""
           style="width: 18px; height: 16px; margin-right: 4px;"
         />
-        <span>{{ child.name }}</span>
+        <span @click.stop="onNameClick(child)">{{ child.name }}</span>
       </div>
       <transition name="tree-expand">
         <div
@@ -70,6 +70,9 @@ export default {
   methods: {
     toggle(id) {
       this.$set(this.expandedMap, id, !this.expandedMap[id]);
+    },
+    onNameClick(child) {
+      this.$EventBus.$emit("orgChange", child);
     }
   }
 };

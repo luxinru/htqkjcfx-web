@@ -43,7 +43,12 @@ export default {
   },
 
   async mounted() {
-    await this.queryKhgxdfx();
+    this.queryKhgxdfx();
+
+    
+    this.$EventBus.$on("orgChange", async org => {
+      this.queryKhgxdfx();
+    });
   },
 
   methods: {

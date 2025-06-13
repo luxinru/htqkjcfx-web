@@ -33,8 +33,8 @@
                 <div class="th">
                   合同总金额(含税)
                   <div class="sort">
-                    <div class="up"></div>
-                    <div class="down"></div>
+                    <div class="up" @click="onSort('htje', 'asc')"></div>
+                    <div class="down" @click="onSort('htje', 'desc')"></div>
                   </div>
                 </div>
               </th>
@@ -42,8 +42,8 @@
                 <div class="th">
                   合同数量
                   <div class="sort">
-                    <div class="up"></div>
-                    <div class="down"></div>
+                    <div class="up" @click="onSort('htsl', 'asc')"></div>
+                    <div class="down" @click="onSort('htsl', 'desc')"></div>
                   </div>
                 </div>
               </th>
@@ -143,7 +143,9 @@ export default {
       tableData: [],
       selectedType: "",
       selectedIndustry: "",
-      loading: false
+      loading: false,
+      sortType: "asc",
+      sortField: "htje"
     };
   },
 
@@ -151,6 +153,13 @@ export default {
     this.queryMltmsFun();
     this.queryMltmsListFun();
     this.getData();
+
+    
+    this.$EventBus.$on("orgChange", org => {
+      this.queryMltmsFun();
+      this.queryMltmsListFun();
+      this.getData();
+    });
   },
 
   methods: {
@@ -183,7 +192,9 @@ export default {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
           qytm: this.selectedType,
-          hytm: this.selectedIndustry
+          hytm: this.selectedIndustry,
+          sortField: this.sortField,
+          sortType: this.sortType
         });
 
         if (res) {
@@ -224,6 +235,12 @@ export default {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       });
+    },
+
+    onSort(field, type) {
+      this.sortField = field;
+      this.sortType = type;
+      this.getData();
     }
   }
 };
@@ -349,7 +366,7 @@ export default {
               align-items: center;
               justify-content: center;
               gap: 4px;
-            } 
+            }
 
             .sort {
               display: flex;

@@ -33,6 +33,10 @@ export default {
 
   mounted() {
     this.getData();
+
+    this.$EventBus.$on("orgChange", () => {
+      this.getData();
+    });
   },
 
   methods: {

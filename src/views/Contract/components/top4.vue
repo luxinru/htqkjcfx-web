@@ -55,6 +55,11 @@ export default {
 
   mounted() {
     this.init();
+
+    
+    this.$EventBus.$on("orgChange", () => {
+      this.init();
+    });
   },
 
   methods: {

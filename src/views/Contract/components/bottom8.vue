@@ -143,6 +143,11 @@ export default {
 
   mounted() {
     this.init();
+
+    
+    this.$EventBus.$on("orgChange", org => {
+      this.init();
+    });
   },
 
   methods: {
@@ -185,7 +190,7 @@ export default {
           {
             name: "客户贡献度",
             type: "pie",
-            radius: "90%",
+            radius: ["60%", "90%"],
             center: ["30%", "50%"],
             data: list.map(item => ({
               value: item.percent,

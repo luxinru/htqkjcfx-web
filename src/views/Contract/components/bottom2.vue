@@ -41,20 +41,30 @@ export default {
   },
 
   mounted() {
-    this.initChina();
-    // this.initWorld();
+    this.init();
 
-    this.$EventBus.$on("updateContractType", type => {
-      this.contractType = type;
-      if (type === 1) {
-        this.initChina();
-      } else {
-        this.initWorld();
-      }
+    this.$EventBus.$on("orgChange", org => {
+      this.init();
     });
   },
 
   methods: {
+    init() {
+      this.initChina();
+      // this.initWorld();
+
+      this.$EventBus.$off("updateContractType");
+
+      this.$EventBus.$on("updateContractType", type => {
+        this.contractType = type;
+        if (type === 1) {
+          this.initChina();
+        } else {
+          this.initWorld();
+        }
+      });
+    },
+
     initChina() {
       if (this.chart) {
         this.chart.dispose();

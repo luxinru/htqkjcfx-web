@@ -51,22 +51,28 @@ export default {
   async mounted() {
     await this.queryKhlxfx();
     this.init();
+
+    
+    this.$EventBus.$on("orgChange", async org => {
+      await this.queryKhlxfx();
+      this.init();
+    });
   },
 
   methods: {
     async queryKhlxfx() {
       const res = await api.queryKhlxfx({
         dwbm: "6B51EA03CC8C4168876E3EA97A29B15E",
-        time: "2024-11",
+        time: "2024-11"
       });
-      
+
       if (res && Array.isArray(res)) {
         // 计算总金额
         this.totalAmount = res.reduce((sum, item) => sum + item.xqyhhte, 0);
-        
+
         // 处理数据
         this.list = res.map(item => {
-          const percent = (item.xqyhhte / this.totalAmount * 100).toFixed(2);
+          const percent = ((item.xqyhhte / this.totalAmount) * 100).toFixed(2);
           return {
             value: item.xqyhhte,
             name: item.type,
@@ -79,13 +85,13 @@ export default {
 
     getColorByType(type) {
       const colorMap = {
-        '地方国有企业': 'rgba(232, 100, 82, 1)',
-        '民营企业': 'rgba(91, 143, 249, 1)',
-        '事业单位': 'rgba(232, 100, 82, 1)',
-        '个体工商户': 'rgba(148, 95, 185, 1)',
-        '其他': 'rgba(246, 189, 22, 1)'
+        地方国有企业: "rgba(232, 100, 82, 1)",
+        民营企业: "rgba(91, 143, 249, 1)",
+        事业单位: "rgba(232, 100, 82, 1)",
+        个体工商户: "rgba(148, 95, 185, 1)",
+        其他: "rgba(246, 189, 22, 1)"
       };
-      return colorMap[type] || 'rgba(246, 189, 22, 1)';
+      return colorMap[type] || "rgba(246, 189, 22, 1)";
     },
 
     init() {
@@ -109,7 +115,7 @@ export default {
           {
             name: "新签客户合同额",
             type: "pie",
-            radius: "90%",
+            radius: ["60%", "90%"],
             center: ["50%", "50%"],
             data: list.map(item => ({
               value: item.percent,

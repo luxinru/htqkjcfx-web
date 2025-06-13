@@ -11,8 +11,8 @@
                 <div class="th">
                   合同总金额(含税)
                   <div class="sort">
-                    <div class="up"></div>
-                    <div class="down"></div>
+                    <div class="up" @click="onSort('htzje', 'asc')"></div>
+                    <div class="down" @click="onSort('htzje', 'desc')"></div>
                   </div>
                 </div>
               </th>
@@ -20,8 +20,8 @@
                 <div class="th">
                   合同总金额占比
                   <div class="sort">
-                    <div class="up"></div>
-                    <div class="down"></div>
+                    <div class="up" @click="onSort('htzjezb', 'asc')"></div>
+                    <div class="down" @click="onSort('htzjezb', 'desc')"></div>
                   </div>
                 </div>
               </th>
@@ -109,12 +109,19 @@ export default {
       total: 0,
       totalPages: 0,
       tableData: [],
-      totalAmount: 0
+      totalAmount: 0,
+      sortType: "asc",
+      sortField: "htzje"
     };
   },
 
   async mounted() {
     this.init();
+
+    
+    this.$EventBus.$on("orgChange", async org => {
+      this.init();
+    });
   },
 
   methods: {
@@ -123,7 +130,9 @@ export default {
         dwbm: "6B51EA03CC8C4168876E3EA97A29B15E",
         time: "2024-11",
         pageNum: this.currentPage,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        sortField: this.sortField,
+        sortType: this.sortType
       });
 
       console.error(res);
@@ -154,6 +163,12 @@ export default {
     async handlePageChange(page) {
       this.currentPage = page;
       await this.init();
+    },
+
+    onSort(field, type) {
+      this.sortField = field;
+      this.sortType = type;
+      this.init();
     }
   }
 };

@@ -2,9 +2,15 @@
   <div class="select-com">
     <span class="title">{{ title }}</span>
     <div class="select_box" @click="toggleDropdown">
-      <span class="label">{{
-        selectedOption ? selectedOption.label : (options.length > 0 ? options[0].label : '请选择')
-      }}</span>
+      <span class="label">
+        {{
+          selectedOption
+            ? selectedOption.label
+            : options.length > 0
+            ? options[0].label
+            : "请选择"
+        }}
+      </span>
       <img
         src="~@/assets/img/contract/select-icon.png"
         alt=""
@@ -105,6 +111,9 @@ export default {
       font-weight: normal;
       font-size: 16px;
       color: #ffffff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     img {
@@ -147,6 +156,9 @@ export default {
       color: #ffffff;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
       &:hover {
         background: rgba(0, 105, 202, 0.3);

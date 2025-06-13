@@ -168,7 +168,12 @@ export default {
   },
 
   async mounted() {
-    await this.init();
+    this.init();
+
+    
+    this.$EventBus.$on("orgChange", () => {
+      this.init();
+    });
   },
 
   methods: {
