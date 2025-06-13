@@ -1,15 +1,26 @@
 <template>
   <div class="bottom2">
-    <section class="tabs">
-      <div class="tab" :class="{ active: active === 1 }" @click="active = 1">
-        合同总金额(含税)
-      </div>
-      <div class="tab" :class="{ active: active === 2 }" @click="active = 2">
-        合同数量
-      </div>
-      <div class="tab" :class="{ active: active === 3 }" @click="active = 3">
-        客户数量
-      </div>
+    <section class="tabs_container">
+      <section class="tabs">
+        <div class="tab" :class="{ active: contractType === 1 }" @click="onChange(1)">
+          境内
+        </div>
+        <div class="tab" :class="{ active: contractType === 2 }" @click="onChange(2)">
+          境外
+        </div>
+      </section>
+
+      <section class="tabs2">
+        <div class="tab" :class="{ active: active === 1 }" @click="active = 1">
+          合同总金额(含税)
+        </div>
+        <div class="tab" :class="{ active: active === 2 }" @click="active = 2">
+          合同数量
+        </div>
+        <div class="tab" :class="{ active: active === 3 }" @click="active = 3">
+          客户数量
+        </div>
+      </section>
     </section>
 
     <section v-if="contractType === 1" class="chart_box">
@@ -49,18 +60,17 @@ export default {
   },
 
   methods: {
+    onChange(type) {
+      this.contractType = type;
+      if (type === 1) {
+        this.initChina();
+      } else {
+        this.initWorld();
+      }
+    },
     init() {
       this.initChina();
       // this.initWorld();
-
-      this.$EventBus.$on("updateContractType", type => {
-        this.contractType = type;
-        if (type === 1) {
-          this.initChina();
-        } else {
-          this.initWorld();
-        }
-      });
     },
 
     initChina() {
@@ -305,8 +315,13 @@ export default {
   display: flex;
   flex-direction: column;
 
+  .tabs_container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
   .tabs {
-    width: 100%;
     height: 28px;
     display: flex;
     align-items: center;
@@ -314,7 +329,7 @@ export default {
 
     .tab {
       width: max-content;
-      padding: 0 10px;
+      padding: 4px 10px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -330,6 +345,33 @@ export default {
     .active {
       background: #004277;
       border: 1px solid #707070;
+      color: #ffffff;
+    }
+  }
+
+  .tabs2 {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    overflow: hidden;
+
+    .tab {
+      width: max-content;
+      padding: 4px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,66,119,0.4);
+      border: 1px solid #005090;
+      font-weight: normal;
+      font-size: 14px;
+      color: #6bd8ff;
+      cursor: pointer;
+    }
+
+    .active {
+      background: #004277;
+      border: 1px solid #0069CA;
       color: #ffffff;
     }
   }

@@ -1,13 +1,13 @@
 <template>
   <div class="bottom3">
-    <section class="tabs">
+    <!-- <section class="tabs">
       <div class="tab" :class="{ active: active === 1 }" @click="onChange(1)">
         境内
       </div>
       <div class="tab" :class="{ active: active === 2 }" @click="onChange(2)">
         境外
       </div>
-    </section>
+    </section> -->
 
     <section class="table">
       <table>

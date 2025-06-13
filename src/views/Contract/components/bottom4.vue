@@ -179,7 +179,7 @@ export default {
         parentItemCode: ""
       });
       this.options2 = res.map(item => ({
-        label: item.tmbm,
+        label: item.tmzwmc,
         value: item.tmbm
       }));
     },

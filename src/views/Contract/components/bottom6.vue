@@ -1,30 +1,30 @@
 <template>
   <div class="bottom6">
     <section class="tabs">
-      <div class="tab" :class="{ active: active === 1 }" @click="active = 1">
+      <div class="tab" :class="{ active: active === 1 }" @click="onChange(1)">
         合同总金额
       </div>
-      <div class="tab" :class="{ active: active === 2 }" @click="active = 2">
+      <div class="tab" :class="{ active: active === 2 }" @click="onChange(2)">
         合同营收总额
       </div>
     </section>
 
     <section class="list">
-      <div class="item" v-for="index in 9" :key="index">
+      <div class="item" v-for="(item, index) in listData" :key="index">
         <div class="labels">
           <div class="index">
-            {{ index }}
+            {{ index + 1 }}
           </div>
           <div class="name">
-            中国电子信息工程有限公司
+            {{ item.name }}
           </div>
           <div class="value">
-            78%
+            {{ (item.zb * 100).toFixed(0) }}%
           </div>
         </div>
 
         <div class="percent">
-          <div class="value" :style="{ '--width': '78%' }"></div>
+          <div class="value" :style="{ '--width': (item.zb * 100) + '%' }"></div>
         </div>
       </div>
     </section>
@@ -38,13 +38,13 @@ export default {
 
   data() {
     return {
-      active: 1
+      active: 1,
+      listData: []
     };
   },
 
   async mounted() {
     this.queryKhgxdfx();
-
     
     this.$EventBus.$on("orgChange", async org => {
       this.queryKhgxdfx();
@@ -52,6 +52,11 @@ export default {
   },
 
   methods: {
+    onChange(type) {
+      this.active = type;
+      this.queryKhgxdfx();
+    },
+    
     async queryKhgxdfx() {
       const res = await api.queryKhgxdfx({
         dwbm: "6B51EA03CC8C4168876E3EA97A29B15E",
@@ -60,7 +65,9 @@ export default {
         type: this.active === 1 ? "0" : "1"
       });
 
-      console.error(res);
+      if (res && Array.isArray(res)) {
+        this.listData = res;
+      }
     }
   }
 };
@@ -110,7 +117,8 @@ export default {
     flex: 1 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    // gap: 6px;
+    justify-content: space-between;
 
     .item {
       width: 100%;
