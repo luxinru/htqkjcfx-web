@@ -11,6 +11,9 @@ importers:
       '@antv/g6':
         specifier: ^4.8.24
         version: 4.8.24
+      autofit.js:
+        specifier: ^3.2.8
+        version: 3.2.8
       axios:
         specifier: ^0.21.1
         version: 0.21.4
@@ -29,6 +32,12 @@ importers:
       element-ui:
         specifier: ^2.15.1
         version: 2.15.14(vue@2.7.16)
+      highcharts:
+        specifier: ^9.3.3
+        version: 9.3.3
+      highcharts-vue:
+        specifier: ^1.4.3
+        version: 1.4.3(highcharts@9.3.3)(vue@2.7.16)
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -51,6 +60,12 @@ importers:
         specifier: ^4.0.0-beta.3
         version: 4.1.0(vuex@3.6.2(vue@2.7.16))
     devDependencies:
+      '@babel/core':
+        specifier: ^7.12.16
+        version: 7.26.0
+      '@babel/preset-env':
+        specifier: ^7.12.16
+        version: 7.26.0(@babel/core@7.26.0)
       '@vue/cli-plugin-babel':
         specifier: ~4.4.0
         version: 4.4.6(@vue/cli-service@4.4.6(@vue/compiler-sfc@3.5.13)(lodash@4.17.21)(prettier@1.19.1)(sass-loader@8.0.2(sass@1.77.6)(webpack@4.47.0))(vue-template-compiler@2.7.16))(core-js@3.39.0)(vue@2.7.16)
@@ -63,18 +78,27 @@ importers:
       '@vue/cli-service':
         specifier: ~4.4.0
         version: 4.4.6(@vue/compiler-sfc@3.5.13)(lodash@4.17.21)(prettier@1.19.1)(sass-loader@8.0.2(sass@1.77.6)(webpack@4.47.0))(vue-template-compiler@2.7.16)
+      babel-loader:
+        specifier: ^8.2.2
+        version: 8.4.1(@babel/core@7.26.0)(webpack@4.47.0)
       prettier:
         specifier: ^1.19.1
         version: 1.19.1
       sass:
-        specifier: 1.77.6
+        specifier: ^1.26.5
         version: 1.77.6
       sass-loader:
         specifier: ^8.0.2
         version: 8.0.2(sass@1.77.6)(webpack@4.47.0)
+      vue-loader:
+        specifier: ^15.9.8
+        version: 15.11.1(@vue/compiler-sfc@3.5.13)(cache-loader@4.1.0(webpack@4.47.0))(css-loader@3.6.0(webpack@4.47.0))(lodash@4.17.21)(prettier@1.19.1)(vue-template-compiler@2.7.16)(webpack@4.47.0)
       vue-template-compiler:
         specifier: ^2.6.11
         version: 2.7.16
+      webpack:
+        specifier: ^4.46.0
+        version: 4.47.0
 
 packages:
 
@@ -1174,6 +1198,9 @@ packages:
     resolution: {integrity: sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==}
     engines: {node: '>= 4.5.0'}
     hasBin: true
+
+  autofit.js@3.2.8:
+    resolution: {integrity: sha512-albZNwDIXvcRneEDyZLW3uAIOH0cUQG/TnCGQ7jpfnL0gPn/+1ZNVRuEz3ZuzZvVkQ4HQRplGHjUeMRtPNxjLQ==}
 
   autoprefixer@9.8.8:
     resolution: {integrity: sha512-eM9d/swFopRt5gdJ7jrpCwgvEMIayITpojhkkSMRsFHYuH5bkSQ4p/9qTEHtmNudUZh22Tehu7I6CxAW0IXTKA==}
@@ -2608,6 +2635,15 @@ packages:
 
   hex-color-regex@1.1.0:
     resolution: {integrity: sha512-l9sfDFsuqtOqKDsQdqrMRk0U85RZc0RtOR9yPI7mRVOa4FsR/BVnZ0shmQRM96Ji99kYZP/7hn1cedc1+ApsTQ==}
+
+  highcharts-vue@1.4.3:
+    resolution: {integrity: sha512-qIy9EFuLIgOw+reNkTvu0pvMBcSE0BAPtONAqZoEl0qaAIpGxiyXqhRNPDufWieSC0YlybpCznxE8EK19Kcg+A==}
+    peerDependencies:
+      highcharts: '>=5.0.0'
+      vue: '>=1.0.0'
+
+  highcharts@9.3.3:
+    resolution: {integrity: sha512-QeOvm6cifeZYYdTLm4IxZsXcOE9c4xqfs0z0OJJ0z7hhA9WG0rmcVAyuIp5HBl/znjA/ayYHmpYjBYD/9PG4Fg==}
 
   highlight.js@10.7.3:
     resolution: {integrity: sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==}
@@ -6627,6 +6663,8 @@ snapshots:
 
   atob@2.1.2: {}
 
+  autofit.js@3.2.8: {}
+
   autoprefixer@9.8.8:
     dependencies:
       browserslist: 4.24.3
@@ -6647,7 +6685,7 @@ snapshots:
 
   axios@0.21.4:
     dependencies:
-      follow-redirects: 1.15.9(debug@4.4.0(supports-color@6.1.0))
+      follow-redirects: 1.15.9(debug@4.4.0)
     transitivePeerDependencies:
       - debug
 
@@ -8016,7 +8054,7 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 2.3.8
 
-  follow-redirects@1.15.9(debug@4.4.0(supports-color@6.1.0)):
+  follow-redirects@1.15.9(debug@4.4.0):
     optionalDependencies:
       debug: 4.4.0(supports-color@6.1.0)
 
@@ -8270,6 +8308,13 @@ snapshots:
 
   hex-color-regex@1.1.0: {}
 
+  highcharts-vue@1.4.3(highcharts@9.3.3)(vue@2.7.16):
+    dependencies:
+      highcharts: 9.3.3
+      vue: 2.7.16
+
+  highcharts@9.3.3: {}
+
   highlight.js@10.7.3: {}
 
   hmac-drbg@1.0.1:
@@ -8346,9 +8391,9 @@ snapshots:
 
   http-parser-js@0.5.8: {}
 
-  http-proxy-middleware@0.19.1(debug@4.4.0(supports-color@6.1.0))(supports-color@6.1.0):
+  http-proxy-middleware@0.19.1(debug@4.4.0)(supports-color@6.1.0):
     dependencies:
-      http-proxy: 1.18.1(debug@4.4.0(supports-color@6.1.0))
+      http-proxy: 1.18.1(debug@4.4.0)
       is-glob: 4.0.3
       lodash: 4.17.21
       micromatch: 3.1.10(supports-color@6.1.0)
@@ -8356,10 +8401,10 @@ snapshots:
       - debug
       - supports-color
 
-  http-proxy@1.18.1(debug@4.4.0(supports-color@6.1.0)):
+  http-proxy@1.18.1(debug@4.4.0):
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.9(debug@4.4.0(supports-color@6.1.0))
+      follow-redirects: 1.15.9(debug@4.4.0)
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -10809,7 +10854,7 @@ snapshots:
       del: 4.1.1
       express: 4.21.2(supports-color@6.1.0)
       html-entities: 1.4.0
-      http-proxy-middleware: 0.19.1(debug@4.4.0(supports-color@6.1.0))(supports-color@6.1.0)
+      http-proxy-middleware: 0.19.1(debug@4.4.0)(supports-color@6.1.0)
       import-local: 2.0.0
       internal-ip: 4.3.0
       ip: 1.1.9

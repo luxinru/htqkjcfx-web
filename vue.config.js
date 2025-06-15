@@ -51,6 +51,19 @@ module.exports = {
       alias: {
         '@': require('path').resolve(__dirname, 'src')
       }
+    },
+    module: {
+      rules: [
+        {
+          test: /highcharts-3d\.js$/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env']
+            }
+          }
+        }
+      ]
     }
   }
 };

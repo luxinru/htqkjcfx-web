@@ -236,7 +236,7 @@ export default {
       // this.initPieChart();
       this.initChart2();
       this.initTableData();
-      this.startAutoScroll();
+      // this.startAutoScroll();
     });
 
     this.$EventBus.$on("updateDate", date => {
