@@ -56,10 +56,12 @@
 
               <div class="value" :class="{ red: card.value < 0 }">
                 <ReasonModal
+                  canEdit
                   title="具体原因"
                   reason="亏损主要原因是因为同方科创新签合同减少，收入减少。"
                   ZBBM="ZBBM"
                   DWBM="DWBM"
+                  @update:reason="handleUpdateReason"
                 >
                   {{ card.value }}
                   <span>{{ card.unit }}</span>
@@ -253,6 +255,11 @@ export default {
   },
 
   methods: {
+    handleUpdateReason(reason, ZBBM, DWBM) {
+      console.log(reason, ZBBM, DWBM);
+      // 这里调更新接口
+    },
+
     init() {
       api2().then(res => {
         this.topCards = res;

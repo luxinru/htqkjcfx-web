@@ -1,7 +1,7 @@
 //开发用
 // window.BASEURL = "http://192.168.8.173:58086"; //后端本地地址
 // window.BASEURL = "http://192.168.1.60:58888"; //后端本地地址
-window.BASEURL = "/stat/prod-api"; //test 环境
+// window.BASEURL = "/stat/prod-api"; //test 环境
 // window.BASEURL = "http://10.10.60.18/stat/prod-api";
 
 /**

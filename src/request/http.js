@@ -6,7 +6,7 @@ import VueRouter from "vue-router";
 // 部署时，动态获取
 if (process.env.NODE_ENV === "production") {
   axios.defaults.baseURL =
-    window.PRO_BASEURL || `${location.origin}/stat/prod-api`;
+    window.PRO_BASEURL || `${location.origin}`;
 } else {
   // 本地时，调试用
   axios.defaults.baseURL = window.BASEURL;

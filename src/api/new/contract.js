@@ -1,7 +1,6 @@
 import axios from "@/request/http"; // 导入http中创建的axios实例
-const server = "/znbg-server";
-const server2 = "/ysjgl-server";
-
+const server = "/stat/prod-api/znbg-server";
+const server2 = "/stat/prod-api/ysjgl-server";
 export default {
   queryJgsdwlb(data) {
     return axios.post(`${server}/api/jjyxjc/queryJgsdwlb`, data);
@@ -57,5 +56,9 @@ export default {
 
   queryKhpfmConfig(data) {
     return axios.get(`${server}/api/jjyxjcV2/khpfmConfig`, { params: data });
+  },
+  
+  listQksm(data) {
+    return axios.post(`/api/qksm/listQksm`, { params: data });
   }
 };
